@@ -1,10 +1,13 @@
 package com.utn.TPFinal.dto;
 
+import com.utn.TPFinal.model.City;
+
 public class EmployeeDto {
     String name;
     String lastName;
     String dni;
     String password;
+    City city;
 
     public String getName() {
         return name;
@@ -38,4 +41,11 @@ public class EmployeeDto {
         this.password = password;
     }
 
+    public City getCity() {
+        return city;
+    }
+
+    public void setCity(City city) {
+        this.city = city;
+    }
 }

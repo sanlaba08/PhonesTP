@@ -2,8 +2,8 @@ package com.utn.TPFinal.service;
 
 import com.utn.TPFinal.dto.EmployeeDto;
 import com.utn.TPFinal.model.User;
-import com.utn.TPFinal.proyections.Clients;
-import com.utn.TPFinal.proyections.Employees;
+import com.utn.TPFinal.projections.Clients;
+import com.utn.TPFinal.projections.Employees;
 import com.utn.TPFinal.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,7 +24,7 @@ public class UserService {
     }
 
     public void addEmployee(EmployeeDto employee){
-        userRepository.addEmployee(employee.getName(), employee.getLastName(), employee.getDni(), employee.getPassword(), 6);
+        userRepository.addEmployee(employee.getName(), employee.getLastName(), employee.getDni(), employee.getPassword(), employee.getCity().getIdCity());
     }
 
     public List<Employees> getListEmployee(){
@@ -35,7 +35,6 @@ public class UserService {
         return userRepository.getClients();
     }
 
-
     public List<Clients> getClient(Integer idUser) {
         return userRepository.getClient(idUser);
     }
@@ -43,6 +42,5 @@ public class UserService {
     public List<Employees> getEmployee(Integer idUser) {
         return userRepository.getEmployee(idUser);
     }
-
 
 }

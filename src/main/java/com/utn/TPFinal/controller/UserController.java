@@ -2,8 +2,8 @@ package com.utn.TPFinal.controller;
 
 import com.utn.TPFinal.dto.EmployeeDto;
 import com.utn.TPFinal.model.User;
-import com.utn.TPFinal.proyections.Clients;
-import com.utn.TPFinal.proyections.Employees;
+import com.utn.TPFinal.projections.Clients;
+import com.utn.TPFinal.projections.Employees;
 import com.utn.TPFinal.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

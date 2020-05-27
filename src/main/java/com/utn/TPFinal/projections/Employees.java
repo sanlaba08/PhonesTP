@@ -1,4 +1,4 @@
-package com.utn.TPFinal.proyections;
+package com.utn.TPFinal.projections;
 
 
 public interface Employees {

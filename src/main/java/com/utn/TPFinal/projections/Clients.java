@@ -1,6 +1,4 @@
-package com.utn.TPFinal.proyections;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
+package com.utn.TPFinal.projections;
 
 public interface Clients {
     String getId_user();

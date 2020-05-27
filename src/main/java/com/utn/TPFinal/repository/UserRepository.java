@@ -1,8 +1,8 @@
 package com.utn.TPFinal.repository;
 
 import com.utn.TPFinal.model.User;
-import com.utn.TPFinal.proyections.Clients;
-import com.utn.TPFinal.proyections.Employees;
+import com.utn.TPFinal.projections.Clients;
+import com.utn.TPFinal.projections.Employees;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.query.Procedure;
