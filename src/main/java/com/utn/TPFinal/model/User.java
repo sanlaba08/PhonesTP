@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -42,6 +44,5 @@ public class User{
     @JoinColumn(name = "id_user_type")
     @JsonBackReference
     private UserType userType;
-
 
 }
