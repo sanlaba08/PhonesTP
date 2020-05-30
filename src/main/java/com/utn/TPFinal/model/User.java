@@ -17,6 +17,7 @@ import java.util.List;
 public class User{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonBackReference
     @Column(name = "id_user")
     private Integer idUser;
 
@@ -44,5 +45,8 @@ public class User{
     @JoinColumn(name = "id_user_type")
     @JsonBackReference
     private UserType userType;
+
+    @OneToMany(mappedBy = "user")
+    List<PhoneLine> phoneLines = new ArrayList<PhoneLine>();
 
 }

@@ -3,12 +3,9 @@ package com.utn.TPFinal.controller;
 import com.utn.TPFinal.dto.EmployeeDto;
 import com.utn.TPFinal.dto.UserPhoneDto;
 import com.utn.TPFinal.dto.UserPhoneModifyDto;
-import com.utn.TPFinal.model.LineType;
 import com.utn.TPFinal.model.User;
-import com.utn.TPFinal.projections.Clients;
-import com.utn.TPFinal.projections.Employees;
-import com.utn.TPFinal.service.CityService;
-import com.utn.TPFinal.service.ProvinceService;
+import com.utn.TPFinal.projections.ClientsProjection;
+import com.utn.TPFinal.projections.EmployeesProjection;
 import com.utn.TPFinal.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -58,22 +55,22 @@ public class UserController {
 
 
     @GetMapping("/employee")
-    public List<Employees> getAllEmployee(){
+    public List<EmployeesProjection> getAllEmployee(){
         return userService.getListEmployee();
     }
 
     @GetMapping("/client")
-    public List<Clients> getAllClients(){
+    public List<ClientsProjection> getAllClients(){
         return userService.getListClients();
     }
 
     @GetMapping("/client/{IdUser}")
-    public List<Clients> getClient(@PathVariable Integer IdUser){
+    public ClientsProjection getClient(@PathVariable Integer IdUser){
         return userService.getClient(IdUser);
     }
 
     @GetMapping("/employee/{IdUser}")
-    public List<Employees> getEmployee(@PathVariable Integer IdUser){
+    public List<EmployeesProjection> getEmployee(@PathVariable Integer IdUser){
         return userService.getEmployee(IdUser);
     }
 

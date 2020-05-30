@@ -1,44 +1,64 @@
 package com.utn.TPFinal.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
+@Entity
+@Table(name = "calls")
 public class Call {
     @Id
     @GeneratedValue()
     @Column(name = "id_call")
-   private Integer idCall;
+    private Integer idCall;
 
-   /* private Date callDate;
+    @Column(name = "call_date")
+    private Date callDate;
 
-    @Column(name = "id_line_origin")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_line_origin")
+    @JsonBackReference
    private PhoneLine phoneLineOrigin;
 
-    @Column(name = "id_line_destination")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_line_destination")
+    @JsonBackReference
    private PhoneLine phoneLineDestination;
 
+    @Column(name = "duration")
     private Long duration;
 
-    private Integer total_price;
+    @Column(name = "total_price")
+    private Integer totalPrice;
 
-    @Column(name = "id_call")
+    @Column(name = "total_cost")
+    private Integer totalCost;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_city_origin")
+    @JsonBackReference
    private City cityOrigin;
 
-    @Column(name = "id_call")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_city_destination")
+    @JsonBackReference
    private City cityDestination;
 
-
-    private Integer total_cost;
-
-
-
+    @Column(name = "billed")
     private Boolean billed;
 
-    private Bill bill;*/
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_bill")
+    @JsonBackReference
+    private Bill bill;
 
 
 

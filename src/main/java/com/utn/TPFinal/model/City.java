@@ -30,4 +30,19 @@ public class City {
     @JsonBackReference
     private Province province;
 
+    @OneToMany(mappedBy = "city")
+    List<User> users = new ArrayList<User>();
+
+    @OneToMany(mappedBy = "cityOrigin")
+    List<Call> cityOrigin = new ArrayList<Call>();
+
+    @OneToMany(mappedBy = "cityDestination")
+    List<Call> cityDestination = new ArrayList<Call>();
+
+    @OneToMany(mappedBy = "cityTariffOrigin")
+    List<Tariff> cityTariffOrigin = new ArrayList<Tariff>();
+
+    @OneToMany(mappedBy = "cityTariffDestination")
+    List<Tariff> cityTariffDestination = new ArrayList<Tariff>();
+
 }

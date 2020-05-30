@@ -1,7 +1,7 @@
 package com.utn.TPFinal.projections;
 
 
-public interface Employees {
+public interface EmployeesProjection {
     String getRol();
     String getName();
     String getLast_name();

@@ -1,7 +1,6 @@
 package com.utn.TPFinal.projections;
 
-public interface Clients {
-    String getId_user();
+public interface ClientsProjection {
     String getRol();
     String getName();
     String getLast_name();

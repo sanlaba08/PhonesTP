@@ -1,25 +1,23 @@
 package com.utn.TPFinal.dto;
 
-import com.utn.TPFinal.model.LineType;
-import com.utn.TPFinal.model.User;
 
 public class PhoneLineByUserDto {
-    User user;
-    LineType lineType;
+    private Integer user;
+    private Integer lineType;
 
-    public User getUser() {
+    public Integer getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(Integer user) {
         this.user = user;
     }
 
-    public LineType getLineType() {
+    public Integer getLineType() {
         return lineType;
     }
 
-    public void setLineType(LineType lineType) {
+    public void setLineType(Integer lineType) {
         this.lineType = lineType;
     }
 }

@@ -1,8 +1,8 @@
 package com.utn.TPFinal.repository;
 
 import com.utn.TPFinal.model.User;
-import com.utn.TPFinal.projections.Clients;
-import com.utn.TPFinal.projections.Employees;
+import com.utn.TPFinal.projections.ClientsProjection;
+import com.utn.TPFinal.projections.EmployeesProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.query.Procedure;
@@ -19,16 +19,16 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     public void addEmployee(@Param("pName") String name, @Param("pLastName") String lastName, @Param("pDni") String dni, @Param("pUserPassword") String password, @Param("pIdCity") Integer idCity);
 
     @Query(value= "select * from v_employee_info;" , nativeQuery = true)
-    List<Employees> getEmployee();
+    List<EmployeesProjection> getEmployee();
 
     @Query(value= "select * from v_client_info;" , nativeQuery = true)
-    List<Clients> getClients();
+    List<ClientsProjection> getClients();
 
-    @Query(value = "select * from v_client_info where id_user = ?1", nativeQuery = true)
-    List<Clients> getClient(Integer idUser);
+    @Query(value = "select * from v_client_info where id_user = ?1 group by id_user", nativeQuery = true)
+    ClientsProjection getClient(Integer idUser);
 
     @Query(value = "select * from v_employee_info where id_user = ?1", nativeQuery = true)
-    List<Employees> getEmployee(Integer idUser);
+    List<EmployeesProjection> getEmployee(Integer idUser);
 
     @Transactional
     @Procedure(procedureName = "sp_insert_client_and_phone_lines")

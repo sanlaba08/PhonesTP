@@ -13,6 +13,6 @@ public class PhoneLineService {
     }
 
     public void addPhoneLine(PhoneLineByUserDto phoneLine) {
-        phoneLineRepository.addPhoneLine(phoneLine.getUser().getIdUser(), phoneLine.getLineType().getIdTypeLine());
+        phoneLineRepository.addPhoneLine(phoneLine.getUser(), phoneLine.getLineType());
     }
 }

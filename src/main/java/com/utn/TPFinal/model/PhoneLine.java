@@ -1,10 +1,13 @@
 package com.utn.TPFinal.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -23,11 +26,25 @@ public class PhoneLine {
     @Column(name = "available")
     private String available;
 
-    @Column(name = "id_line_type")
-    private String idLineType;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_line_type")
+    @JsonBackReference
+    private LineType lineType;
 
-    @Column(name = "id_user")
-    private String idUser;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_user")
+    @JsonBackReference
+    private User user;
+
+    @OneToMany(mappedBy = "phoneLineOrigin")
+    List<Call> callsOrigin = new ArrayList<Call>();
+
+    @OneToMany(mappedBy = "phoneLineDestination")
+    List<Call> callsDestination = new ArrayList<Call>();
+
+    @OneToMany(mappedBy = "line")
+    List<Bill> billLine = new ArrayList<Bill>();
+
 
 
 
