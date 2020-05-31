@@ -8,8 +8,8 @@ public class UserPhoneDto {
     String lastName;
     String dni;
     String password;
-    City city;
-    LineType lineType;
+    Integer city;
+    Integer lineType;
 
     public String getName() {
         return name;
@@ -43,19 +43,19 @@ public class UserPhoneDto {
         this.password = password;
     }
 
-    public City getCity() {
+    public Integer getCity() {
         return city;
     }
 
-    public void setCity(City city) {
+    public void setCity(Integer city) {
         this.city = city;
     }
 
-    public LineType getLineType() {
+    public Integer getLineType() {
         return lineType;
     }
 
-    public void setLineType(LineType lineType) {
+    public void setLineType(Integer lineType) {
         this.lineType = lineType;
     }
 }

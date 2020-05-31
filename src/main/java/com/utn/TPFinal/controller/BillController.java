@@ -3,6 +3,7 @@ package com.utn.TPFinal.controller;
 import com.utn.TPFinal.projections.BillProjection;
 import com.utn.TPFinal.projections.CallsProjection;
 import com.utn.TPFinal.service.BillService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,6 +16,7 @@ import java.util.List;
 public class BillController {
     private final BillService billService;
 
+    @Autowired
     public BillController(BillService billService) {
         this.billService = billService;
     }

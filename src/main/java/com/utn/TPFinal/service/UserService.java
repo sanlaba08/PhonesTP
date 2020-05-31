@@ -25,7 +25,7 @@ public class UserService {
 
     // Alta de Cliente con su respectiva linea telefonica.
     public void addClientPhone(UserPhoneDto userPhone){
-        userRepository.addClientPhone(userPhone.getName(), userPhone.getLastName(), userPhone.getDni(), userPhone.getPassword(), userPhone.getCity().getIdCity(), userPhone.getLineType().getIdTypeLine());
+        userRepository.addClientPhone(userPhone.getName(), userPhone.getLastName(), userPhone.getDni(), userPhone.getPassword(), userPhone.getCity(), userPhone.getLineType());
     }
 
     // Baja de Cliente con su respectiva linea telefonica.
@@ -35,7 +35,7 @@ public class UserService {
 
     // Modificacion del Cliente y la linea telefonica.
     public void modifyClientPhone(UserPhoneModifyDto clientPhone) {
-        userRepository.modifyClientPhone(clientPhone.getUser().getIdUser(), clientPhone.getName(), clientPhone.getLastName(), clientPhone.getPassword(), clientPhone.getCity().getIdCity(), clientPhone.getLineType().getIdTypeLine());
+        userRepository.modifyClientPhone(clientPhone.getUser(), clientPhone.getName(), clientPhone.getLastName(), clientPhone.getPassword(), clientPhone.getCity(), clientPhone.getLineType());
     }
 
 
@@ -44,7 +44,7 @@ public class UserService {
     }
 
     public void addEmployee(EmployeeDto employee){
-        userRepository.addEmployee(employee.getName(), employee.getLastName(), employee.getDni(), employee.getPassword(), employee.getCity().getIdCity());
+        userRepository.addEmployee(employee.getName(), employee.getLastName(), employee.getDni(), employee.getPassword(), employee.getCity());
     }
 
     public List<EmployeesProjection> getListEmployee(){

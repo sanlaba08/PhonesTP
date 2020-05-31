@@ -1,5 +1,6 @@
 package com.utn.TPFinal.service;
 
+import com.utn.TPFinal.dto.CallDto;
 import com.utn.TPFinal.projections.CallsProjection;
 import com.utn.TPFinal.repository.CallRepository;
 import org.springframework.stereotype.Service;
@@ -17,5 +18,9 @@ public class CallService {
 
     public List<CallsProjection> getListCall(String dni) {
         return callRepository.getListCall(dni);
+    }
+
+    public void addCall(CallDto callDto){
+        callRepository.addCall(callDto.getIdLineOrigin(), callDto.getIdLineDestination(), callDto.getDuration(), callDto.getCallDate());
     }
 }

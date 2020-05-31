@@ -5,18 +5,18 @@ import com.utn.TPFinal.model.LineType;
 import com.utn.TPFinal.model.User;
 
 public class UserPhoneModifyDto {
-    User user;
+    Integer user;
     String name;
     String lastName;
     String password;
-    City city;
-    LineType lineType;
+    Integer city;
+    Integer lineType;
 
-    public User getUser() {
+    public Integer getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(Integer user) {
         this.user = user;
     }
 
@@ -44,19 +44,19 @@ public class UserPhoneModifyDto {
         this.password = password;
     }
 
-    public City getCity() {
+    public Integer getCity() {
         return city;
     }
 
-    public void setCity(City city) {
+    public void setCity(Integer city) {
         this.city = city;
     }
 
-    public LineType getLineType() {
+    public Integer getLineType() {
         return lineType;
     }
 
-    public void setLineType(LineType lineType) {
+    public void setLineType(Integer lineType) {
         this.lineType = lineType;
     }
 }

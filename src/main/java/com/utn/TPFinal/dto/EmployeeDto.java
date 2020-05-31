@@ -7,7 +7,7 @@ public class EmployeeDto {
     String lastName;
     String dni;
     String password;
-    City city;
+    Integer city;
 
     public String getName() {
         return name;
@@ -41,11 +41,11 @@ public class EmployeeDto {
         this.password = password;
     }
 
-    public City getCity() {
+    public Integer getCity() {
         return city;
     }
 
-    public void setCity(City city) {
+    public void setCity(Integer city) {
         this.city = city;
     }
 }
