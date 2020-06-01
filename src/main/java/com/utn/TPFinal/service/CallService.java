@@ -2,9 +2,11 @@ package com.utn.TPFinal.service;
 
 import com.utn.TPFinal.dto.CallDto;
 import com.utn.TPFinal.projections.CallsProjection;
+import com.utn.TPFinal.projections.ParcialProjection;
 import com.utn.TPFinal.repository.CallRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,5 +24,13 @@ public class CallService {
 
     public void addCall(CallDto callDto){
         callRepository.addCall(callDto.getIdLineOrigin(), callDto.getIdLineDestination(), callDto.getDuration(), callDto.getCallDate());
+    }
+
+    public ParcialProjection getCallByDestination(String dni){
+        return callRepository.getCallByDestination(dni);
+    }
+
+    public List<CallsProjection> getListCallByDate(String firstDate, String secondDate){
+        return callRepository.getListCallByDate(firstDate, secondDate);
     }
 }

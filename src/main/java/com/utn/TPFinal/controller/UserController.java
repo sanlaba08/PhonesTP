@@ -3,11 +3,14 @@ package com.utn.TPFinal.controller;
 import com.utn.TPFinal.dto.EmployeeDto;
 import com.utn.TPFinal.dto.UserPhoneDto;
 import com.utn.TPFinal.dto.UserPhoneModifyDto;
+import com.utn.TPFinal.exceptions.InvalidClientException;
+import com.utn.TPFinal.exceptions.UserNotExistException;
 import com.utn.TPFinal.model.User;
 import com.utn.TPFinal.projections.ClientsProjection;
 import com.utn.TPFinal.projections.EmployeesProjection;
 import com.utn.TPFinal.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -64,9 +67,16 @@ public class UserController {
         return userService.getListClients();
     }
 
-    @GetMapping("/client/{IdUser}")
-    public ClientsProjection getClient(@PathVariable Integer IdUser){
-        return userService.getClient(IdUser);
+    @GetMapping("/client/{idUser}")
+    public ResponseEntity getClient(@PathVariable Integer idUser) throws InvalidClientException{
+        ResponseEntity responseEntity;
+        try{
+            responseEntity = ResponseEntity.ok(userService.getClient(idUser));
+        } catch (UserNotExistException e){
+            responseEntity = ResponseEntity.badRequest().build();
+            throw new InvalidClientException("Enter a value to get a user.");
+        }
+        return responseEntity;
     }
 
     @GetMapping("/employee/{IdUser}")

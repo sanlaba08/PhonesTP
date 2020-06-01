@@ -22,12 +22,17 @@ public class BillController {
     }
 
     @GetMapping("/number") // localhost:8080/bill/number?line=4123
-    public List<BillProjection> getCall(@RequestParam String line){
+    public List<BillProjection> getBill(@RequestParam String line){
         return billService.getBillByNumber(line);
     }
 
-    @GetMapping("/") // localhost:8080/call/number?=4123
-    public List<BillProjection> getCallAll(){
+    @GetMapping("/")
+    public List<BillProjection> getBillAll(){
         return billService.getBillAll();
+    }
+
+    @GetMapping("/date")
+    public List<BillProjection> getBillDate(@RequestParam String first, @RequestParam String second){
+        return billService.getListBillByDate(first, second);
     }
 }

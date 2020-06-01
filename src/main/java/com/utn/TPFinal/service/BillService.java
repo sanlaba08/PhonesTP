@@ -22,4 +22,10 @@ public class BillService {
     public List<BillProjection> getBillAll() {
         return billRepository.getBillAll();
     }
+
+    public List<BillProjection> getListBillByDate(String firstDate, String secondDate) {
+        return billRepository.getListBillByDate(firstDate, secondDate);
+    }
+
+
 }

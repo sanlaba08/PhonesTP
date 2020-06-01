@@ -18,4 +18,8 @@ public interface BillRepository extends JpaRepository<Bill, Integer> {
     @Query(value = "select * " + " from v_bills_info where paid = 0", nativeQuery = true)
     List<BillProjection> getBillAll();
 
+    /*Consulta de facturas por rango de fechas*/
+    @Query(value ="select * from v_bills_info where DATE(bill_date) BETWEEN ? AND ?;", nativeQuery = true)
+    List<BillProjection> getListBillByDate(String firstDate, String secondDate);
+
 }

@@ -3,6 +3,8 @@ package com.utn.TPFinal.service;
 import com.utn.TPFinal.dto.EmployeeDto;
 import com.utn.TPFinal.dto.UserPhoneDto;
 import com.utn.TPFinal.dto.UserPhoneModifyDto;
+import com.utn.TPFinal.exceptions.InvalidClientException;
+import com.utn.TPFinal.exceptions.UserNotExistException;
 import com.utn.TPFinal.model.User;
 import com.utn.TPFinal.projections.ClientsProjection;
 import com.utn.TPFinal.projections.EmployeesProjection;
@@ -55,8 +57,8 @@ public class UserService {
         return userRepository.getClients();
     }
 
-    public ClientsProjection getClient(Integer idUser) {
-        return userRepository.getClient(idUser);
+    public ClientsProjection getClient(Integer idUser) throws UserNotExistException{
+            return userRepository.getClient(idUser);
     }
 
     public List<EmployeesProjection> getEmployee(Integer idUser) {
