@@ -1,5 +1,6 @@
 package com.utn.TPFinal.controller;
 
+import ch.qos.logback.core.net.server.Client;
 import com.utn.TPFinal.dto.EmployeeDto;
 import com.utn.TPFinal.dto.UserPhoneDto;
 import com.utn.TPFinal.dto.UserPhoneModifyDto;
@@ -68,15 +69,8 @@ public class UserController {
     }
 
     @GetMapping("/client/{idUser}")
-    public ResponseEntity getClient(@PathVariable Integer idUser) throws InvalidClientException{
-        ResponseEntity responseEntity;
-        try{
-            responseEntity = ResponseEntity.ok(userService.getClient(idUser));
-        } catch (UserNotExistException e){
-            responseEntity = ResponseEntity.badRequest().build();
-            throw new InvalidClientException("Enter a value to get a user.");
-        }
-        return responseEntity;
+    public ClientsProjection getClient(@PathVariable Integer idUser) throws InvalidClientException{
+       return userService.getClient(idUser);
     }
 
     @GetMapping("/employee/{IdUser}")
@@ -84,7 +78,17 @@ public class UserController {
         return userService.getEmployee(IdUser);
     }
 
+    //PARCIAL
 
+    @GetMapping("/employee/")
+    public ResponseEntity <List<EmployeesProjection>> getEmployee(@RequestParam String dni) throws UserNotExistException {
+        List<EmployeesProjection> employees = userService.getEmployeeDni(dni);
 
+        if (employees.size() > 0){
+            return ResponseEntity.ok().body(employees);
+        }else{
+            throw new UserNotExistException("Enter a value to get a user.");
+        }
+    }
 }
 

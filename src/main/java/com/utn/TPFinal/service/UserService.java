@@ -57,7 +57,7 @@ public class UserService {
         return userRepository.getClients();
     }
 
-    public ClientsProjection getClient(Integer idUser) throws UserNotExistException{
+    public ClientsProjection getClient(Integer idUser){
             return userRepository.getClient(idUser);
     }
 
@@ -65,9 +65,11 @@ public class UserService {
         return userRepository.getEmployee(idUser);
     }
 
+    //PARCIAL
 
-
-
+    public List<EmployeesProjection> getEmployeeDni(String dni) throws UserNotExistException {
+        return userRepository.getEmployeeDni(dni);
+    }
 
 
 }

@@ -41,4 +41,9 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     @Transactional
     @Procedure(procedureName = "sp_modify_client")
     public void modifyClientPhone(@Param("pIdUser") Integer idUser, @Param("pName") String name, @Param("pLastName") String lastName, @Param("pPassword") String password, @Param("pIdCity") Integer idCity, @Param("pIdLineType") Integer idLineType);
+
+    //PARCIAL
+
+    @Query(value = "select * from v_employee_info where dni = ?1", nativeQuery = true)
+    List<EmployeesProjection> getEmployeeDni(String dni);
 }
