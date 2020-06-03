@@ -9,5 +9,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PhoneLineRepository extends JpaRepository<PhoneLine, Integer> {
     @Procedure(procedureName = "sp_phone_lines")
-    void addPhoneLine(@Param("pIdUser") Integer idUser, @Param("pIdLineType") Integer idTypeLine);
+    void addPhoneLine(@Param("pIdUser") Integer idUser, @Param("pLineType") String TypeLine);
 }

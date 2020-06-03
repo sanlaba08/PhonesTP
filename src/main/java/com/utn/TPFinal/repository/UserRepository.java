@@ -32,15 +32,15 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     @Transactional
     @Procedure(procedureName = "sp_insert_client_and_phone_lines")
-    public void addClientPhone(@Param("pName") String name, @Param("pLastName") String lastName, @Param("pDni") String dni, @Param("pUserPassword") String password, @Param("pIdCity") Integer idCity, @Param("pLineType") Integer lineType);
+    public void addClientPhone(@Param("pName") String name, @Param("pLastName") String lastName, @Param("pDni") String dni, @Param("pUserPassword") String password, @Param("pIdCity") Integer idCity, @Param("pLineType") String lineType);
 
     @Transactional
     @Procedure(procedureName = "sp_client_line_suspend")
-    public void deleteClientPhone(@Param("pIdUser") Integer idUser);
+    public void deleteClientPhone(@Param("pDni") String dni);
 
     @Transactional
     @Procedure(procedureName = "sp_modify_client")
-    public void modifyClientPhone(@Param("pIdUser") Integer idUser, @Param("pName") String name, @Param("pLastName") String lastName, @Param("pPassword") String password, @Param("pIdCity") Integer idCity, @Param("pIdLineType") Integer idLineType);
+    public void modifyClientPhone(@Param("pIdUser") Integer idUser, @Param("pName") String name, @Param("pLastName") String lastName, @Param("pPassword") String password, @Param("pIdCity") Integer idCity, @Param("pLineType") String lineType);
 
     //PARCIAL
 

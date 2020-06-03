@@ -31,8 +31,8 @@ public class UserService {
     }
 
     // Baja de Cliente con su respectiva linea telefonica.
-    public void deleteClientPhone(Integer idUser) {
-        userRepository.deleteClientPhone(idUser);
+    public void deleteClientPhone(String dni) {
+        userRepository.deleteClientPhone(dni);
     }
 
     // Modificacion del Cliente y la linea telefonica.

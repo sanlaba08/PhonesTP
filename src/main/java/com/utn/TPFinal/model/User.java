@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -41,9 +43,8 @@ public class User{
     @JsonBackReference
     private City city;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_user_type")
-    @JsonBackReference
+    @Column(name = "role_name")
+    @Enumerated(EnumType.STRING)
     private UserType userType;
 
     @OneToMany(mappedBy = "user")

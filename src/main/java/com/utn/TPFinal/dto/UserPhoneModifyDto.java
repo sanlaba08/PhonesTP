@@ -10,7 +10,7 @@ public class UserPhoneModifyDto {
     String lastName;
     String password;
     Integer city;
-    Integer lineType;
+    String lineType;
 
     public Integer getUser() {
         return user;
@@ -52,11 +52,11 @@ public class UserPhoneModifyDto {
         this.city = city;
     }
 
-    public Integer getLineType() {
+    public String getLineType() {
         return lineType;
     }
 
-    public void setLineType(Integer lineType) {
+    public void setLineType(String lineType) {
         this.lineType = lineType;
     }
 }

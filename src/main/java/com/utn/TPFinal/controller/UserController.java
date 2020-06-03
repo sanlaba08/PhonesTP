@@ -36,9 +36,9 @@ public class UserController {
     }
 
     // Baja de Cliente con su respectiva linea telefonica.
-    @DeleteMapping("/client/{IdUser}")
-    public void deleteClient(@PathVariable Integer IdUser){
-        userService.deleteClientPhone(IdUser);
+    @DeleteMapping("/client/")
+    public void deleteClient(@RequestParam String dni){
+        userService.deleteClientPhone(dni);
     }
 
     // Modificacion del Cliente y la linea telefonica. (VERIFICAR "NO SOPORTA EL METODO PUT")

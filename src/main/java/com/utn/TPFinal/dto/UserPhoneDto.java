@@ -9,7 +9,7 @@ public class UserPhoneDto {
     String dni;
     String password;
     Integer city;
-    Integer lineType;
+    String lineType;
 
     public String getName() {
         return name;
@@ -51,11 +51,11 @@ public class UserPhoneDto {
         this.city = city;
     }
 
-    public Integer getLineType() {
+    public String getLineType() {
         return lineType;
     }
 
-    public void setLineType(Integer lineType) {
+    public void setLineType(String lineType) {
         this.lineType = lineType;
     }
 }

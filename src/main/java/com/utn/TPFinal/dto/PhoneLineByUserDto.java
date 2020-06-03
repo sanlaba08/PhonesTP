@@ -3,7 +3,7 @@ package com.utn.TPFinal.dto;
 
 public class PhoneLineByUserDto {
     private Integer user;
-    private Integer lineType;
+    private String lineType;
 
     public Integer getUser() {
         return user;
@@ -13,11 +13,11 @@ public class PhoneLineByUserDto {
         this.user = user;
     }
 
-    public Integer getLineType() {
+    public String getLineType() {
         return lineType;
     }
 
-    public void setLineType(Integer lineType) {
+    public void setLineType(String lineType) {
         this.lineType = lineType;
     }
 }
