@@ -1,6 +1,7 @@
 package com.utn.TPFinal.service;
 
 import com.utn.TPFinal.dto.EmployeeDto;
+import com.utn.TPFinal.dto.LoginRequestDto;
 import com.utn.TPFinal.dto.UserPhoneDto;
 import com.utn.TPFinal.dto.UserPhoneModifyDto;
 import com.utn.TPFinal.exceptions.InvalidClientException;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -62,5 +64,8 @@ public class UserService {
         return userRepository.getEmployeeDni(dni);
     }
 
-
+    public User login(LoginRequestDto login) throws UserNotExistException {
+        User user = userRepository.getByUsername(login.getDni(), login.getPassword());
+        return Optional.ofNullable(user).orElseThrow(() -> new UserNotExistException("User not exist"));
+    }
 }

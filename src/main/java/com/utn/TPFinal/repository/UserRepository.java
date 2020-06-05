@@ -1,6 +1,5 @@
 package com.utn.TPFinal.repository;
 
-import com.utn.TPFinal.dto.UserPhoneDto;
 import com.utn.TPFinal.model.User;
 import com.utn.TPFinal.projections.ClientsProjection;
 import com.utn.TPFinal.projections.EmployeesProjection;
@@ -41,4 +40,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     @Query(value = "select * from v_employee_info where dni = ?1", nativeQuery = true)
     List<EmployeesProjection> getEmployeeDni(String dni);
+
+    @Query(value = "SELECT * FROM users u WHERE u.dni = ? and u.user_password = ?", nativeQuery = true)
+    public User getByUsername(@Param("dni") String dni, @Param("user_password") String password);
 }

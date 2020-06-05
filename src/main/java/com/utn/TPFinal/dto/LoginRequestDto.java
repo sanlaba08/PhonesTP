@@ -1,8 +1,13 @@
 package com.utn.TPFinal.dto;
 
-public class LoginDto {
+public class LoginRequestDto {
     String dni;
     String password;
+
+    public LoginRequestDto(String dni, String password) {
+        this.dni = dni;
+        this.password = password;
+    }
 
     public String getDni() {
         return dni;
