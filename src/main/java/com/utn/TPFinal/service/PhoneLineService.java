@@ -15,4 +15,12 @@ public class PhoneLineService {
     public void addPhoneLine(PhoneLineByUserDto phoneLine) {
         phoneLineRepository.addPhoneLine(phoneLine.getUser(), phoneLine.getLineType());
     }
+
+    public void deletePhoneLine(Integer idLine) {
+        phoneLineRepository.deletePhoneLine(idLine);
+    }
+
+    public void enablePhoneLine(Integer idLine) {
+        phoneLineRepository.enablePhoneLine(idLine);
+    }
 }

@@ -3,25 +3,25 @@ package com.utn.TPFinal.dto;
 import java.util.Date;
 
 public class CallDto {
-    Integer idLineOrigin;
-    Integer idLineDestination;
+    String lineOrigin;
+    String lineDestination;
     Long duration;
     Date callDate;
 
-    public Integer getIdLineOrigin() {
-        return idLineOrigin;
+    public String getLineOrigin() {
+        return lineOrigin;
     }
 
-    public void setIdLineOrigin(Integer idLineOrigin) {
-        this.idLineOrigin = idLineOrigin;
+    public void setLineOrigin(String lineOrigin) {
+        this.lineOrigin = lineOrigin;
     }
 
-    public Integer getIdLineDestination() {
-        return idLineDestination;
+    public String getLineDestination() {
+        return lineDestination;
     }
 
-    public void setIdLineDestination(Integer idLineDestination) {
-        this.idLineDestination = idLineDestination;
+    public void setLineDestination(String lineDestination) {
+        this.lineDestination = lineDestination;
     }
 
     public Long getDuration() {

@@ -38,11 +38,4 @@ public class City {
 
     @OneToMany(mappedBy = "cityDestination")
     List<Call> cityDestination = new ArrayList<Call>();
-
-    @OneToMany(mappedBy = "cityTariffOrigin")
-    List<Tariff> cityTariffOrigin = new ArrayList<Tariff>();
-
-    @OneToMany(mappedBy = "cityTariffDestination")
-    List<Tariff> cityTariffDestination = new ArrayList<Tariff>();
-
 }

@@ -1,5 +1,6 @@
 package com.utn.TPFinal.repository;
 
+import com.utn.TPFinal.dto.UserPhoneDto;
 import com.utn.TPFinal.model.User;
 import com.utn.TPFinal.projections.ClientsProjection;
 import com.utn.TPFinal.projections.EmployeesProjection;
@@ -23,12 +24,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     @Query(value= "select * from v_client_info;" , nativeQuery = true)
     List<ClientsProjection> getClients();
-
-    @Query(value = "select * from v_client_info where id_user = ?1 group by id_user", nativeQuery = true)
-    ClientsProjection getClient(Integer idUser);
-
-    @Query(value = "select * from v_employee_info where id_user = ?1", nativeQuery = true)
-    List<EmployeesProjection> getEmployee(Integer idUser);
 
     @Transactional
     @Procedure(procedureName = "sp_insert_client_and_phone_lines")

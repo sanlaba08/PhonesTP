@@ -21,7 +21,7 @@ public class CallService {
     }
 
     public void addCall(CallDto callDto) {
-        callRepository.addCall(callDto.getIdLineOrigin(), callDto.getIdLineDestination(), callDto.getDuration(), callDto.getCallDate());
+        callRepository.addCall(callDto.getLineOrigin(), callDto.getLineDestination(), callDto.getDuration(), callDto.getCallDate());
     }
 
     public DestinationCallProjection getCallByDestination(String dni){

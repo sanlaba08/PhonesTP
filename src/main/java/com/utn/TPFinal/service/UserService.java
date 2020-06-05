@@ -27,7 +27,7 @@ public class UserService {
 
     // Alta de Cliente con su respectiva linea telefonica.
     public void addClientPhone(UserPhoneDto userPhone){
-        userRepository.addClientPhone(userPhone.getName(), userPhone.getLastName(), userPhone.getDni(), userPhone.getPassword(), userPhone.getCity(), userPhone.getLineType());
+       userRepository.addClientPhone(userPhone.getName(), userPhone.getLastName(), userPhone.getDni(), userPhone.getPassword(), userPhone.getCity(), userPhone.getLineType());
     }
 
     // Baja de Cliente con su respectiva linea telefonica.
@@ -57,15 +57,6 @@ public class UserService {
         return userRepository.getClients();
     }
 
-    public ClientsProjection getClient(Integer idUser){
-            return userRepository.getClient(idUser);
-    }
-
-    public List<EmployeesProjection> getEmployee(Integer idUser) {
-        return userRepository.getEmployee(idUser);
-    }
-
-    //PARCIAL
 
     public List<EmployeesProjection> getEmployeeDni(String dni) throws UserNotExistException {
         return userRepository.getEmployeeDni(dni);

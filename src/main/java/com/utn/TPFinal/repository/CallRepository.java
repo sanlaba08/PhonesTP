@@ -19,10 +19,10 @@ public interface CallRepository extends JpaRepository<Call,Integer> {
     List<CallsProjection> getListCall(String dni);
 
     @Procedure(procedureName = "sp_insert_call")
-    public void addCall(@Param("pIdOrigin") Integer lineOrigin, @Param("pIdDestination") Integer lineDestination, @Param("pDuration") Long duration, @Param("pCallDate") Date callDate);
+    public void addCall(@Param("pLineOrigin") String lineOrigin, @Param("pLineDestination") String lineDestination, @Param("pDuration") Long duration, @Param("pCallDate") Date callDate);
 
     /*Consulta de TOP 10 destinos más llamados por el usuario.*/
-    @Query(value = "select full_name, destination_city, count(destination_city) as cant from v_calls_info where dni_user_origin = ?1 group by destination_city order by cant desc limit 10;", nativeQuery = true)
+    @Query(value = "select full_name_o as FullName, destination_city, count(destination_city) as cant from v_calls_info where dni_user_origin = ?1 group by destination_city order by cant desc limit 10;", nativeQuery = true)
     DestinationCallProjection getCallByDestination(String dni);
 
     /*Consulta de llamadas por rango de fechas*/
