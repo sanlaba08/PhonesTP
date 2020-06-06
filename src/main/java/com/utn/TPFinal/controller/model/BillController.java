@@ -23,7 +23,7 @@ public class BillController {
         return billService.getBillAll();
     }
 
-    public List<BillProjection> getBillDate(String first, String second){
-        return billService.getListBillByDate(first, second);
+    public List<BillProjection> getBillDate(String dni,String first, String second){
+        return billService.getListBillByDate(dni,first, second);
     }
 }

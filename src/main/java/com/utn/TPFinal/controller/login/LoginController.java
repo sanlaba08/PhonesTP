@@ -6,6 +6,7 @@ import com.utn.TPFinal.exceptions.InvalidLoginException;
 import com.utn.TPFinal.exceptions.UserNotExistException;
 import com.utn.TPFinal.exceptions.ValidationException;
 import com.utn.TPFinal.model.User;
+import com.utn.TPFinal.model.UserType;
 import com.utn.TPFinal.session.SessionManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -26,10 +27,16 @@ public class LoginController {
 
     @PostMapping("/")
     public ResponseEntity login(@RequestBody LoginRequestDto loginRequestDto) throws InvalidLoginException, ValidationException {
+        String token = null;
         ResponseEntity response;
         try {
             User u = userController.login(loginRequestDto);
-            String token = sessionManager.createSession(u);
+            if(u.getUserType() == UserType.Employee){
+                token = sessionManager.createSession(u);
+            } else{
+                token = sessionManager.createSession(u);
+            }
+
             response = ResponseEntity.ok().headers(createHeaders(token)).build();
         } catch (UserNotExistException e) {
             throw new InvalidLoginException(e);

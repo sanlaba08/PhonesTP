@@ -2,6 +2,7 @@ package com.utn.TPFinal.controller.backoffice;
 
 import com.utn.TPFinal.controller.model.UserController;
 import com.utn.TPFinal.dto.EmployeeDto;
+import com.utn.TPFinal.exceptions.TariffNotExistException;
 import com.utn.TPFinal.exceptions.UserNotExistException;
 import com.utn.TPFinal.projections.EmployeesProjection;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +24,9 @@ public class EmployeeBackController {
 
     // Alta de Empleado (Opcional).
     @PostMapping("/")
-    public void addEmployee(@RequestBody EmployeeDto employee){
+    public ResponseEntity addEmployee(@RequestBody EmployeeDto employee){
         userController.addEmployee(employee);
+        return ResponseEntity.ok().build();
     }
 
     // Consulta de todos los empleados (Opcional).
@@ -40,14 +42,15 @@ public class EmployeeBackController {
     }
 
     // Consulta de empleado (Opcional).
-    @GetMapping("/employee/")
-    public ResponseEntity<List<EmployeesProjection>> getEmployee(@RequestParam String dni) throws UserNotExistException {
-        List<EmployeesProjection> employee = userController.getEmployee(dni);
-
-        if (employee.size() > 0){
-            return ResponseEntity.status(HttpStatus.ACCEPTED).body(employee);
-        }else{
-            throw new UserNotExistException("Enter a value to get a user.");
+    @GetMapping("/number")
+    public ResponseEntity getEmployee(@RequestParam String dni) throws UserNotExistException {
+        ResponseEntity responseEntity;
+        try{
+            responseEntity = ResponseEntity.ok(userController.getEmployee(dni));
+        } catch (UserNotExistException e){
+            responseEntity = ResponseEntity.badRequest().build();
+            throw new UserNotExistException("Dni not exist");
         }
+        return responseEntity;
     }
 }

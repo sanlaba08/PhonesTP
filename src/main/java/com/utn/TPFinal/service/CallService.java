@@ -24,11 +24,11 @@ public class CallService {
         callRepository.addCall(callDto.getLineOrigin(), callDto.getLineDestination(), callDto.getDuration(), callDto.getCallDate());
     }
 
-    public DestinationCallProjection getCallByDestination(String dni){
+    public List<DestinationCallProjection> getCallByDestination(String dni){
         return callRepository.getCallByDestination(dni);
     }
 
-    public List<CallsProjection> getListCallByDate(String firstDate, String secondDate){
-        return callRepository.getListCallByDate(firstDate, secondDate);
+    public List<CallsProjection> getListCallByDate(String dni,String firstDate, String secondDate){
+        return callRepository.getListCallByDate(dni,firstDate, secondDate);
     }
 }

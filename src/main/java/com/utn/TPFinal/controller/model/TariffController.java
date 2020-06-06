@@ -1,6 +1,7 @@
 package com.utn.TPFinal.controller.model;
 
 import com.utn.TPFinal.dto.TariffDto;
+import com.utn.TPFinal.exceptions.TariffNotExistException;
 import com.utn.TPFinal.model.Tariff;
 import com.utn.TPFinal.projections.TariffProjection;
 import com.utn.TPFinal.service.TariffService;
@@ -24,24 +25,15 @@ public class TariffController {
         return tariffService.getAllTariffs();
     }
 
-    public List<TariffProjection> getTariffById(Integer idTariff){
+    public List<TariffProjection> getTariffById(Integer idTariff) throws TariffNotExistException {
         return tariffService.getTariffById(idTariff);
     }
 
-    public List<TariffProjection> getTariffByName(String originCityName, String destinationCityName) {
+    public TariffProjection getTariffByName(String originCityName, String destinationCityName) throws TariffNotExistException {
         return tariffService.getTariffByName(originCityName,destinationCityName);
     }
 
-//
-//    public List<TariffProjection> getTariffByOrigin(String originCityName) {
-//        return tariffService.getTariffByOrigin(originCityName);
-//    }
-//
-//    public List<TariffProjection> getTariffByDestination(String destinationCityName) {
-//        return tariffService.getTariffByDestination(destinationCityName);
-//    }
-
-    public void addClient(TariffDto tariffDto) {
-        tariffService.addClient(tariffDto);
+    public void addTariff(TariffDto tariffDto) {
+        tariffService.addTariff(tariffDto);
     }
 }

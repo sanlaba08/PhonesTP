@@ -1,6 +1,7 @@
 package com.utn.TPFinal.session;
 
 import com.utn.TPFinal.model.User;
+import com.utn.TPFinal.model.UserType;
 import org.springframework.stereotype.Component;
 
 import java.util.*;

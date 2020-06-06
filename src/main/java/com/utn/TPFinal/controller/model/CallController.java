@@ -1,6 +1,7 @@
 package com.utn.TPFinal.controller.model;
 
 import com.utn.TPFinal.dto.CallDto;
+import com.utn.TPFinal.exceptions.CallNotExistException;
 import com.utn.TPFinal.projections.CallsProjection;
 import com.utn.TPFinal.projections.DestinationCallProjection;
 import com.utn.TPFinal.service.CallService;
@@ -27,11 +28,11 @@ public class CallController {
         callService.addCall(callDto);
     }
 
-    public DestinationCallProjection getCallByDestination(String dni){
+    public List<DestinationCallProjection> getCallByDestination(String dni) throws CallNotExistException{
         return callService.getCallByDestination(dni);
     }
 
-    public List<CallsProjection> getCallByDate(String firstDate, String secondDate){
-        return callService.getListCallByDate(firstDate, secondDate);
+    public List<CallsProjection> getCallByDate(String dni, String firstDate, String secondDate) throws CallNotExistException {
+        return callService.getListCallByDate(dni,firstDate, secondDate);
     }
 }

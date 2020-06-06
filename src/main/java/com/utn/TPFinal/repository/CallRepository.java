@@ -23,10 +23,10 @@ public interface CallRepository extends JpaRepository<Call,Integer> {
 
     /*Consulta de TOP 10 destinos más llamados por el usuario.*/
     @Query(value = "select full_name_o as FullName, destination_city, count(destination_city) as cant from v_calls_info where dni_user_origin = ?1 group by destination_city order by cant desc limit 10;", nativeQuery = true)
-    DestinationCallProjection getCallByDestination(String dni);
+    List<DestinationCallProjection> getCallByDestination(String dni);
 
     /*Consulta de llamadas por rango de fechas*/
-    @Query(value ="select * from v_calls_info where DATE(call_date) BETWEEN ? AND ?;", nativeQuery = true)
-    List<CallsProjection> getListCallByDate(String firstDate, String secondDate);
+    @Query(value ="select * from v_calls_info where dni_user_origin = ? and DATE(call_date) BETWEEN ? AND ?;", nativeQuery = true)
+    List<CallsProjection> getListCallByDate(String dni, String firstDate, String secondDate);
 
 }

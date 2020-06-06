@@ -25,6 +25,7 @@ public class BillBackController {
 
     @GetMapping("/number") // localhost:8080/bill/number?line=4123
     public ResponseEntity <List<BillProjection>> getBill(@RequestParam String line) throws BillNotExistException{
+
         List<BillProjection> billsByNumber = billController.getBill(line);
         if (billsByNumber.size() > 0){
             return ResponseEntity.status(HttpStatus.ACCEPTED).body(billsByNumber);

@@ -60,12 +60,16 @@ public class UserService {
     }
 
 
-    public List<EmployeesProjection> getEmployeeDni(String dni) throws UserNotExistException {
+    public EmployeesProjection getEmployeeDni(String dni) throws UserNotExistException {
         return userRepository.getEmployeeDni(dni);
     }
 
     public User login(LoginRequestDto login) throws UserNotExistException {
         User user = userRepository.getByUsername(login.getDni(), login.getPassword());
         return Optional.ofNullable(user).orElseThrow(() -> new UserNotExistException("User not exist"));
+    }
+
+    public ClientsProjection getClientDni(String dni) {
+        return userRepository.getClientDni(dni);
     }
 }

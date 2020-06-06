@@ -51,7 +51,7 @@ public class UserController {
         return userService.getListClients();
     }
 
-    public List<EmployeesProjection> getEmployee(String dni) throws UserNotExistException {
+    public EmployeesProjection getEmployee(String dni) throws UserNotExistException {
        return userService.getEmployeeDni(dni);
     }
 
@@ -61,6 +61,10 @@ public class UserController {
         } else {
             throw new ValidationException("username and password must have a value");
         }
+    }
+
+    public ClientsProjection getClient(String dni) throws UserNotExistException {
+        return userService.getClientDni(dni);
     }
 }
 

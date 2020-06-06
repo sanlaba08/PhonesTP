@@ -6,7 +6,7 @@ import com.utn.TPFinal.dto.UserPhoneModifyDto;
 import com.utn.TPFinal.exceptions.UserNotExistException;
 import com.utn.TPFinal.model.User;
 import com.utn.TPFinal.projections.ClientsProjection;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.utn.TPFinal.session.SessionManager;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,30 +16,34 @@ import java.util.List;
 @RestController
 @RequestMapping("/backoffice/client")
 public class ClientBackController {
+    private final SessionManager sessionManager;
     private final UserController userController;
 
-    @Autowired
-    public ClientBackController(UserController userController) {
+    public ClientBackController(SessionManager sessionManager, UserController userController) {
+        this.sessionManager = sessionManager;
         this.userController = userController;
     }
 
     /* 2) Manejo de Clientes (Controller)*/
     // Alta de Cliente con su respectiva linea telefonica.
     @PostMapping("/")
-    public void addClient(@RequestBody UserPhoneDto clientPhone) throws UserNotExistException{
+    public ResponseEntity addClient(@RequestHeader("Authorization") String sessionToken, @RequestBody UserPhoneDto clientPhone) throws UserNotExistException{
         userController.addClient(clientPhone);
+        return ResponseEntity.ok().build();
     }
 
     // Baja de Cliente con su respectiva linea telefonica.
     @DeleteMapping("/")
-    public void deleteClient(@RequestParam String dni){
+    public ResponseEntity deleteClient(@RequestParam String dni){
         userController.deleteClient(dni);
+        return ResponseEntity.ok().build();
     }
 
     // Modificacion del Cliente y la linea telefonica. (VERIFICAR "NO SOPORTA EL METODO PUT")
     @PutMapping("/")
-    public void modifyClient(@RequestBody UserPhoneModifyDto clientPhone){
+    public ResponseEntity modifyClient(@RequestBody UserPhoneModifyDto clientPhone){
         userController.modifyClient(clientPhone);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/all")
@@ -62,7 +66,15 @@ public class ClientBackController {
         }
     }
 
-
-
-
+    @GetMapping("/number")
+    public ResponseEntity getEmployee(@RequestParam String dni) throws UserNotExistException {
+        ResponseEntity responseEntity;
+        try{
+            responseEntity = ResponseEntity.ok(userController.getClient(dni));
+        } catch (UserNotExistException e){
+            responseEntity = ResponseEntity.badRequest().build();
+            throw new UserNotExistException("Dni not exist");
+        }
+        return responseEntity;
+    }
 }

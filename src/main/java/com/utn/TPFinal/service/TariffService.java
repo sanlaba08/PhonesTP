@@ -25,20 +25,11 @@ public class TariffService {
         return tariffRepository.getTariffById(idTariff);
     }
 
-    public List<TariffProjection> getTariffByName(String originCityName, String destinationCityName) {
+    public TariffProjection getTariffByName(String originCityName, String destinationCityName) {
         return tariffRepository.getTariffByName(originCityName,destinationCityName);
     }
 
-//
-//    public List<TariffProjection> getTariffByOrigin(String originCityName) {
-//        return tariffRepository.getTariffByOrigin(originCityName);
-//    }
-//
-//    public List<TariffProjection> getTariffByDestination(String destinationCityName) {
-//        return tariffRepository.getTariffByDestination(destinationCityName);
-//    }
-
-    public void addClient(TariffDto tariffDto) {
-        tariffRepository.addClient(tariffDto.getOriginCityName(),tariffDto.getDestinationCityName(),tariffDto.getPricePerMinute(),tariffDto.getCostPerMinute());
+    public void addTariff(TariffDto tariffDto) {
+        tariffRepository.addTariff(tariffDto.getOriginCityName(),tariffDto.getDestinationCityName(),tariffDto.getPricePerMinute(),tariffDto.getCostPerMinute());
     }
 }

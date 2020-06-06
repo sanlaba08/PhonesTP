@@ -24,8 +24,8 @@ public class BillService {
         return billRepository.getBillAll();
     }
 
-    public List<BillProjection> getListBillByDate(String firstDate, String secondDate) {
-        return billRepository.getListBillByDate(firstDate, secondDate);
+    public List<BillProjection> getListBillByDate(String dni, String firstDate, String secondDate) {
+        return billRepository.getListBillByDate(dni,firstDate, secondDate);
     }
 
 

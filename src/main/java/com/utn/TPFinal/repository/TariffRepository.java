@@ -22,17 +22,9 @@ public interface TariffRepository extends JpaRepository<Tariff, Integer> {
     List<TariffProjection> getTariffById(Integer idTariff);
 
     @Query(value = "select * from v_tariffs_info where city_origin = ?1 AND city_destination = ?2",nativeQuery = true)
-    List<TariffProjection> getTariffByName(String originCityName, String destinationCityName);
-
-
-//
-//    @Query(value = "select * from v_tariffs_info where city_origin = ?1")
-//    List<TariffProjection> getTariffByOrigin(String originCityName);
-//
-//    @Query(value = "select * from v_tariffs_info where city_destination = ?1",nativeQuery = true)
-//    List<TariffProjection> getTariffByDestination(String destinationCityName);
+    TariffProjection getTariffByName(String originCityName, String destinationCityName);
 
     @Transactional
     @Procedure(procedureName = "sp_create_tariff_by_city_name")
-    void addClient(@Param("pOriginCityName") String originCityName,@Param("pDestinationCityName") String destinationCityName,@Param("pPrice_per_minute") long pricePerMinute,@Param("pCost_per_minute") float costPerMinute);
+    void addTariff(@Param("pOriginCityName") String originCityName,@Param("pDestinationCityName") String destinationCityName,@Param("pPrice_per_minute") long pricePerMinute,@Param("pCost_per_minute") float costPerMinute);
 }

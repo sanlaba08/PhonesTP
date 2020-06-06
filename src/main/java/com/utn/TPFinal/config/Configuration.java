@@ -24,7 +24,7 @@ public class Configuration {
     @Bean
     public FilterRegistrationBean myFilter() {
         FilterRegistrationBean registration = new FilterRegistrationBean();
-        registration.setFilter(sessionFilter);
+        registration.setFilter(superSessionFilter);
         registration.addUrlPatterns("/backoffice/*");
         return registration;
     }
@@ -32,7 +32,7 @@ public class Configuration {
     @Bean
     public FilterRegistrationBean myFilter1() {
         FilterRegistrationBean registration = new FilterRegistrationBean();
-        registration.setFilter(superSessionFilter);
+        registration.setFilter(sessionFilter);
         registration.addUrlPatterns("/web/*");
         return registration;
     }
