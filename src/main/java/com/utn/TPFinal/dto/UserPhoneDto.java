@@ -11,6 +11,15 @@ public class UserPhoneDto {
     Integer city;
     String lineType;
 
+    public UserPhoneDto(String name, String lastName, String dni, String password, Integer city, String lineType) {
+        this.name = name;
+        this.lastName = lastName;
+        this.dni = dni;
+        this.password = password;
+        this.city = city;
+        this.lineType = lineType;
+    }
+
     public String getName() {
         return name;
     }

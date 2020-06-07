@@ -31,12 +31,7 @@ public class LoginController {
         ResponseEntity response;
         try {
             User u = userController.login(loginRequestDto);
-            if(u.getUserType() == UserType.Employee){
-                token = sessionManager.createSession(u);
-            } else{
-                token = sessionManager.createSession(u);
-            }
-
+            token = sessionManager.createSession(u);
             response = ResponseEntity.ok().headers(createHeaders(token)).build();
         } catch (UserNotExistException e) {
             throw new InvalidLoginException(e);

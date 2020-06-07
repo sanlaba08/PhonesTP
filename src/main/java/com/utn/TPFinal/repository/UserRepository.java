@@ -1,5 +1,6 @@
 package com.utn.TPFinal.repository;
 
+import com.utn.TPFinal.dto.UserPhoneDto;
 import com.utn.TPFinal.model.User;
 import com.utn.TPFinal.projections.ClientsProjection;
 import com.utn.TPFinal.projections.EmployeesProjection;

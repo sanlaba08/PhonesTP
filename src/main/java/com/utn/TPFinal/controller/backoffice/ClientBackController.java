@@ -3,14 +3,17 @@ package com.utn.TPFinal.controller.backoffice;
 import com.utn.TPFinal.controller.model.UserController;
 import com.utn.TPFinal.dto.UserPhoneDto;
 import com.utn.TPFinal.dto.UserPhoneModifyDto;
+import com.utn.TPFinal.exceptions.IncorrectDataClientPhoneException;
 import com.utn.TPFinal.exceptions.UserNotExistException;
 import com.utn.TPFinal.model.User;
+import com.utn.TPFinal.model.UserType;
 import com.utn.TPFinal.projections.ClientsProjection;
 import com.utn.TPFinal.session.SessionManager;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLException;
 import java.util.List;
 
 @RestController
@@ -26,10 +29,17 @@ public class ClientBackController {
 
     /* 2) Manejo de Clientes (Controller)*/
     // Alta de Cliente con su respectiva linea telefonica.
+
+    // VERIFICAR
     @PostMapping("/")
-    public ResponseEntity addClient(@RequestHeader("Authorization") String sessionToken, @RequestBody UserPhoneDto clientPhone) throws UserNotExistException{
-        userController.addClient(clientPhone);
-        return ResponseEntity.ok().build();
+    public ResponseEntity addClient(@RequestHeader("Authorization") String sessionToken, @RequestBody UserPhoneDto clientPhone) throws UserNotExistException, IncorrectDataClientPhoneException {
+        ResponseEntity response;
+        try{
+            userController.addClient(clientPhone);
+            return ResponseEntity.ok().build();
+        } catch (SQLException e){
+           throw new IncorrectDataClientPhoneException(e.getMessage());
+        }
     }
 
     // Baja de Cliente con su respectiva linea telefonica.
@@ -64,17 +74,5 @@ public class ClientBackController {
         }else{
             throw new UserNotExistException("Users not exist.");
         }
-    }
-
-    @GetMapping("/number")
-    public ResponseEntity getEmployee(@RequestParam String dni) throws UserNotExistException {
-        ResponseEntity responseEntity;
-        try{
-            responseEntity = ResponseEntity.ok(userController.getClient(dni));
-        } catch (UserNotExistException e){
-            responseEntity = ResponseEntity.badRequest().build();
-            throw new UserNotExistException("Dni not exist");
-        }
-        return responseEntity;
     }
 }

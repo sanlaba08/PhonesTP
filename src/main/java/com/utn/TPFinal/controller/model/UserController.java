@@ -4,6 +4,7 @@ import com.utn.TPFinal.dto.EmployeeDto;
 import com.utn.TPFinal.dto.LoginRequestDto;
 import com.utn.TPFinal.dto.UserPhoneDto;
 import com.utn.TPFinal.dto.UserPhoneModifyDto;
+import com.utn.TPFinal.exceptions.IncorrectDataClientPhoneException;
 import com.utn.TPFinal.exceptions.UserNotExistException;
 import com.utn.TPFinal.exceptions.ValidationException;
 import com.utn.TPFinal.model.User;
@@ -12,6 +13,8 @@ import com.utn.TPFinal.projections.EmployeesProjection;
 import com.utn.TPFinal.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+
+import java.sql.SQLException;
 import java.util.List;
 
 @Controller
@@ -23,7 +26,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    public void addClient(UserPhoneDto clientPhone){
+    public void addClient(UserPhoneDto clientPhone) throws SQLException,UserNotExistException {
        userService.addClientPhone(clientPhone);
     }
 
