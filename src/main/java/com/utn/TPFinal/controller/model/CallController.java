@@ -2,6 +2,7 @@ package com.utn.TPFinal.controller.model;
 
 import com.utn.TPFinal.dto.CallDto;
 import com.utn.TPFinal.exceptions.CallNotExistException;
+import com.utn.TPFinal.exceptions.IncorrectDataCallException;
 import com.utn.TPFinal.projections.CallsProjection;
 import com.utn.TPFinal.projections.DestinationCallProjection;
 import com.utn.TPFinal.service.CallService;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 
+import java.sql.SQLException;
 import java.util.List;
 
 @Controller
@@ -24,7 +26,7 @@ public class CallController {
         return callService.getListCall(dni);
     }
 
-    public void addCall(CallDto callDto){
+    public void addCall(CallDto callDto) throws IncorrectDataCallException, SQLException {
         callService.addCall(callDto);
     }
 

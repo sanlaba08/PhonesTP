@@ -1,6 +1,8 @@
 package com.utn.TPFinal.exceptions;
 
-public class IncorrectDataClientPhoneException extends Throwable {
+import java.sql.SQLException;
+
+public class IncorrectDataClientPhoneException extends SQLException {
     public IncorrectDataClientPhoneException(String message) {
         super(message);
     }

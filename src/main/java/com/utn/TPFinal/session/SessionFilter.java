@@ -1,5 +1,6 @@
 package com.utn.TPFinal.session;
 
+import com.utn.TPFinal.model.UserType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -24,10 +25,11 @@ public class SessionFilter extends OncePerRequestFilter {
 
         String sessionToken = request.getHeader("Authorization");
         Session session = sessionManager.getSession(sessionToken);
-        if (null != session) {
+
+        if (null != session && session.getLoggedUser().getUserType().equals(UserType.Client)) {
             filterChain.doFilter(request, response);
         } else {
-            response.setStatus(HttpStatus.FORBIDDEN.value());
+                response.setStatus(HttpStatus.FORBIDDEN.value());
         }
     }
 }

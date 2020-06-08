@@ -1,6 +1,7 @@
 package com.utn.TPFinal.repository;
 
 import com.utn.TPFinal.dto.UserPhoneDto;
+import com.utn.TPFinal.exceptions.UserNotExistException;
 import com.utn.TPFinal.model.User;
 import com.utn.TPFinal.projections.ClientsProjection;
 import com.utn.TPFinal.projections.EmployeesProjection;
@@ -11,6 +12,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
+import java.sql.SQLException;
 import java.util.List;
 
 @Repository
@@ -27,15 +29,15 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     @Transactional
     @Procedure(procedureName = "sp_insert_client_and_phone_lines")
-    public void addClientPhone(@Param("pName") String name, @Param("pLastName") String lastName, @Param("pDni") String dni, @Param("pUserPassword") String password, @Param("pIdCity") Integer idCity, @Param("pLineType") String lineType);
+    public void addClientPhone(@Param("pName") String name, @Param("pLastName") String lastName, @Param("pDni") String dni, @Param("pUserPassword") String password, @Param("pIdCity") Integer idCity, @Param("pLineType") String lineType) throws SQLException;
 
     @Transactional
     @Procedure(procedureName = "sp_client_line_suspend")
-    public void deleteClientPhone(@Param("pDni") String dni);
+    public void deleteClientPhone(@Param("pDni") String dni) throws UserNotExistException;
 
     @Transactional
     @Procedure(procedureName = "sp_modify_client")
-    public void modifyClientPhone(@Param("pIdUser") Integer idUser, @Param("pName") String name, @Param("pLastName") String lastName, @Param("pPassword") String password, @Param("pIdCity") Integer idCity, @Param("pLineType") String lineType);
+    public void modifyClientPhone(@Param("pIdUser") Integer idUser, @Param("pName") String name, @Param("pLastName") String lastName, @Param("pDni") String dni, @Param("pPassword") String password, @Param("pIdCity") Integer idCity, @Param("pLineType") String lineType);
 
     //PARCIAL
 

@@ -19,6 +19,7 @@ public class BillWebController {
     private final SessionManager sessionManager;
     private final BillController billController;
 
+    @Autowired
     public BillWebController(SessionManager sessionManager, BillController billController) {
         this.sessionManager = sessionManager;
         this.billController = billController;

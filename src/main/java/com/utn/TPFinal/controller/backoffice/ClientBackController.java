@@ -9,6 +9,7 @@ import com.utn.TPFinal.model.User;
 import com.utn.TPFinal.model.UserType;
 import com.utn.TPFinal.projections.ClientsProjection;
 import com.utn.TPFinal.session.SessionManager;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +23,7 @@ public class ClientBackController {
     private final SessionManager sessionManager;
     private final UserController userController;
 
+    @Autowired
     public ClientBackController(SessionManager sessionManager, UserController userController) {
         this.sessionManager = sessionManager;
         this.userController = userController;
@@ -29,31 +31,37 @@ public class ClientBackController {
 
     /* 2) Manejo de Clientes (Controller)*/
     // Alta de Cliente con su respectiva linea telefonica.
-
-    // VERIFICAR
     @PostMapping("/")
-    public ResponseEntity addClient(@RequestHeader("Authorization") String sessionToken, @RequestBody UserPhoneDto clientPhone) throws UserNotExistException, IncorrectDataClientPhoneException {
-        ResponseEntity response;
+    public ResponseEntity addClient(@RequestHeader("Authorization") String sessionToken, @RequestBody UserPhoneDto clientPhone) throws UserNotExistException, SQLException {
         try{
             userController.addClient(clientPhone);
             return ResponseEntity.ok().build();
         } catch (SQLException e){
-           throw new IncorrectDataClientPhoneException(e.getMessage());
+           throw new SQLException(e.getSQLState());
         }
     }
 
     // Baja de Cliente con su respectiva linea telefonica.
     @DeleteMapping("/")
-    public ResponseEntity deleteClient(@RequestParam String dni){
-        userController.deleteClient(dni);
-        return ResponseEntity.ok().build();
+    public ResponseEntity deleteClient(@RequestParam String dni) throws UserNotExistException{
+        try{
+            userController.deleteClient(dni);
+            return ResponseEntity.ok().build();
+        } catch (UserNotExistException e){
+            throw new UserNotExistException("User not exist");
+        }
+
     }
 
     // Modificacion del Cliente y la linea telefonica. (VERIFICAR "NO SOPORTA EL METODO PUT")
     @PutMapping("/")
-    public ResponseEntity modifyClient(@RequestBody UserPhoneModifyDto clientPhone){
-        userController.modifyClient(clientPhone);
-        return ResponseEntity.ok().build();
+    public ResponseEntity modifyClient(@RequestBody UserPhoneModifyDto clientPhone) throws UserNotExistException, SQLException {
+        try{
+            userController.modifyClient(clientPhone);
+            return ResponseEntity.ok().build();
+        } catch (UserNotExistException e){
+            throw new UserNotExistException("User not exist");
+        }
     }
 
     @GetMapping("/all")

@@ -13,6 +13,7 @@ import com.utn.TPFinal.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,18 +29,18 @@ public class UserService {
     /* 2) Manejo de Clientes (Service)*/
 
     // Alta de Cliente con su respectiva linea telefonica.
-    public void addClientPhone(UserPhoneDto userPhone){
+    public void addClientPhone(UserPhoneDto userPhone) throws SQLException {
        userRepository.addClientPhone(userPhone.getName(), userPhone.getLastName(), userPhone.getDni(), userPhone.getPassword(), userPhone.getCity(), userPhone.getLineType());
     }
 
     // Baja de Cliente con su respectiva linea telefonica.
-    public void deleteClientPhone(String dni) {
+    public void deleteClientPhone(String dni) throws UserNotExistException{
         userRepository.deleteClientPhone(dni);
     }
 
     // Modificacion del Cliente y la linea telefonica.
     public void modifyClientPhone(UserPhoneModifyDto clientPhone) {
-        userRepository.modifyClientPhone(clientPhone.getUser(), clientPhone.getName(), clientPhone.getLastName(), clientPhone.getPassword(), clientPhone.getCity(), clientPhone.getLineType());
+        userRepository.modifyClientPhone(clientPhone.getUser(), clientPhone.getName(), clientPhone.getLastName(), clientPhone.getDni(),clientPhone.getPassword(), clientPhone.getCity(), clientPhone.getLineType());
     }
 
 

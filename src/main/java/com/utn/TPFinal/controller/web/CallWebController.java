@@ -7,6 +7,7 @@ import com.utn.TPFinal.model.UserType;
 import com.utn.TPFinal.projections.CallsProjection;
 import com.utn.TPFinal.projections.DestinationCallProjection;
 import com.utn.TPFinal.session.SessionManager;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +20,7 @@ public class CallWebController {
     private final SessionManager sessionManager;
     private final CallController callController;
 
+    @Autowired
     public CallWebController(SessionManager sessionManager, CallController callController) {
         this.sessionManager = sessionManager;
         this.callController = callController;

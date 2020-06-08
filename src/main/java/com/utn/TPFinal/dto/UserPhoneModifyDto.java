@@ -8,6 +8,7 @@ public class UserPhoneModifyDto {
     Integer user;
     String name;
     String lastName;
+    String dni;
     String password;
     Integer city;
     String lineType;
@@ -26,6 +27,14 @@ public class UserPhoneModifyDto {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDni() {
+        return dni;
+    }
+
+    public void setDni(String dni) {
+        this.dni = dni;
     }
 
     public String getLastName() {

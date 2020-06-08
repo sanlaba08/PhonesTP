@@ -26,15 +26,15 @@ public class UserController {
         this.userService = userService;
     }
 
-    public void addClient(UserPhoneDto clientPhone) throws SQLException,UserNotExistException {
+    public void addClient(UserPhoneDto clientPhone) throws UserNotExistException, SQLException {
        userService.addClientPhone(clientPhone);
     }
 
-    public void deleteClient(String dni){
+    public void deleteClient(String dni) throws UserNotExistException{
         userService.deleteClientPhone(dni);
     }
 
-    public void modifyClient(UserPhoneModifyDto clientPhone){
+    public void modifyClient(UserPhoneModifyDto clientPhone) throws UserNotExistException{
         userService.modifyClientPhone(clientPhone);
     }
 
