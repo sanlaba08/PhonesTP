@@ -115,3 +115,7 @@ fabric.properties
 .idea/**/markdown-navigator/
 
 # End of https://www.gitignore.io/api/intellij
+.idea/PhonesTP.iml
+.idea/codeStyles/codeStyleConfig.xml
+src/main/resources/application.properties
+target/classes/application.properties

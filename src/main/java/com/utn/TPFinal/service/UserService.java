@@ -11,6 +11,7 @@ import com.utn.TPFinal.projections.ClientsProjection;
 import com.utn.TPFinal.projections.EmployeesProjection;
 import com.utn.TPFinal.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
@@ -29,7 +30,7 @@ public class UserService {
     /* 2) Manejo de Clientes (Service)*/
 
     // Alta de Cliente con su respectiva linea telefonica.
-    public void addClientPhone(UserPhoneDto userPhone) throws SQLException {
+    public void addClientPhone(UserPhoneDto userPhone) throws JpaSystemException {
        userRepository.addClientPhone(userPhone.getName(), userPhone.getLastName(), userPhone.getDni(), userPhone.getPassword(), userPhone.getCity(), userPhone.getLineType());
     }
 

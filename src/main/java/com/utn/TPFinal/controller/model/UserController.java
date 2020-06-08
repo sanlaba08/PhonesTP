@@ -12,6 +12,7 @@ import com.utn.TPFinal.projections.ClientsProjection;
 import com.utn.TPFinal.projections.EmployeesProjection;
 import com.utn.TPFinal.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.stereotype.Controller;
 
 import java.sql.SQLException;
@@ -26,7 +27,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    public void addClient(UserPhoneDto clientPhone) throws UserNotExistException, SQLException {
+    public void addClient(UserPhoneDto clientPhone) throws JpaSystemException {
        userService.addClientPhone(clientPhone);
     }
 

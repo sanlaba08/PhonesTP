@@ -4,6 +4,7 @@ import com.utn.TPFinal.controller.model.UserController;
 import com.utn.TPFinal.dto.UserPhoneDto;
 import com.utn.TPFinal.dto.UserPhoneModifyDto;
 import com.utn.TPFinal.exceptions.IncorrectDataClientPhoneException;
+import com.utn.TPFinal.exceptions.UserAllReadyExistException;
 import com.utn.TPFinal.exceptions.UserNotExistException;
 import com.utn.TPFinal.model.User;
 import com.utn.TPFinal.model.UserType;
@@ -12,6 +13,7 @@ import com.utn.TPFinal.session.SessionManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
@@ -32,13 +34,16 @@ public class ClientBackController {
     /* 2) Manejo de Clientes (Controller)*/
     // Alta de Cliente con su respectiva linea telefonica.
     @PostMapping("/")
-    public ResponseEntity addClient(@RequestHeader("Authorization") String sessionToken, @RequestBody UserPhoneDto clientPhone) throws UserNotExistException, SQLException {
-        try{
+    public ResponseEntity addClient(@RequestHeader("Authorization") String sessionToken, @RequestBody UserPhoneDto clientPhone) throws UserAllReadyExistException {
+        try {
             userController.addClient(clientPhone);
-            return ResponseEntity.ok().build();
-        } catch (SQLException e){
-           throw new SQLException(e.getSQLState());
+            System.out.println("\n\n\nestoy en clientBackController : ");
+        } catch (JpaSystemException e) {
+            System.out.println("\n\nfui cacheado\n\n");
+            System.out.println(e.getCause().getCause().getMessage());
+            throw new UserAllReadyExistException(e.getCause().getCause().getMessage());
         }
+        return ResponseEntity.ok().build();
     }
 
     // Baja de Cliente con su respectiva linea telefonica.

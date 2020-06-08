@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.data.repository.query.Param;
+import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
@@ -29,7 +30,12 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     @Transactional
     @Procedure(procedureName = "sp_insert_client_and_phone_lines")
-    public void addClientPhone(@Param("pName") String name, @Param("pLastName") String lastName, @Param("pDni") String dni, @Param("pUserPassword") String password, @Param("pIdCity") Integer idCity, @Param("pLineType") String lineType) throws SQLException;
+    void addClientPhone(@Param("pName") String name,
+                        @Param("pLastName") String lastName,
+                        @Param("pDni") String dni,
+                        @Param("pUserPassword") String password,
+                        @Param("pIdCity") Integer idCity,
+                        @Param("pLineType") String lineType) throws JpaSystemException;
 
     @Transactional
     @Procedure(procedureName = "sp_client_line_suspend")
