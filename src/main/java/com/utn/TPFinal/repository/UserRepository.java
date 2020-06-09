@@ -20,12 +20,16 @@ import java.util.List;
 public interface UserRepository extends JpaRepository<User, Integer> {
 
     @Procedure(procedureName = "sp_insert_employee")
-    public void addEmployee(@Param("pName") String name, @Param("pLastName") String lastName, @Param("pDni") String dni, @Param("pUserPassword") String password, @Param("pIdCity") Integer idCity);
+    void addEmployee(@Param("pName") String name,
+                     @Param("pLastName") String lastName,
+                     @Param("pDni") String dni,
+                     @Param("pUserPassword") String password,
+                     @Param("pIdCity") Integer idCity) throws JpaSystemException;
 
-    @Query(value= "select * from v_employee_info;" , nativeQuery = true)
+    @Query(value = "select * from v_employee_info;", nativeQuery = true)
     List<EmployeesProjection> getEmployee();
 
-    @Query(value= "select * from v_client_info;" , nativeQuery = true)
+    @Query(value = "select * from v_client_info;", nativeQuery = true)
     List<ClientsProjection> getClients();
 
     @Transactional
@@ -38,12 +42,22 @@ public interface UserRepository extends JpaRepository<User, Integer> {
                         @Param("pLineType") String lineType) throws JpaSystemException;
 
     @Transactional
+    @Procedure(procedureName = "sp_delete_user")
+    void deleteClientPhone(@Param("pDni") String dni) throws JpaSystemException;
+
+    @Transactional
     @Procedure(procedureName = "sp_client_line_suspend")
-    public void deleteClientPhone(@Param("pDni") String dni) throws UserNotExistException;
+    void suspendClient(@Param("pDni") String dni) throws UserNotExistException;
 
     @Transactional
     @Procedure(procedureName = "sp_modify_client")
-    public void modifyClientPhone(@Param("pIdUser") Integer idUser, @Param("pName") String name, @Param("pLastName") String lastName, @Param("pDni") String dni, @Param("pPassword") String password, @Param("pIdCity") Integer idCity, @Param("pLineType") String lineType);
+    void modifyClientPhone(@Param("pIdUser") Integer idUser,
+                           @Param("pName") String name,
+                           @Param("pLastName") String lastName,
+                           @Param("pDni") String dni,
+                           @Param("pPassword") String password,
+                           @Param("pIdCity") Integer idCity,
+                           @Param("pLineType") String lineType) throws JpaSystemException;
 
     //PARCIAL
 
@@ -51,8 +65,10 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     EmployeesProjection getEmployeeDni(String dni);
 
     @Query(value = "SELECT * FROM users u WHERE u.dni = ? and u.user_password = ?", nativeQuery = true)
-    public User getByUsername(@Param("dni") String dni, @Param("user_password") String password);
+    User getByUsername(@Param("dni") String dni, @Param("user_password") String password);
 
     @Query(value = "select * from v_client_info where dni = ?1", nativeQuery = true)
     ClientsProjection getClientDni(String dni);
+
+
 }

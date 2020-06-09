@@ -31,11 +31,15 @@ public class UserController {
        userService.addClientPhone(clientPhone);
     }
 
-    public void deleteClient(String dni) throws UserNotExistException{
+    public void deleteClient(String dni) throws JpaSystemException{
         userService.deleteClientPhone(dni);
     }
 
-    public void modifyClient(UserPhoneModifyDto clientPhone) throws UserNotExistException{
+    public void suspendClient(String dni) throws UserNotExistException{
+        userService.suspendClient(dni);
+    }
+
+    public void modifyClient(UserPhoneModifyDto clientPhone) throws JpaSystemException{
         userService.modifyClientPhone(clientPhone);
     }
 
@@ -43,7 +47,7 @@ public class UserController {
         return userService.getUserAll();
     }
 
-    public void addEmployee(EmployeeDto employee){
+    public void addEmployee(EmployeeDto employee) throws JpaSystemException {
         userService.addEmployee(employee);
     }
 
@@ -55,7 +59,7 @@ public class UserController {
         return userService.getListClients();
     }
 
-    public EmployeesProjection getEmployee(String dni) throws UserNotExistException {
+    public EmployeesProjection getEmployee(String dni) {
        return userService.getEmployeeDni(dni);
     }
 
@@ -70,5 +74,6 @@ public class UserController {
     public ClientsProjection getClient(String dni) throws UserNotExistException {
         return userService.getClientDni(dni);
     }
+
 }
 

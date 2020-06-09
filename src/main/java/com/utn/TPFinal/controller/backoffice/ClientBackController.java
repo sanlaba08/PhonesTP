@@ -37,55 +37,63 @@ public class ClientBackController {
     public ResponseEntity addClient(@RequestHeader("Authorization") String sessionToken, @RequestBody UserPhoneDto clientPhone) throws UserAllReadyExistException {
         try {
             userController.addClient(clientPhone);
-            System.out.println("\n\n\nestoy en clientBackController : ");
+            return ResponseEntity.ok().build();
         } catch (JpaSystemException e) {
-            System.out.println("\n\nfui cacheado\n\n");
-            System.out.println(e.getCause().getCause().getMessage());
             throw new UserAllReadyExistException(e.getCause().getCause().getMessage());
         }
-        return ResponseEntity.ok().build();
     }
 
     // Baja de Cliente con su respectiva linea telefonica.
     @DeleteMapping("/")
-    public ResponseEntity deleteClient(@RequestParam String dni) throws UserNotExistException{
-        try{
+    public ResponseEntity deleteClient(@RequestParam String dni) throws UserNotExistException {
+        try {
             userController.deleteClient(dni);
             return ResponseEntity.ok().build();
-        } catch (UserNotExistException e){
-            throw new UserNotExistException("User not exist");
+        } catch (JpaSystemException e) {
+            throw new UserNotExistException(e.getCause().getCause().getMessage());
         }
 
     }
 
-    // Modificacion del Cliente y la linea telefonica. (VERIFICAR "NO SOPORTA EL METODO PUT")
+//    @PutMapping("/")
+//    public ResponseEntity suspendClient(@RequestParam String dni) throws UserNotExistException{
+//        try{
+//            userController.suspendClient(dni);
+//            return ResponseEntity.ok().build();
+//        } catch (JpaSystemException e){
+//            throw new UserNotExistException(e.getCause().getCause().getMessage());
+//        }
+//
+//    }
+
+    // Modificacion del Cliente y la linea telefonica.
     @PutMapping("/")
-    public ResponseEntity modifyClient(@RequestBody UserPhoneModifyDto clientPhone) throws UserNotExistException, SQLException {
-        try{
+    public ResponseEntity modifyClient(@RequestBody UserPhoneModifyDto clientPhone) throws UserNotExistException {
+        try {
             userController.modifyClient(clientPhone);
             return ResponseEntity.ok().build();
-        } catch (UserNotExistException e){
-            throw new UserNotExistException("User not exist");
+        } catch (JpaSystemException e) {
+            throw new UserNotExistException(e.getCause().getCause().getMessage());
         }
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<User>> getAll() throws UserNotExistException{
+    public ResponseEntity<List<User>> getAll() throws UserNotExistException {
         List<User> clients = userController.getAll();
-        if (clients.size() > 0){
-            return ResponseEntity.status(HttpStatus.ACCEPTED).body(clients);
-        }else{
-            throw new UserNotExistException("Users not exist.");
-        }
+//        if (clients.size() > 0){
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(clients);
+//        }else{
+//            throw new UserNotExistException("Users not exist.");
+//        }
     }
 
     @GetMapping("/all2")
-    public ResponseEntity<List<ClientsProjection>> getAllClients() throws UserNotExistException{
+    public ResponseEntity<List<ClientsProjection>> getAllClients() throws UserNotExistException {
         List<ClientsProjection> clients = userController.getAllClients();
-        if (clients.size() > 0){
-            return ResponseEntity.status(HttpStatus.ACCEPTED).body(clients);
-        }else{
-            throw new UserNotExistException("Users not exist.");
-        }
+//        if (clients.size() > 0) {
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(clients);
+//        } else {
+//            throw new UserNotExistException("Users not exist.");
+//        }
     }
 }

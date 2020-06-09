@@ -11,7 +11,7 @@ public class SessionManager {
 
 
     Map<String, Session> sessionMap;
-    int sessionExpiration = 600000;
+    int sessionExpiration = 999999999;
 
 
     public SessionManager() {

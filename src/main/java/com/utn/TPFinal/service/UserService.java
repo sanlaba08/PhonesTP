@@ -31,17 +31,27 @@ public class UserService {
 
     // Alta de Cliente con su respectiva linea telefonica.
     public void addClientPhone(UserPhoneDto userPhone) throws JpaSystemException {
-       userRepository.addClientPhone(userPhone.getName(), userPhone.getLastName(), userPhone.getDni(), userPhone.getPassword(), userPhone.getCity(), userPhone.getLineType());
+        userRepository.addClientPhone(userPhone.getName(), userPhone.getLastName(), userPhone.getDni(), userPhone.getPassword(), userPhone.getCity(), userPhone.getLineType());
     }
 
     // Baja de Cliente con su respectiva linea telefonica.
-    public void deleteClientPhone(String dni) throws UserNotExistException{
+    public void deleteClientPhone(String dni) throws JpaSystemException {
         userRepository.deleteClientPhone(dni);
     }
 
+    public void suspendClient(String dni) throws UserNotExistException {
+        userRepository.suspendClient(dni);
+    }
+
     // Modificacion del Cliente y la linea telefonica.
-    public void modifyClientPhone(UserPhoneModifyDto clientPhone) {
-        userRepository.modifyClientPhone(clientPhone.getUser(), clientPhone.getName(), clientPhone.getLastName(), clientPhone.getDni(),clientPhone.getPassword(), clientPhone.getCity(), clientPhone.getLineType());
+    public void modifyClientPhone(UserPhoneModifyDto clientPhone) throws JpaSystemException {
+        userRepository.modifyClientPhone(clientPhone.getUser(),
+                clientPhone.getName(),
+                clientPhone.getLastName(),
+                clientPhone.getDni(),
+                clientPhone.getPassword(),
+                clientPhone.getCity(),
+                clientPhone.getLineType());
     }
 
 
@@ -49,20 +59,20 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public void addEmployee(EmployeeDto employee){
+    public void addEmployee(EmployeeDto employee) throws JpaSystemException{
         userRepository.addEmployee(employee.getName(), employee.getLastName(), employee.getDni(), employee.getPassword(), employee.getCity());
     }
 
-    public List<EmployeesProjection> getListEmployee(){
+    public List<EmployeesProjection> getListEmployee() {
         return userRepository.getEmployee();
     }
 
-    public List<ClientsProjection> getListClients(){
+    public List<ClientsProjection> getListClients() {
         return userRepository.getClients();
     }
 
 
-    public EmployeesProjection getEmployeeDni(String dni) throws UserNotExistException {
+    public EmployeesProjection getEmployeeDni(String dni) {
         return userRepository.getEmployeeDni(dni);
     }
 
@@ -74,4 +84,6 @@ public class UserService {
     public ClientsProjection getClientDni(String dni) {
         return userRepository.getClientDni(dni);
     }
+
+
 }

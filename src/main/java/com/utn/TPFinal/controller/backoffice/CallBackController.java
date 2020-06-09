@@ -24,13 +24,13 @@ public class CallBackController {
     }
 
     @GetMapping("/") // localhost:8080/call/dni?=4123
-    public ResponseEntity<List<CallsProjection>> getCall(@RequestParam String dni) throws CallNotExistException{
+    public ResponseEntity<List<CallsProjection>> getCall(@RequestParam String dni) throws CallNotExistException {
         List<CallsProjection> calls = callController.getCall(dni);
-        if (calls.size() > 0){
-            return ResponseEntity.status(HttpStatus.ACCEPTED).body(calls);
-        }else{
-            throw new CallNotExistException("Call not exist.");
-        }
+//        if (calls.size() > 0){
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(calls);
+//        } else {
+//            throw new CallNotExistException("Call not exist.");
+//        }
     }
 
 

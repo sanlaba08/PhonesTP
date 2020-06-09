@@ -1,6 +1,7 @@
 package com.utn.TPFinal.controller.backoffice;
 
 import com.utn.TPFinal.controller.model.BillController;
+import com.utn.TPFinal.dto.ErrorResponseDto;
 import com.utn.TPFinal.exceptions.BillNotExistException;
 import com.utn.TPFinal.projections.BillProjection;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,24 +25,20 @@ public class BillBackController {
     }
 
     @GetMapping("/number") // localhost:8080/bill/number?line=4123
-    public ResponseEntity <List<BillProjection>> getBill(@RequestParam String line) throws BillNotExistException{
+    public ResponseEntity<List<BillProjection>> getBill(@RequestParam String line) /*throws BillNotExistException */ {
+
         List<BillProjection> billsByNumber = billController.getBill(line);
-        if (billsByNumber.size() > 0){
-            return ResponseEntity.status(HttpStatus.ACCEPTED).body(billsByNumber);
-        }else{
-            throw new BillNotExistException("Bills not exist.");
-        }
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(billsByNumber);
     }
 
     @GetMapping("/")
-    public ResponseEntity <List<BillProjection>> getBillAll() throws BillNotExistException{
+    public ResponseEntity<List<BillProjection>> getBillAll() throws BillNotExistException {
         List<BillProjection> bills = billController.getBillAll();
-        if (bills.size() > 0){
-            return ResponseEntity.status(HttpStatus.ACCEPTED).body(bills);
-        }else{
-            throw new BillNotExistException("Bills not exist.");
-        }
-
+//        if (bills.size() > 0) {
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(bills);
+//        } else {
+//            throw new BillNotExistException("Bills not exist.");
+//        }
     }
 
 
