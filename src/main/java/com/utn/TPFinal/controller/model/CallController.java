@@ -7,10 +7,12 @@ import com.utn.TPFinal.projections.CallsProjection;
 import com.utn.TPFinal.projections.DestinationCallProjection;
 import com.utn.TPFinal.service.CallService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.stereotype.Controller;
 
 
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -22,19 +24,19 @@ public class CallController {
         this.callService = callService;
     }
 
-    public List<CallsProjection> getCall(String dni){
+    public List<CallsProjection> getCall(String dni) throws JpaSystemException{
         return callService.getListCall(dni);
     }
 
-    public void addCall(CallDto callDto) throws IncorrectDataCallException, SQLException {
+    public void addCall(CallDto callDto) throws JpaSystemException {
         callService.addCall(callDto);
     }
 
-    public List<DestinationCallProjection> getCallByDestination(String dni) throws CallNotExistException{
+    public List<DestinationCallProjection> getCallByDestination(String dni) throws JpaSystemException{
         return callService.getCallByDestination(dni);
     }
 
-    public List<CallsProjection> getCallByDate(String dni, String firstDate, String secondDate) throws CallNotExistException {
+    public List<CallsProjection> getCallByDate(String dni, String firstDate, String secondDate) throws JpaSystemException{
         return callService.getListCallByDate(dni,firstDate, secondDate);
     }
 }

@@ -6,6 +6,7 @@ import com.utn.TPFinal.projections.CallsProjection;
 import com.utn.TPFinal.repository.BillRepository;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLException;
 import java.util.List;
 
 @Service
@@ -16,15 +17,15 @@ public class BillService {
         this.billRepository = billRepository;
     }
 
-    public List<BillProjection> getBillByNumber(String line) {
+    public List<BillProjection> getBillByNumber(String line) throws SQLException {
         return billRepository.getBillByNumber(line);
     }
 
-    public List<BillProjection> getBillAll() {
+    public List<BillProjection> getBillAll() throws SQLException{
         return billRepository.getBillAll();
     }
 
-    public List<BillProjection> getListBillByDate(String dni, String firstDate, String secondDate) {
+    public List<BillProjection> getListBillByDate(String dni, String firstDate, String secondDate) throws SQLException{
         return billRepository.getListBillByDate(dni,firstDate, secondDate);
     }
 

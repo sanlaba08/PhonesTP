@@ -25,11 +25,11 @@ public class TariffController {
         return tariffService.getAllTariffs();
     }
 
-    public List<TariffProjection> getTariffById(Integer idTariff) throws TariffNotExistException {
+    public TariffProjection getTariffById(Integer idTariff)  {
         return tariffService.getTariffById(idTariff);
     }
 
-    public TariffProjection getTariffByName(String originCityName, String destinationCityName) throws TariffNotExistException {
+    public TariffProjection getTariffByName(String originCityName, String destinationCityName)  {
         return tariffService.getTariffByName(originCityName,destinationCityName);
     }
 

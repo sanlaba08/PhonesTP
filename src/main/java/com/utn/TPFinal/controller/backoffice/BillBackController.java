@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.sql.SQLException;
 import java.util.List;
 
 @RestController
@@ -26,19 +27,30 @@ public class BillBackController {
 
     @GetMapping("/number") // localhost:8080/bill/number?line=4123
     public ResponseEntity<List<BillProjection>> getBill(@RequestParam String line) /*throws BillNotExistException */ {
-
-        List<BillProjection> billsByNumber = billController.getBill(line);
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(billsByNumber);
+        try {
+            List<BillProjection> billsByNumber = billController.getBill(line);
+            if (billsByNumber.size() > 0) {
+                return ResponseEntity.ok().body(billsByNumber);
+            } else {
+                return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+            }
+        } catch (SQLException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @GetMapping("/")
     public ResponseEntity<List<BillProjection>> getBillAll() throws BillNotExistException {
-        List<BillProjection> bills = billController.getBillAll();
-//        if (bills.size() > 0) {
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(bills);
-//        } else {
-//            throw new BillNotExistException("Bills not exist.");
-//        }
+        try {
+            List<BillProjection> bills = billController.getBillAll();
+            if (bills.size() > 0) {
+                return ResponseEntity.ok().body(bills);
+            } else {
+                return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+            }
+        } catch (SQLException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
 

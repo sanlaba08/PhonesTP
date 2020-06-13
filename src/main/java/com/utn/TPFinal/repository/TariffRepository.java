@@ -19,7 +19,7 @@ public interface TariffRepository extends JpaRepository<Tariff, Integer> {
     List<TariffProjection> getAllTariffs();
 
     @Query(value = "select * from v_tariffs_info where id_tariff = ?1", nativeQuery = true)
-    List<TariffProjection> getTariffById(Integer idTariff);
+    TariffProjection getTariffById(Integer idTariff);
 
     @Query(value = "select * from v_tariffs_info where city_origin = ?1 AND city_destination = ?2",nativeQuery = true)
     TariffProjection getTariffByName(String originCityName, String destinationCityName);

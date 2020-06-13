@@ -4,6 +4,7 @@ import com.utn.TPFinal.dto.CallDto;
 import com.utn.TPFinal.projections.CallsProjection;
 import com.utn.TPFinal.projections.DestinationCallProjection;
 import com.utn.TPFinal.repository.CallRepository;
+import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,15 +21,15 @@ public class CallService {
         return callRepository.getListCall(dni);
     }
 
-    public void addCall(CallDto callDto) {
+    public void addCall(CallDto callDto) throws JpaSystemException {
         callRepository.addCall(callDto.getLineOrigin(), callDto.getLineDestination(), callDto.getDuration(), callDto.getCallDate());
     }
 
-    public List<DestinationCallProjection> getCallByDestination(String dni){
+    public List<DestinationCallProjection> getCallByDestination(String dni) {
         return callRepository.getCallByDestination(dni);
     }
 
-    public List<CallsProjection> getListCallByDate(String dni,String firstDate, String secondDate){
-        return callRepository.getListCallByDate(dni,firstDate, secondDate);
+    public List<CallsProjection> getListCallByDate(String dni, String firstDate, String secondDate) {
+        return callRepository.getListCallByDate(dni, firstDate, secondDate);
     }
 }

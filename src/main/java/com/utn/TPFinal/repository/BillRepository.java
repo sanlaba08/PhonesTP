@@ -7,19 +7,20 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.sql.SQLException;
 import java.util.List;
 
 @Repository
 public interface BillRepository extends JpaRepository<Bill, Integer> {
 
     @Query(value = "select * " + " from v_bills_info where full_number = ?1 and paid = 0", nativeQuery = true)
-    List<BillProjection> getBillByNumber(String line);
+    List<BillProjection> getBillByNumber(String line) throws SQLException;
 
     @Query(value = "select * " + " from v_bills_info where paid = 0", nativeQuery = true)
-    List<BillProjection> getBillAll();
+    List<BillProjection> getBillAll() throws SQLException;
 
     /*Consulta de facturas por rango de fechas*/
     @Query(value ="select * from v_bills_info where dni = ? and DATE(bill_date) BETWEEN ? AND ?;", nativeQuery = true)
-    List<BillProjection> getListBillByDate(String dni,String firstDate, String secondDate);
+    List<BillProjection> getListBillByDate(String dni,String firstDate, String secondDate) throws SQLException;
 
 }

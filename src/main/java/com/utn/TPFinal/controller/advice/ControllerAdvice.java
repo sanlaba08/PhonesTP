@@ -3,10 +3,13 @@ package com.utn.TPFinal.controller.advice;
 import com.utn.TPFinal.dto.ErrorResponseDto;
 import com.utn.TPFinal.exceptions.*;
 import org.springframework.http.HttpStatus;
+import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+
+import java.sql.SQLException;
 
 @RestControllerAdvice
 public class ControllerAdvice extends ResponseEntityExceptionHandler {
@@ -41,5 +44,21 @@ public class ControllerAdvice extends ResponseEntityExceptionHandler {
         return new ErrorResponseDto(5, e.getMessage());
     }
 
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(SQLException.class)
+    public ErrorResponseDto handleSQLExeption(SQLException e) {
+        return new ErrorResponseDto(789, "Error interno en la base de datos");//esto no lo tirara siempre no?
+    }
 
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(PhoneLineException.class)
+    public ErrorResponseDto handlePhoneLineException(PhoneLineException e) {
+        return new ErrorResponseDto(6, e.getMessage());//esto no lo tirara siempre no?
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(IncorrectDataCallException.class)
+    public ErrorResponseDto handleIncorrectDataCallException(IncorrectDataCallException e) {
+        return new ErrorResponseDto(7, e.getMessage());
+    }
 }

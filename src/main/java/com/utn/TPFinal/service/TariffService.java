@@ -21,7 +21,7 @@ public class TariffService {
         return tariffRepository.getAllTariffs();
     }
 
-    public List<TariffProjection> getTariffById(Integer idTariff) {
+    public TariffProjection getTariffById(Integer idTariff) {
         return tariffRepository.getTariffById(idTariff);
     }
 

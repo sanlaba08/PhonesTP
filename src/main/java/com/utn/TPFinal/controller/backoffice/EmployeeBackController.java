@@ -30,7 +30,7 @@ public class EmployeeBackController {
     public ResponseEntity addEmployee(@RequestBody EmployeeDto employee) throws EmployeeException {
         try {
             userController.addEmployee(employee);
-            return ResponseEntity.ok().build();
+            return ResponseEntity.status(HttpStatus.CREATED).build();//cambiar por uri
         } catch (JpaSystemException e) {
             throw new EmployeeException(e.getCause().getCause().getMessage());
         }
@@ -40,23 +40,20 @@ public class EmployeeBackController {
     @GetMapping("/")
     public ResponseEntity<List<EmployeesProjection>> getAllEmployee() {
         List<EmployeesProjection> employees = userController.getAllEmployee();
-//        if(employees.size() > 0)
-//        {
-        return ResponseEntity.ok().body(employees);
-//        } else { PREGUNTAR SI ACA QUIERE QUE LE TIREMOS UNA EXCEPTION, POR Q TECNICAMENTE NO SE ROMPIO, SOLO DEVUELVE UN JSON VACIO
-//            return ResponseEntity.badRequest().body(new ErrorResponseDto(8,"There are no employee loaded yet..."));
-//        }
+        if (employees.size() > 0) {
+            return ResponseEntity.ok().body(employees);
+        } else {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        }
     }
 
     // Consulta de empleado (Opcional).
     @GetMapping("/number")
-    public ResponseEntity getEmployee(@RequestParam String dni) throws UserNotExistException {
+    public ResponseEntity getEmployee(@RequestParam String dni) {
         ResponseEntity responseEntity = ResponseEntity.ok(userController.getEmployee(dni));
-        if (responseEntity.getBody() != null) {
-            return responseEntity;
-        } else {
-            responseEntity = ResponseEntity.badRequest().body(new ErrorResponseDto(8, "There is no employee with that dni..."));
-            return responseEntity;
+        if (responseEntity.getBody() == null) {
+            responseEntity = ResponseEntity.notFound().build()/*.body(new ErrorResponseDto(8, "There is no employee with that dni..."))*/;
         }
+        return responseEntity;
     }
 }

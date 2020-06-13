@@ -1,6 +1,7 @@
 package com.utn.TPFinal.controller.backoffice;
 
 import com.utn.TPFinal.controller.model.CallController;
+import com.utn.TPFinal.dto.ErrorResponseDto;
 import com.utn.TPFinal.exceptions.CallNotExistException;
 import com.utn.TPFinal.projections.CallsProjection;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.sql.SQLException;
 import java.util.List;
 
 @RestController
@@ -24,13 +26,15 @@ public class CallBackController {
     }
 
     @GetMapping("/") // localhost:8080/call/dni?=4123
-    public ResponseEntity<List<CallsProjection>> getCall(@RequestParam String dni) throws CallNotExistException {
+    public ResponseEntity<List<CallsProjection>> getCall(@RequestParam String dni) {
+
         List<CallsProjection> calls = callController.getCall(dni);
-//        if (calls.size() > 0){
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(calls);
-//        } else {
-//            throw new CallNotExistException("Call not exist.");
-//        }
+        if (calls.size() > 0) {
+            return ResponseEntity.ok().body(calls);
+        } else {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        }
+
     }
 
 

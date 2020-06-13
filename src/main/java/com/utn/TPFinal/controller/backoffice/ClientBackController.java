@@ -37,7 +37,7 @@ public class ClientBackController {
     public ResponseEntity addClient(@RequestHeader("Authorization") String sessionToken, @RequestBody UserPhoneDto clientPhone) throws UserAllReadyExistException {
         try {
             userController.addClient(clientPhone);
-            return ResponseEntity.ok().build();
+            return ResponseEntity.status(HttpStatus.CREATED).build();
         } catch (JpaSystemException e) {
             throw new UserAllReadyExistException(e.getCause().getCause().getMessage());
         }
@@ -52,26 +52,24 @@ public class ClientBackController {
         } catch (JpaSystemException e) {
             throw new UserNotExistException(e.getCause().getCause().getMessage());
         }
-
     }
 
-//    @PutMapping("/")
-//    public ResponseEntity suspendClient(@RequestParam String dni) throws UserNotExistException{
-//        try{
-//            userController.suspendClient(dni);
-//            return ResponseEntity.ok().build();
-//        } catch (JpaSystemException e){
-//            throw new UserNotExistException(e.getCause().getCause().getMessage());
-//        }
-//
-//    }
+    @PutMapping("/number")///number?dni=.....
+    public ResponseEntity suspendClient(@RequestParam String dni) throws UserNotExistException {
+        try {
+            userController.suspendClient(dni);
+            return ResponseEntity.ok().build();
+        } catch (JpaSystemException e) {
+            throw new UserNotExistException(e.getCause().getCause().getMessage());
+        }
+    }
 
     // Modificacion del Cliente y la linea telefonica.
     @PutMapping("/")
     public ResponseEntity modifyClient(@RequestBody UserPhoneModifyDto clientPhone) throws UserNotExistException {
         try {
             userController.modifyClient(clientPhone);
-            return ResponseEntity.ok().build();
+            return ResponseEntity.status(HttpStatus.ACCEPTED).build();
         } catch (JpaSystemException e) {
             throw new UserNotExistException(e.getCause().getCause().getMessage());
         }
@@ -80,20 +78,20 @@ public class ClientBackController {
     @GetMapping("/all")
     public ResponseEntity<List<User>> getAll() throws UserNotExistException {
         List<User> clients = userController.getAll();
-//        if (clients.size() > 0){
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(clients);
-//        }else{
-//            throw new UserNotExistException("Users not exist.");
-//        }
+        if (clients.size() > 0) {
+            return ResponseEntity.ok().body(clients);
+        } else {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        }
     }
 
-    @GetMapping("/all2")
+    @GetMapping("/all/clients")
     public ResponseEntity<List<ClientsProjection>> getAllClients() throws UserNotExistException {
         List<ClientsProjection> clients = userController.getAllClients();
-//        if (clients.size() > 0) {
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(clients);
-//        } else {
-//            throw new UserNotExistException("Users not exist.");
-//        }
+        if (clients.size() > 0) {
+            return ResponseEntity.ok().body(clients);
+        } else {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        }
     }
 }

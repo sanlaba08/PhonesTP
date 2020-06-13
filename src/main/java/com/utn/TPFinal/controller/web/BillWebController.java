@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLException;
 import java.util.List;
 
 @RestController
@@ -26,13 +27,15 @@ public class BillWebController {
     }
 
     @GetMapping("/date")
-    public ResponseEntity <List<BillProjection>> getBillDate(@RequestHeader("Authorization") String sessionToken,@RequestParam String first, @RequestParam String second) throws BillNotExistException{
+    public ResponseEntity <List<BillProjection>> getBillDate(@RequestHeader("Authorization") String sessionToken,
+                                                             @RequestParam String first,
+                                                             @RequestParam String second) throws BillNotExistException, SQLException {
         User session = sessionManager.getCurrentUser(sessionToken);
         List<BillProjection> billsByDate = billController.getBillDate(session.getDni(),first, second);
         if (billsByDate.size() > 0){
-             return ResponseEntity.status(HttpStatus.ACCEPTED).body(billsByDate);
+             return ResponseEntity.ok().body(billsByDate);
         }else{
-            throw new BillNotExistException("Bills not exist.");
+            return ResponseEntity.noContent().build();
         }
     }
 }

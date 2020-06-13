@@ -3,6 +3,7 @@ package com.utn.TPFinal.controller.model;
 import com.utn.TPFinal.dto.PhoneLineByUserDto;
 import com.utn.TPFinal.service.PhoneLineService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.stereotype.Controller;
 
 @Controller
@@ -14,15 +15,15 @@ public class PhoneLineController {
         this.phoneLineService = phoneLineService;
     }
 
-    public void addPhoneLine(PhoneLineByUserDto phoneLine){
+    public void addPhoneLine(PhoneLineByUserDto phoneLine) throws JpaSystemException {
         phoneLineService.addPhoneLine(phoneLine);
     }
 
-    public void deletePhoneLine(Integer idLine) {
+    public void deletePhoneLine(Integer idLine) throws JpaSystemException {
         phoneLineService.deletePhoneLine(idLine);
     }
 
-    public void enablePhoneLine(Integer idLine) {
+    public void enablePhoneLine(Integer idLine) throws JpaSystemException {
         phoneLineService.enablePhoneLine(idLine);
     }
 }
