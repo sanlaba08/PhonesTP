@@ -2,7 +2,6 @@ package com.utn.TPFinal.repository;
 
 import com.utn.TPFinal.model.Bill;
 import com.utn.TPFinal.projections.BillProjection;
-import com.utn.TPFinal.projections.CallsProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

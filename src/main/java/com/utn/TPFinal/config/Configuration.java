@@ -2,6 +2,7 @@ package com.utn.TPFinal.config;
 
 import com.utn.TPFinal.model.User;
 import com.utn.TPFinal.model.UserType;
+import com.utn.TPFinal.session.adminSessionFilter;
 import com.utn.TPFinal.session.SessionFilter;
 import com.utn.TPFinal.session.SessionManager;
 import com.utn.TPFinal.session.SuperSessionFilter;
@@ -26,8 +27,11 @@ public class Configuration {
     @Autowired
     SuperSessionFilter superSessionFilter;
 
+    @Autowired
+    adminSessionFilter adminSessionFilter;
+
     @Bean
-    public FilterRegistrationBean myFilter() {
+    public FilterRegistrationBean myFilterEmployee() {
         FilterRegistrationBean registration = new FilterRegistrationBean();
         registration.setFilter(superSessionFilter);
         registration.addUrlPatterns("/backoffice/*");
@@ -35,11 +39,19 @@ public class Configuration {
     }
 
     @Bean
-    public FilterRegistrationBean myFilter1() {
+    public FilterRegistrationBean myFilterClient() {
         FilterRegistrationBean registration = new FilterRegistrationBean();
         registration.setFilter(sessionFilter);
         registration.addUrlPatterns("/web/*");
 
         return registration;
      }
+
+    @Bean
+    public FilterRegistrationBean myFilterAdmin() {
+        FilterRegistrationBean registration = new FilterRegistrationBean();
+        registration.setFilter(adminSessionFilter);
+        registration.addUrlPatterns("/admin/*");
+        return registration;
+    }
 }

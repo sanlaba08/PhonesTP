@@ -1,7 +1,6 @@
 package com.utn.TPFinal.service;
 
 import com.utn.TPFinal.dto.TariffDto;
-import com.utn.TPFinal.projections.ClientsProjection;
 import com.utn.TPFinal.projections.TariffProjection;
 import com.utn.TPFinal.repository.TariffRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +12,7 @@ import java.util.List;
 public class TariffService {
     private final TariffRepository tariffRepository;
 
+    @Autowired
     public TariffService(TariffRepository tariffRepository) {
         this.tariffRepository = tariffRepository;
     }

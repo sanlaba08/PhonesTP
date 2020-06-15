@@ -1,12 +1,9 @@
 package com.utn.TPFinal.controller.model;
 
 import com.utn.TPFinal.dto.TariffDto;
-import com.utn.TPFinal.exceptions.TariffNotExistException;
-import com.utn.TPFinal.model.Tariff;
 import com.utn.TPFinal.projections.TariffProjection;
 import com.utn.TPFinal.service.TariffService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 
 import java.util.List;

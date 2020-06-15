@@ -3,11 +3,8 @@ package com.utn.TPFinal.controller.backoffice;
 import com.utn.TPFinal.controller.model.UserController;
 import com.utn.TPFinal.dto.UserPhoneDto;
 import com.utn.TPFinal.dto.UserPhoneModifyDto;
-import com.utn.TPFinal.exceptions.IncorrectDataClientPhoneException;
 import com.utn.TPFinal.exceptions.UserAllReadyExistException;
 import com.utn.TPFinal.exceptions.UserNotExistException;
-import com.utn.TPFinal.model.User;
-import com.utn.TPFinal.model.UserType;
 import com.utn.TPFinal.projections.ClientsProjection;
 import com.utn.TPFinal.session.SessionManager;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.web.bind.annotation.*;
-
-import java.sql.SQLException;
 import java.util.List;
 
 @RestController
@@ -75,9 +70,9 @@ public class ClientBackController {
         }
     }
 
-    @GetMapping("/all")
-    public ResponseEntity<List<User>> getAll() throws UserNotExistException {
-        List<User> clients = userController.getAll();
+    @GetMapping("/")
+    public ResponseEntity<List<ClientsProjection>> getAllClients() throws UserNotExistException {
+        List<ClientsProjection> clients = userController.getAllClients();
         if (clients.size() > 0) {
             return ResponseEntity.ok().body(clients);
         } else {
@@ -85,9 +80,9 @@ public class ClientBackController {
         }
     }
 
-    @GetMapping("/all/clients")
-    public ResponseEntity<List<ClientsProjection>> getAllClients() throws UserNotExistException {
-        List<ClientsProjection> clients = userController.getAllClients();
+    @GetMapping("/number")
+    public ResponseEntity<List<ClientsProjection>> getClientPhoneLine(@RequestParam String dni) throws UserNotExistException {
+        List<ClientsProjection> clients = userController.getClient(dni);
         if (clients.size() > 0) {
             return ResponseEntity.ok().body(clients);
         } else {

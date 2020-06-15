@@ -1,7 +1,6 @@
 package com.utn.TPFinal.controller.backoffice;
 
 import com.utn.TPFinal.controller.model.BillController;
-import com.utn.TPFinal.dto.ErrorResponseDto;
 import com.utn.TPFinal.exceptions.BillNotExistException;
 import com.utn.TPFinal.projections.BillProjection;
 import org.springframework.beans.factory.annotation.Autowired;

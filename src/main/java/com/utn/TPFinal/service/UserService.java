@@ -4,7 +4,6 @@ import com.utn.TPFinal.dto.EmployeeDto;
 import com.utn.TPFinal.dto.LoginRequestDto;
 import com.utn.TPFinal.dto.UserPhoneDto;
 import com.utn.TPFinal.dto.UserPhoneModifyDto;
-import com.utn.TPFinal.exceptions.InvalidClientException;
 import com.utn.TPFinal.exceptions.UserNotExistException;
 import com.utn.TPFinal.model.User;
 import com.utn.TPFinal.projections.ClientsProjection;
@@ -13,8 +12,6 @@ import com.utn.TPFinal.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.stereotype.Service;
-
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
@@ -81,7 +78,7 @@ public class UserService {
         return Optional.ofNullable(user).orElseThrow(() -> new UserNotExistException("User not exist"));
     }
 
-    public ClientsProjection getClientDni(String dni) {
+    public List<ClientsProjection> getClientDni(String dni) {
         return userRepository.getClientDni(dni);
     }
 

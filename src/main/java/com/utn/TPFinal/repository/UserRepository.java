@@ -1,6 +1,5 @@
 package com.utn.TPFinal.repository;
 
-import com.utn.TPFinal.dto.UserPhoneDto;
 import com.utn.TPFinal.exceptions.UserNotExistException;
 import com.utn.TPFinal.model.User;
 import com.utn.TPFinal.projections.ClientsProjection;
@@ -13,7 +12,6 @@ import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
-import java.sql.SQLException;
 import java.util.List;
 
 @Repository
@@ -59,8 +57,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
                            @Param("pIdCity") Integer idCity,
                            @Param("pLineType") String lineType) throws JpaSystemException;
 
-    //PARCIAL
-
     @Query(value = "select * from v_employee_info where dni = ?1", nativeQuery = true)
     EmployeesProjection getEmployeeDni(String dni);
 
@@ -68,7 +64,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     User getByUsername(@Param("dni") String dni, @Param("user_password") String password);
 
     @Query(value = "select * from v_client_info where dni = ?1", nativeQuery = true)
-    ClientsProjection getClientDni(String dni);
+    List<ClientsProjection> getClientDni(String dni);
 
 
 }

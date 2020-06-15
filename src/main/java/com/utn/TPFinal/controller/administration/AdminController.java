@@ -1,11 +1,14 @@
-package com.utn.TPFinal.controller.backoffice;
+package com.utn.TPFinal.controller.administration;
 
+import com.utn.TPFinal.controller.model.CallController;
+import com.utn.TPFinal.controller.model.TariffController;
 import com.utn.TPFinal.controller.model.UserController;
+import com.utn.TPFinal.dto.CallDto;
 import com.utn.TPFinal.dto.EmployeeDto;
-import com.utn.TPFinal.dto.ErrorResponseDto;
+import com.utn.TPFinal.dto.TariffDto;
 import com.utn.TPFinal.exceptions.EmployeeException;
-import com.utn.TPFinal.exceptions.TariffNotExistException;
-import com.utn.TPFinal.exceptions.UserNotExistException;
+import com.utn.TPFinal.exceptions.IncorrectDataCallException;
+import com.utn.TPFinal.exceptions.PhoneLineException;
 import com.utn.TPFinal.projections.EmployeesProjection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,17 +19,21 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/employee")
-public class EmployeeBackController {
+@RequestMapping("/admin/")
+public class AdminController {
     private final UserController userController;
+    private final TariffController tariffController;
+    private final CallController callController;
 
     @Autowired
-    public EmployeeBackController(UserController userController) {
+    public AdminController(UserController userController, TariffController tariffController, CallController callController) {
         this.userController = userController;
+        this.tariffController = tariffController;
+        this.callController = callController;
     }
 
     // Alta de Empleado (Opcional).
-    @PostMapping("/")
+    @PostMapping("employee/")
     public ResponseEntity addEmployee(@RequestBody EmployeeDto employee) throws EmployeeException {
         try {
             userController.addEmployee(employee);
@@ -37,7 +44,7 @@ public class EmployeeBackController {
     }
 
     // Consulta de todos los empleados (Opcional).
-    @GetMapping("/")
+    @GetMapping("employee/")
     public ResponseEntity<List<EmployeesProjection>> getAllEmployee() {
         List<EmployeesProjection> employees = userController.getAllEmployee();
         if (employees.size() > 0) {
@@ -48,7 +55,7 @@ public class EmployeeBackController {
     }
 
     // Consulta de empleado (Opcional).
-    @GetMapping("/number")
+    @GetMapping("employee/number")
     public ResponseEntity getEmployee(@RequestParam String dni) {
         ResponseEntity responseEntity = ResponseEntity.ok(userController.getEmployee(dni));
         if (responseEntity.getBody() == null) {
@@ -56,4 +63,25 @@ public class EmployeeBackController {
         }
         return responseEntity;
     }
+
+    @PostMapping("tariff/")
+    public ResponseEntity addTariff(@RequestBody TariffDto tariffDto) throws PhoneLineException {
+        try {
+            tariffController.addTariff(tariffDto);
+            return ResponseEntity.status(HttpStatus.CREATED).build();//uri
+        } catch (JpaSystemException e) {
+            throw new PhoneLineException(e.getCause().getCause().getMessage());
+        }
+    }
+
+    @PostMapping("call/")
+    public ResponseEntity addCall(@RequestBody CallDto callDto) throws IncorrectDataCallException {
+        try{
+            callController.addCall(callDto);
+            return ResponseEntity.status(HttpStatus.CREATED).build();
+        } catch (JpaSystemException e){
+            throw new IncorrectDataCallException(e.getCause().getCause().getMessage());
+        }
+    }
+
 }

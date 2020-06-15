@@ -1,8 +1,6 @@
 package com.utn.TPFinal.service;
 
-import com.utn.TPFinal.model.Bill;
 import com.utn.TPFinal.projections.BillProjection;
-import com.utn.TPFinal.projections.CallsProjection;
 import com.utn.TPFinal.repository.BillRepository;
 import org.springframework.stereotype.Service;
 
