@@ -13,8 +13,8 @@ public class PhoneLineService {
         this.phoneLineRepository = phoneLineRepository;
     }
 
-    public void addPhoneLine(PhoneLineByUserDto phoneLine) throws JpaSystemException {
-        phoneLineRepository.addPhoneLine(phoneLine.getUser(), phoneLine.getLineType());
+    public Integer addPhoneLine(PhoneLineByUserDto phoneLine) throws JpaSystemException {
+        return phoneLineRepository.addPhoneLine(phoneLine.getUser(), phoneLine.getLineType());
     }
 
     public void deletePhoneLine(Integer idLine) throws JpaSystemException {

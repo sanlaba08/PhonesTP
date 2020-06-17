@@ -21,8 +21,8 @@ public class CallService {
         return callRepository.getListCall(dni);
     }
 
-    public void addCall(CallDto callDto) throws JpaSystemException {
-        callRepository.addCall(callDto.getLineOrigin(), callDto.getLineDestination(), callDto.getDuration(), callDto.getCallDate());
+    public Integer addCall(CallDto callDto) throws JpaSystemException {
+       return callRepository.addCall(callDto.getLineOrigin(), callDto.getLineDestination(), callDto.getDuration(), callDto.getCallDate());
     }
 
     public List<DestinationCallProjection> getCallByDestination(String dni) {

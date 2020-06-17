@@ -24,8 +24,8 @@ public class UserController {
         this.userService = userService;
     }
 
-    public void addClient(UserPhoneDto clientPhone) throws JpaSystemException {
-       userService.addClientPhone(clientPhone);
+    public Integer addClient(UserPhoneDto clientPhone) throws JpaSystemException {
+       return userService.addClientPhone(clientPhone);
     }
 
     public void deleteClient(String dni) throws JpaSystemException{
@@ -44,8 +44,8 @@ public class UserController {
         return userService.getUserAll();
     }
 
-    public void addEmployee(EmployeeDto employee) throws JpaSystemException {
-        userService.addEmployee(employee);
+    public Integer addEmployee(EmployeeDto employee) throws JpaSystemException {
+        return userService.addEmployee(employee);
     }
 
     public List<EmployeesProjection> getAllEmployee(){
@@ -72,5 +72,8 @@ public class UserController {
         return userService.getClientDni(dni);
     }
 
+    public void reactiveClient(String dni) throws UserNotExistException {
+        userService.reactiveClient(dni);
+    }
 }
 

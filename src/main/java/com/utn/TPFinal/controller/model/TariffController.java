@@ -30,7 +30,7 @@ public class TariffController {
         return tariffService.getTariffByName(originCityName,destinationCityName);
     }
 
-    public void addTariff(TariffDto tariffDto) {
-        tariffService.addTariff(tariffDto);
+    public Integer addTariff(TariffDto tariffDto) {
+       return tariffService.addTariff(tariffDto);
     }
 }

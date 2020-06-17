@@ -20,7 +20,7 @@ public interface CallRepository extends JpaRepository<Call,Integer> {
     List<CallsProjection> getListCall(String dni);
 
     @Procedure(procedureName = "sp_insert_call")
-    void addCall(@Param("pLineOrigin") String lineOrigin,
+    Integer addCall(@Param("pLineOrigin") String lineOrigin,
                  @Param("pLineDestination") String lineDestination,
                  @Param("pDuration") Long duration,
                  @Param("pCallDate") Date callDate) throws JpaSystemException;

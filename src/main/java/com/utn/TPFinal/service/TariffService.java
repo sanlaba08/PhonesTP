@@ -29,7 +29,7 @@ public class TariffService {
         return tariffRepository.getTariffByName(originCityName,destinationCityName);
     }
 
-    public void addTariff(TariffDto tariffDto) {
-        tariffRepository.addTariff(tariffDto.getOriginCityName(),tariffDto.getDestinationCityName(),tariffDto.getPricePerMinute(),tariffDto.getCostPerMinute());
+    public Integer addTariff(TariffDto tariffDto) {
+        return tariffRepository.addTariff(tariffDto.getOriginCityName(),tariffDto.getDestinationCityName(),tariffDto.getPricePerMinute(),tariffDto.getCostPerMinute());
     }
 }

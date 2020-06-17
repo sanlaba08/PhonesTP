@@ -25,5 +25,5 @@ public interface TariffRepository extends JpaRepository<Tariff, Integer> {
 
     @Transactional
     @Procedure(procedureName = "sp_create_tariff_by_city_name")
-    void addTariff(@Param("pOriginCityName") String originCityName,@Param("pDestinationCityName") String destinationCityName,@Param("pPrice_per_minute") long pricePerMinute,@Param("pCost_per_minute") float costPerMinute);
+    Integer addTariff(@Param("pOriginCityName") String originCityName,@Param("pDestinationCityName") String destinationCityName,@Param("pPrice_per_minute") long pricePerMinute,@Param("pCost_per_minute") float costPerMinute);
 }

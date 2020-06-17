@@ -16,6 +16,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 
 @RestController
@@ -34,10 +36,10 @@ public class AdminController {
 
     // Alta de Empleado (Opcional).
     @PostMapping("employee/")
-    public ResponseEntity addEmployee(@RequestBody EmployeeDto employee) throws EmployeeException {
+    public ResponseEntity addEmployee(@RequestBody EmployeeDto employee) throws EmployeeException, URISyntaxException {
         try {
-            userController.addEmployee(employee);
-            return ResponseEntity.status(HttpStatus.CREATED).build();//cambiar por uri
+           Integer idEmployee = userController.addEmployee(employee);
+           return ResponseEntity.created(new URI("http://localhost:8080/admin/employee/" + idEmployee)).body(employee);
         } catch (JpaSystemException e) {
             throw new EmployeeException(e.getCause().getCause().getMessage());
         }
@@ -65,20 +67,20 @@ public class AdminController {
     }
 
     @PostMapping("tariff/")
-    public ResponseEntity addTariff(@RequestBody TariffDto tariffDto) throws PhoneLineException {
+    public ResponseEntity addTariff(@RequestBody TariffDto tariffDto) throws PhoneLineException, URISyntaxException {
         try {
-            tariffController.addTariff(tariffDto);
-            return ResponseEntity.status(HttpStatus.CREATED).build();//uri
+            Integer idTariff = tariffController.addTariff(tariffDto);
+            return ResponseEntity.created(new URI("http://localhost:8080/admin/tariff/" + idTariff)).body(tariffDto);
         } catch (JpaSystemException e) {
             throw new PhoneLineException(e.getCause().getCause().getMessage());
         }
     }
 
     @PostMapping("call/")
-    public ResponseEntity addCall(@RequestBody CallDto callDto) throws IncorrectDataCallException {
+    public ResponseEntity addCall(@RequestBody CallDto callDto) throws IncorrectDataCallException, URISyntaxException {
         try{
-            callController.addCall(callDto);
-            return ResponseEntity.status(HttpStatus.CREATED).build();
+            Integer idCall = callController.addCall(callDto);
+            return ResponseEntity.created(new URI("http://localhost:8080/admin/call/" + idCall)).body(callDto);
         } catch (JpaSystemException e){
             throw new IncorrectDataCallException(e.getCause().getCause().getMessage());
         }

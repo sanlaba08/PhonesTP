@@ -1,7 +1,5 @@
 package com.utn.TPFinal.dto;
 
-import com.utn.TPFinal.model.City;
-
 public class EmployeeDto {
     String name;
     String lastName;

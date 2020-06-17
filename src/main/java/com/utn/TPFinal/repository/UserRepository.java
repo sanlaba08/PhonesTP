@@ -18,7 +18,7 @@ import java.util.List;
 public interface UserRepository extends JpaRepository<User, Integer> {
 
     @Procedure(procedureName = "sp_insert_employee")
-    void addEmployee(@Param("pName") String name,
+    Integer addEmployee(@Param("pName") String name,
                      @Param("pLastName") String lastName,
                      @Param("pDni") String dni,
                      @Param("pUserPassword") String password,
@@ -32,7 +32,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     @Transactional
     @Procedure(procedureName = "sp_insert_client_and_phone_lines")
-    void addClientPhone(@Param("pName") String name,
+    Integer addClientPhone(@Param("pName") String name,
                         @Param("pLastName") String lastName,
                         @Param("pDni") String dni,
                         @Param("pUserPassword") String password,
@@ -66,5 +66,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     @Query(value = "select * from v_client_info where dni = ?1", nativeQuery = true)
     List<ClientsProjection> getClientDni(String dni);
 
-
+    @Transactional
+    @Procedure(procedureName = "sp_client_reactive")
+    void reactiveClient(@Param("pDni") String dni) throws UserNotExistException;
 }

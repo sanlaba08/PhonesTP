@@ -22,8 +22,8 @@ public class CallController {
         return callService.getListCall(dni);
     }
 
-    public void addCall(CallDto callDto) throws JpaSystemException {
-        callService.addCall(callDto);
+    public Integer addCall(CallDto callDto) throws JpaSystemException {
+        return callService.addCall(callDto);
     }
 
     public List<DestinationCallProjection> getCallByDestination(String dni) throws JpaSystemException{

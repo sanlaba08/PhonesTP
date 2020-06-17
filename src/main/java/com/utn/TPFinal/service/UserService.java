@@ -27,8 +27,8 @@ public class UserService {
     /* 2) Manejo de Clientes (Service)*/
 
     // Alta de Cliente con su respectiva linea telefonica.
-    public void addClientPhone(UserPhoneDto userPhone) throws JpaSystemException {
-        userRepository.addClientPhone(userPhone.getName(), userPhone.getLastName(), userPhone.getDni(), userPhone.getPassword(), userPhone.getCity(), userPhone.getLineType());
+    public Integer addClientPhone(UserPhoneDto userPhone) throws JpaSystemException {
+        return userRepository.addClientPhone(userPhone.getName(), userPhone.getLastName(), userPhone.getDni(), userPhone.getPassword(), userPhone.getCity(), userPhone.getLineType());
     }
 
     // Baja de Cliente con su respectiva linea telefonica.
@@ -56,8 +56,8 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public void addEmployee(EmployeeDto employee) throws JpaSystemException{
-        userRepository.addEmployee(employee.getName(), employee.getLastName(), employee.getDni(), employee.getPassword(), employee.getCity());
+    public Integer addEmployee(EmployeeDto employee) throws JpaSystemException{
+       return userRepository.addEmployee(employee.getName(), employee.getLastName(), employee.getDni(), employee.getPassword(), employee.getCity());
     }
 
     public List<EmployeesProjection> getListEmployee() {
@@ -83,4 +83,7 @@ public class UserService {
     }
 
 
+    public void reactiveClient(String dni) throws UserNotExistException{
+        userRepository.reactiveClient(dni);
+    }
 }

@@ -15,8 +15,8 @@ public class PhoneLineController {
         this.phoneLineService = phoneLineService;
     }
 
-    public void addPhoneLine(PhoneLineByUserDto phoneLine) throws JpaSystemException {
-        phoneLineService.addPhoneLine(phoneLine);
+    public Integer addPhoneLine(PhoneLineByUserDto phoneLine) throws JpaSystemException {
+       return phoneLineService.addPhoneLine(phoneLine);
     }
 
     public void deletePhoneLine(Integer idLine) throws JpaSystemException {

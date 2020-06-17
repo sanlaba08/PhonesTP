@@ -9,6 +9,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+
 @RestController
 @RequestMapping("/backoffice/phoneline")
 public class PhoneLineBackController {
@@ -22,10 +25,10 @@ public class PhoneLineBackController {
     /* 3) Alta y baja de Lineas (Controller)*/
     // Alta de Linea con su respectivo usuario.
     @PostMapping("/")
-    public ResponseEntity addPhoneLine(@RequestBody PhoneLineByUserDto phoneLine) throws PhoneLineException {
+    public ResponseEntity addPhoneLine(@RequestBody PhoneLineByUserDto phoneLine) throws PhoneLineException, URISyntaxException {
         try {
-            phoneLineController.addPhoneLine(phoneLine);
-            return ResponseEntity.status(HttpStatus.CREATED).build();//aca tenemos que usar uri
+            Integer idLine = phoneLineController.addPhoneLine(phoneLine);
+            return ResponseEntity.created(new URI("http://localhost:8080/backoffice/phoneline/" + idLine)).body(phoneLine);
         } catch (JpaSystemException e) {
             throw new PhoneLineException(e.getCause().getCause().getMessage());
         }

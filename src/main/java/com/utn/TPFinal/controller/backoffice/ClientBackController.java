@@ -12,6 +12,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.web.bind.annotation.*;
+
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 
 @RestController
@@ -29,10 +32,10 @@ public class ClientBackController {
     /* 2) Manejo de Clientes (Controller)*/
     // Alta de Cliente con su respectiva linea telefonica.
     @PostMapping("/")
-    public ResponseEntity addClient(@RequestHeader("Authorization") String sessionToken, @RequestBody UserPhoneDto clientPhone) throws UserAllReadyExistException {
+    public ResponseEntity addClient(@RequestHeader("Authorization") String sessionToken, @RequestBody UserPhoneDto clientPhone) throws UserAllReadyExistException,  URISyntaxException {
         try {
-            userController.addClient(clientPhone);
-            return ResponseEntity.status(HttpStatus.CREATED).build();
+            Integer idClient = userController.addClient(clientPhone);
+            return ResponseEntity.created(new URI("http://localhost:8080/backoffice/client/" + idClient)).body(clientPhone);
         } catch (JpaSystemException e) {
             throw new UserAllReadyExistException(e.getCause().getCause().getMessage());
         }
@@ -89,4 +92,16 @@ public class ClientBackController {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }
     }
+
+    @PostMapping("/number")
+    public ResponseEntity reactiveClient(@RequestParam String dni) throws UserNotExistException {
+        try {
+            userController.reactiveClient(dni);
+            return ResponseEntity.ok().build();
+        } catch (JpaSystemException e) {
+            throw new UserNotExistException(e.getCause().getCause().getMessage());
+        }
+    }
+
+
 }
