@@ -1,6 +1,7 @@
 package com.utn.TPFinal.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -59,6 +60,7 @@ public class Call {
    private City cityDestination;
 
     @Column(name = "billed")
+    @JsonIgnore
     private Boolean billed;
 
     @ManyToOne(fetch = FetchType.EAGER)

@@ -8,8 +8,6 @@ import com.utn.TPFinal.exceptions.UserNotExistException;
 import com.utn.TPFinal.exceptions.ValidationException;
 import com.utn.TPFinal.model.User;
 import com.utn.TPFinal.model.UserType;
-import com.utn.TPFinal.projections.ClientsProjection;
-import com.utn.TPFinal.projections.EmployeesProjection;
 import com.utn.TPFinal.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.jpa.JpaSystemException;
@@ -43,16 +41,8 @@ public class UserController {
         userService.modifyClientPhone(clientPhone);
     }
 
-    public List<User> getAllEmployee() throws UserNotExistException{
-        List<User> users = userService.getUserAll();
-        List<User> ans = new ArrayList<>();
-
-        for (User aux: users) {
-            if(aux.getUserType().equals(UserType.Employee)){
-                ans.add(aux);
-            }
-        }
-        return ans;
+    public List<User> getAllEmployee(){
+       return userService.getAllEmployee();
     }
 
     public Integer addEmployee(EmployeeDto employee) throws JpaSystemException {
@@ -61,18 +51,10 @@ public class UserController {
 
 
     public List<User> getAllClients() throws UserNotExistException{
-        List<User> users = userService.getUserAll();
-        List<User> ans = new ArrayList<>();
-
-        for (User aux: users) {
-            if(aux.getUserType().equals(UserType.Client)){
-                ans.add(aux);
-            }
-        }
-        return ans;
+       return userService.getAllClient();
     }
 
-    public EmployeesProjection getEmployee(String dni) {
+    public User getEmployee(String dni) {
        return userService.getEmployeeDni(dni);
     }
 
@@ -84,8 +66,8 @@ public class UserController {
         }
     }
 
-    public List<ClientsProjection> getClient(String dni) throws UserNotExistException {
-        return userService.getClientDni(dni);
+    public List<User> getClient(String dni) throws UserNotExistException {
+        return userService.findClientByDni(dni);
     }
 
     public void reactiveClient(String dni) throws UserNotExistException {

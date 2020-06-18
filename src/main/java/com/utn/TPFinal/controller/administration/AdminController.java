@@ -11,7 +11,6 @@ import com.utn.TPFinal.exceptions.IncorrectDataCallException;
 import com.utn.TPFinal.exceptions.PhoneLineException;
 import com.utn.TPFinal.exceptions.UserNotExistException;
 import com.utn.TPFinal.model.User;
-import com.utn.TPFinal.projections.EmployeesProjection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -49,7 +48,7 @@ public class AdminController {
 
     // Consulta de todos los empleados (Opcional).
     @GetMapping("employee/")
-    public ResponseEntity<List<User>> getAllEmployee() throws UserNotExistException {
+    public ResponseEntity<List<User>> getAllEmployee() {
         List<User> employees = userController.getAllEmployee();
         if (employees.size() > 0) {
             return ResponseEntity.ok().body(employees);
@@ -63,7 +62,7 @@ public class AdminController {
     public ResponseEntity getEmployee(@RequestParam String dni) {
         ResponseEntity responseEntity = ResponseEntity.ok(userController.getEmployee(dni));
         if (responseEntity.getBody() == null) {
-            responseEntity = ResponseEntity.notFound().build()/*.body(new ErrorResponseDto(8, "There is no employee with that dni..."))*/;
+            responseEntity = ResponseEntity.notFound().build();
         }
         return responseEntity;
     }
@@ -87,5 +86,4 @@ public class AdminController {
             throw new IncorrectDataCallException(e.getCause().getCause().getMessage());
         }
     }
-
 }

@@ -6,7 +6,6 @@ import com.utn.TPFinal.dto.UserPhoneModifyDto;
 import com.utn.TPFinal.exceptions.UserAllReadyExistException;
 import com.utn.TPFinal.exceptions.UserNotExistException;
 import com.utn.TPFinal.model.User;
-import com.utn.TPFinal.projections.ClientsProjection;
 import com.utn.TPFinal.session.SessionManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,7 +32,7 @@ public class ClientBackController {
     /* 2) Manejo de Clientes (Controller)*/
     // Alta de Cliente con su respectiva linea telefonica.
     @PostMapping("/")
-    public ResponseEntity addClient(@RequestHeader("Authorization") String sessionToken, @RequestBody UserPhoneDto clientPhone) throws UserAllReadyExistException,  URISyntaxException {
+    public ResponseEntity addClient(@RequestBody UserPhoneDto clientPhone) throws UserAllReadyExistException,  URISyntaxException {
         try {
             Integer idClient = userController.addClient(clientPhone);
             return ResponseEntity.created(new URI("http://localhost:8080/backoffice/client/" + idClient)).body(clientPhone);
@@ -86,8 +85,8 @@ public class ClientBackController {
     }
 
     @GetMapping("/number")
-    public ResponseEntity<List<ClientsProjection>> getClientPhoneLine(@RequestParam String dni) throws UserNotExistException {
-        List<ClientsProjection> clients = userController.getClient(dni);
+    public ResponseEntity<List<User>> getClientPhoneLine(@RequestParam String dni) throws UserNotExistException {
+        List<User> clients = userController.getClient(dni);
         if (clients.size() > 0) {
             return ResponseEntity.ok().body(clients);
         } else {

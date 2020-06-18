@@ -2,8 +2,6 @@ package com.utn.TPFinal.repository;
 
 import com.utn.TPFinal.exceptions.UserNotExistException;
 import com.utn.TPFinal.model.User;
-import com.utn.TPFinal.projections.ClientsProjection;
-import com.utn.TPFinal.projections.EmployeesProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.query.Procedure;
@@ -23,12 +21,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
                      @Param("pDni") String dni,
                      @Param("pUserPassword") String password,
                      @Param("pIdCity") Integer idCity) throws JpaSystemException;
-
-    @Query(value = "select * from v_employee_info;", nativeQuery = true)
-    List<EmployeesProjection> getEmployee();
-
-    @Query(value = "select * from v_client_info;", nativeQuery = true)
-    List<ClientsProjection> getClients();
 
     @Transactional
     @Procedure(procedureName = "sp_insert_client_and_phone_lines")
@@ -57,16 +49,23 @@ public interface UserRepository extends JpaRepository<User, Integer> {
                            @Param("pIdCity") Integer idCity,
                            @Param("pLineType") String lineType) throws JpaSystemException;
 
-    @Query(value = "select * from v_employee_info where dni = ?1", nativeQuery = true)
-    EmployeesProjection getEmployeeDni(String dni);
 
     @Query(value = "SELECT * FROM users u WHERE u.dni = ? and u.user_password = ?", nativeQuery = true)
     User getByUsername(@Param("dni") String dni, @Param("user_password") String password);
 
-    @Query(value = "select * from v_client_info where dni = ?1", nativeQuery = true)
-    List<ClientsProjection> getClientDni(String dni);
-
     @Transactional
     @Procedure(procedureName = "sp_client_reactive")
     void reactiveClient(@Param("pDni") String dni) throws UserNotExistException;
+
+    @Query(value = "SELECT * FROM users u WHERE u.dni = ? and role_name = 'Employee'", nativeQuery = true)
+    User findEmployeeByDni(@Param("dni") String dni);
+
+    @Query(value = "SELECT * FROM users u WHERE u.dni = ? and role_name = 'Client'", nativeQuery = true)
+    List<User> findClientByDni(@Param("dni") String dni);
+
+    @Query(value = "SELECT * FROM users u WHERE role_name = 'Employee'", nativeQuery = true)
+    List<User> getAllEmployee();
+
+    @Query(value = "SELECT * FROM users u WHERE role_name = 'Client'", nativeQuery = true)
+    List<User> getAllClient();
 }

@@ -6,8 +6,6 @@ import com.utn.TPFinal.dto.UserPhoneDto;
 import com.utn.TPFinal.dto.UserPhoneModifyDto;
 import com.utn.TPFinal.exceptions.UserNotExistException;
 import com.utn.TPFinal.model.User;
-import com.utn.TPFinal.projections.ClientsProjection;
-import com.utn.TPFinal.projections.EmployeesProjection;
 import com.utn.TPFinal.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.jpa.JpaSystemException;
@@ -52,25 +50,8 @@ public class UserService {
     }
 
 
-    public List<User> getUserAll() {
-        return userRepository.findAll();
-    }
-
     public Integer addEmployee(EmployeeDto employee) throws JpaSystemException{
        return userRepository.addEmployee(employee.getName(), employee.getLastName(), employee.getDni(), employee.getPassword(), employee.getCity());
-    }
-
-    public List<EmployeesProjection> getListEmployee() {
-        return userRepository.getEmployee();
-    }
-
-    public List<ClientsProjection> getListClients() {
-        return userRepository.getClients();
-    }
-
-
-    public EmployeesProjection getEmployeeDni(String dni) {
-        return userRepository.getEmployeeDni(dni);
     }
 
     public User login(LoginRequestDto login) throws UserNotExistException {
@@ -78,12 +59,24 @@ public class UserService {
         return Optional.ofNullable(user).orElseThrow(() -> new UserNotExistException("User not exist"));
     }
 
-    public List<ClientsProjection> getClientDni(String dni) {
-        return userRepository.getClientDni(dni);
-    }
-
 
     public void reactiveClient(String dni) throws UserNotExistException{
         userRepository.reactiveClient(dni);
+    }
+
+    public List<User> findClientByDni(String dni) {
+        return userRepository.findClientByDni(dni);
+    }
+
+    public User getEmployeeDni(String dni) {
+        return userRepository.findEmployeeByDni(dni);
+    }
+
+    public List<User> getAllClient() {
+        return userRepository.getAllClient();
+    }
+
+    public List<User> getAllEmployee() {
+        return userRepository.getAllEmployee();
     }
 }

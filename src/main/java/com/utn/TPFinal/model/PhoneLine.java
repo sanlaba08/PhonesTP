@@ -1,6 +1,7 @@
 package com.utn.TPFinal.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,6 +27,7 @@ public class PhoneLine {
     private String numberLine;
 
     @Column(name = "available")
+    @JsonIgnore
     private String available;
 
     @Column(name = "line_type")
