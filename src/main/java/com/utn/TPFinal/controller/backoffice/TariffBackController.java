@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
@@ -20,7 +21,7 @@ public class TariffBackController {
     }
 
     @GetMapping("/")
-    public ResponseEntity<List<TariffProjection>> getAllTariffs() throws TariffNotExistException {
+    public ResponseEntity<List<TariffProjection>> getAllTariffs() {
         List<TariffProjection> tariffs = tariffController.getAllTariffs();
         if (tariffs.size() > 0) {
             return ResponseEntity.ok().body(tariffs);
@@ -46,7 +47,4 @@ public class TariffBackController {
         }
         return responseEntity;
     }
-
-
-
 }
