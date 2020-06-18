@@ -1,11 +1,10 @@
 package com.utn.TPFinal.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -48,6 +47,7 @@ public class User{
     private UserType userType;
 
     @OneToMany(mappedBy = "user")
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     List<PhoneLine> phoneLines = new ArrayList<PhoneLine>();
 
 }

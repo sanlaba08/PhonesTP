@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.persistence.*;
@@ -25,11 +27,13 @@ public class Call {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_line_origin")
+    @Fetch(FetchMode.JOIN)
     @JsonBackReference
    private PhoneLine phoneLineOrigin;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_line_destination")
+    @Fetch(FetchMode.JOIN)
     @JsonBackReference
    private PhoneLine phoneLineDestination;
 
@@ -44,11 +48,13 @@ public class Call {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_city_origin")
+    @Fetch(FetchMode.JOIN)
     @JsonBackReference
    private City cityOrigin;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_city_destination")
+    @Fetch(FetchMode.JOIN)
     @JsonBackReference
    private City cityDestination;
 

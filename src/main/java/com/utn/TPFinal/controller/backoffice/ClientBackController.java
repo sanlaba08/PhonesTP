@@ -5,6 +5,7 @@ import com.utn.TPFinal.dto.UserPhoneDto;
 import com.utn.TPFinal.dto.UserPhoneModifyDto;
 import com.utn.TPFinal.exceptions.UserAllReadyExistException;
 import com.utn.TPFinal.exceptions.UserNotExistException;
+import com.utn.TPFinal.model.User;
 import com.utn.TPFinal.projections.ClientsProjection;
 import com.utn.TPFinal.session.SessionManager;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,8 +75,9 @@ public class ClientBackController {
     }
 
     @GetMapping("/")
-    public ResponseEntity<List<ClientsProjection>> getAllClients() throws UserNotExistException {
-        List<ClientsProjection> clients = userController.getAllClients();
+    public ResponseEntity<List<User>> getAllClients() throws UserNotExistException {
+        List<User> clients = userController.getAllClients();
+
         if (clients.size() > 0) {
             return ResponseEntity.ok().body(clients);
         } else {
@@ -102,6 +104,9 @@ public class ClientBackController {
             throw new UserNotExistException(e.getCause().getCause().getMessage());
         }
     }
+
+
+
 
 
 }

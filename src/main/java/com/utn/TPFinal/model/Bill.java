@@ -1,9 +1,12 @@
 package com.utn.TPFinal.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -23,6 +26,7 @@ public class Bill {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_line")
+    @Fetch(FetchMode.JOIN)
     @JsonBackReference
     private PhoneLine line;
 
@@ -45,5 +49,6 @@ public class Bill {
     private boolean paid;
 
     @OneToMany(mappedBy = "bill")
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     List<Call> calls = new ArrayList<Call>();
 }

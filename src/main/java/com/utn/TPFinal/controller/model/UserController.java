@@ -7,12 +7,15 @@ import com.utn.TPFinal.dto.UserPhoneModifyDto;
 import com.utn.TPFinal.exceptions.UserNotExistException;
 import com.utn.TPFinal.exceptions.ValidationException;
 import com.utn.TPFinal.model.User;
+import com.utn.TPFinal.model.UserType;
 import com.utn.TPFinal.projections.ClientsProjection;
 import com.utn.TPFinal.projections.EmployeesProjection;
 import com.utn.TPFinal.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.stereotype.Controller;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -40,20 +43,33 @@ public class UserController {
         userService.modifyClientPhone(clientPhone);
     }
 
-    public List<User> getAll() throws UserNotExistException{
-        return userService.getUserAll();
+    public List<User> getAllEmployee() throws UserNotExistException{
+        List<User> users = userService.getUserAll();
+        List<User> ans = new ArrayList<>();
+
+        for (User aux: users) {
+            if(aux.getUserType().equals(UserType.Employee)){
+                ans.add(aux);
+            }
+        }
+        return ans;
     }
 
     public Integer addEmployee(EmployeeDto employee) throws JpaSystemException {
         return userService.addEmployee(employee);
     }
 
-    public List<EmployeesProjection> getAllEmployee(){
-        return userService.getListEmployee();
-    }
 
-    public List<ClientsProjection> getAllClients() throws UserNotExistException{
-        return userService.getListClients();
+    public List<User> getAllClients() throws UserNotExistException{
+        List<User> users = userService.getUserAll();
+        List<User> ans = new ArrayList<>();
+
+        for (User aux: users) {
+            if(aux.getUserType().equals(UserType.Client)){
+                ans.add(aux);
+            }
+        }
+        return ans;
     }
 
     public EmployeesProjection getEmployee(String dni) {

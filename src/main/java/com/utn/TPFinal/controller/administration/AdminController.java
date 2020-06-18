@@ -9,6 +9,8 @@ import com.utn.TPFinal.dto.TariffDto;
 import com.utn.TPFinal.exceptions.EmployeeException;
 import com.utn.TPFinal.exceptions.IncorrectDataCallException;
 import com.utn.TPFinal.exceptions.PhoneLineException;
+import com.utn.TPFinal.exceptions.UserNotExistException;
+import com.utn.TPFinal.model.User;
 import com.utn.TPFinal.projections.EmployeesProjection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -47,8 +49,8 @@ public class AdminController {
 
     // Consulta de todos los empleados (Opcional).
     @GetMapping("employee/")
-    public ResponseEntity<List<EmployeesProjection>> getAllEmployee() {
-        List<EmployeesProjection> employees = userController.getAllEmployee();
+    public ResponseEntity<List<User>> getAllEmployee() throws UserNotExistException {
+        List<User> employees = userController.getAllEmployee();
         if (employees.size() > 0) {
             return ResponseEntity.ok().body(employees);
         } else {

@@ -33,9 +33,4 @@ public class City {
     @OneToMany(mappedBy = "city")
     List<User> users = new ArrayList<User>();
 
-    @OneToMany(mappedBy = "cityOrigin")
-    List<Call> cityOrigin = new ArrayList<Call>();
-
-    @OneToMany(mappedBy = "cityDestination")
-    List<Call> cityDestination = new ArrayList<Call>();
 }

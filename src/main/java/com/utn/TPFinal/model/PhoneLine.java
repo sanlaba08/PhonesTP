@@ -37,16 +37,5 @@ public class PhoneLine {
     @JsonBackReference
     private User user;
 
-    @OneToMany(mappedBy = "phoneLineOrigin")
-    List<Call> callsOrigin = new ArrayList<Call>();
-
-    @OneToMany(mappedBy = "phoneLineDestination")
-    List<Call> callsDestination = new ArrayList<Call>();
-
-    @OneToMany(mappedBy = "line")
-    List<Bill> billLine = new ArrayList<Bill>();
-
-
-
 
 }
