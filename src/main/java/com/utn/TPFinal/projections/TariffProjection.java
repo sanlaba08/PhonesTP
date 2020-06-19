@@ -10,4 +10,6 @@ public interface TariffProjection {
     void setCity_destination(String cityDestination);
     void setPrice_per_minute(Long pricePerMinute);
     void setCost_per_minute(Float costPerMinute);
+
+    void setIdTariff(int id);
 }
