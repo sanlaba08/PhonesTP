@@ -32,19 +32,21 @@ public class TariffBackController {
 
     @GetMapping("/{idTariff}")
     public ResponseEntity getTariffById(@PathVariable Integer idTariff) {
-        ResponseEntity responseEntity = ResponseEntity.ok(tariffController.getTariffById(idTariff));
-        if (responseEntity == null) {
-            responseEntity = ResponseEntity.notFound().build();
+        TariffProjection tariffById = tariffController.getTariffById(idTariff);
+        if(tariffById == null){
+            return ResponseEntity.notFound().build();
+        } else{
+           return ResponseEntity.ok(tariffById);
         }
-        return responseEntity;
     }
 
     @GetMapping("/city")
-    public ResponseEntity getTariffByName(@RequestParam String originCityName, @RequestParam String destinationCityName) throws TariffNotExistException {
-        ResponseEntity responseEntity = ResponseEntity.ok(tariffController.getTariffByName(originCityName, destinationCityName));
-        if (responseEntity == null) {
-            responseEntity = ResponseEntity.noContent().build();
+    public ResponseEntity getTariffByName(@RequestParam String originCityName, @RequestParam String destinationCityName){
+        TariffProjection tariffByName = tariffController.getTariffByName(originCityName, destinationCityName);
+        if(tariffByName == null){
+            return ResponseEntity.notFound().build();
+        } else{
+            return ResponseEntity.ok(tariffByName);
         }
-        return responseEntity;
     }
 }

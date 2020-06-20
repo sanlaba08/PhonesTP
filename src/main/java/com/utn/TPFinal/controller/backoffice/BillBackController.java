@@ -25,7 +25,7 @@ public class BillBackController {
     }
 
     @GetMapping("/number") // localhost:8080/bill/number?line=4123
-    public ResponseEntity<List<BillProjection>> getBill(@RequestParam String line) {
+    public ResponseEntity<List<BillProjection>> getBillbyNumber(@RequestParam String line){
         List<BillProjection> billsByNumber = billController.getBillByNumber(line);
         if (billsByNumber.size() > 0) {
             return ResponseEntity.ok().body(billsByNumber);
@@ -35,7 +35,7 @@ public class BillBackController {
     }
 
     @GetMapping("/")
-    public ResponseEntity<List<BillProjection>> getBillAll() throws BillNotExistException {
+    public ResponseEntity<List<BillProjection>> getBillAll(){
         List<BillProjection> bills = billController.getBillAll();
         if (bills.size() > 0) {
             return ResponseEntity.ok().body(bills);
@@ -43,6 +43,5 @@ public class BillBackController {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }
     }
-
 
 }

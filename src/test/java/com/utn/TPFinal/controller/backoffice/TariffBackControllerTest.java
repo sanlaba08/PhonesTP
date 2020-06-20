@@ -13,6 +13,7 @@ import org.mockito.quality.Strictness;
 import org.mockito.stubbing.OngoingStubbing;
 import org.springframework.data.projection.ProjectionFactory;
 import org.springframework.data.projection.SpelAwareProxyProjectionFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.util.ArrayList;
@@ -26,23 +27,22 @@ import static org.mockito.MockitoAnnotations.initMocks;
 @MockitoSettings(strictness = Strictness.WARN)
 class TariffBackControllerTest {
 
-    @InjectMocks
     private TariffBackController tariffBackController;
+    private TariffProjection tariffProjection;
 
     @Mock
-    private TariffController tariffController;//este devuelve el list
+    private TariffController tariffController;
 
     @BeforeEach
     void setUp() {
         initMocks(this);
         tariffBackController = new TariffBackController(tariffController);
+        ProjectionFactory factory = new SpelAwareProxyProjectionFactory();
+        tariffProjection = factory.createProjection(TariffProjection.class);
     }
 
     @Test
     void getAllTariffsOk() {
-        ProjectionFactory factory = new SpelAwareProxyProjectionFactory();
-        TariffProjection tariffProjection = factory.createProjection(TariffProjection.class);
-
         tariffProjection.setCity_origin("Mar del Plata");
         tariffProjection.setCity_destination("Buenos Aires");
         tariffProjection.setCost_per_minute((float) 30);
@@ -59,26 +59,6 @@ class TariffBackControllerTest {
     }
 
     @Test
-    void getTariffByIdOk() {
-        ProjectionFactory factory = new SpelAwareProxyProjectionFactory();
-        TariffProjection tariffProjection = factory.createProjection(TariffProjection.class);
-
-        tariffProjection.setIdTariff(1);
-
-        when(tariffController.getTariffById(1)).thenReturn(tariffProjection);
-
-        ResponseEntity response = tariffBackController.getTariffById(1);
-
-        assertNotNull(response);
-        assertEquals(tariffProjection, response.getBody());
-    }
-
-    @Test
-    void getTariffByNameOk() {
-
-    }
-
-    @Test
     void getAllTariffsEmpty() {
         List<TariffProjection> tariffList = new ArrayList<TariffProjection>();
 
@@ -89,16 +69,52 @@ class TariffBackControllerTest {
     }
 
     @Test
+    void getTariffByIdOk() {
+        tariffProjection.setIdTariff(1);
+        tariffProjection.setCity_origin("Mar del Plata");
+        tariffProjection.setCity_destination("Buenos Aires");
+        tariffProjection.setPrice_per_minute((long) 3);
+        tariffProjection.setCost_per_minute((float) 0.3);
+
+        when(tariffController.getTariffById(1)).thenReturn(tariffProjection);
+
+        ResponseEntity response = tariffBackController.getTariffById(1);
+
+        assertNotNull(response);
+        assertEquals(ResponseEntity.ok(tariffProjection), response);
+    }
+
+    @Test
     void getTariffByIdBad() {
-//        ResponseEntity responseController = (ResponseEntity) tariffController.getTariffById(null);
-//        when(responseController).thenReturn(null);
-//        ResponseEntity responseBack = tariffBackController.getTariffById(1);
-//        assertEquals(404, responseBack.getStatusCode());
+        when(tariffController.getTariffById(800)).thenReturn(null);
+
+        ResponseEntity responseController = tariffBackController.getTariffById(800);
+        assertEquals(HttpStatus.NOT_FOUND, responseController.getStatusCode());
+    }
 
 
-//        responseEntity = ResponseEntity.notFound().build();
-        ResponseEntity responseEntity = ResponseEntity.notFound().build();
-        when(tariffBackController.getTariffById(0)).thenReturn(responseEntity);
+    @Test
+    void getTariffByName() {
+        tariffProjection.setIdTariff(1);
+        tariffProjection.setCity_origin("Mar del Plata");
+        tariffProjection.setCity_destination("Buenos Aires");
+        tariffProjection.setPrice_per_minute((long) 3);
+        tariffProjection.setCost_per_minute((float) 0.3);
+
+        when(tariffController.getTariffByName("Mar del Plata", "Buenos Aires")).thenReturn(tariffProjection);
+
+        ResponseEntity response = tariffBackController.getTariffByName("Mar del Plata", "Buenos Aires");
+
+        assertNotNull(response);
+        assertEquals(ResponseEntity.ok(tariffProjection), response);
+    }
+
+    @Test
+    void getTariffByNameBad() {
+        when(tariffController.getTariffByName("Argentina", "Buenos Aires")).thenReturn(null);
+
+        ResponseEntity responseController = tariffBackController.getTariffByName("Argentina", "Buenos Aires");
+        assertEquals(HttpStatus.NOT_FOUND, responseController.getStatusCode());
     }
 
 }

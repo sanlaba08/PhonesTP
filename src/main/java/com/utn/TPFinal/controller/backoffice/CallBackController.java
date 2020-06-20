@@ -23,7 +23,6 @@ public class CallBackController {
 
     @GetMapping("/") // localhost:8080/call/dni?=4123
     public ResponseEntity<List<CallsProjection>> getCall(@RequestParam String dni) {
-
         List<CallsProjection> calls = callController.getCall(dni);
         if (calls.size() > 0) {
             return ResponseEntity.ok().body(calls);
