@@ -25,30 +25,22 @@ public class BillBackController {
     }
 
     @GetMapping("/number") // localhost:8080/bill/number?line=4123
-    public ResponseEntity<List<BillProjection>> getBill(@RequestParam String line){
-        try {
-            List<BillProjection> billsByNumber = billController.getBill(line);
-            if (billsByNumber.size() > 0) {
-                return ResponseEntity.ok().body(billsByNumber);
-            } else {
-                return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-            }
-        } catch (SQLException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    public ResponseEntity<List<BillProjection>> getBill(@RequestParam String line) {
+        List<BillProjection> billsByNumber = billController.getBillByNumber(line);
+        if (billsByNumber.size() > 0) {
+            return ResponseEntity.ok().body(billsByNumber);
+        } else {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }
     }
 
     @GetMapping("/")
     public ResponseEntity<List<BillProjection>> getBillAll() throws BillNotExistException {
-        try {
-            List<BillProjection> bills = billController.getBillAll();
-            if (bills.size() > 0) {
-                return ResponseEntity.ok().body(bills);
-            } else {
-                return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-            }
-        } catch (SQLException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        List<BillProjection> bills = billController.getBillAll();
+        if (bills.size() > 0) {
+            return ResponseEntity.ok().body(bills);
+        } else {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }
     }
 

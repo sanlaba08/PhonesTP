@@ -1,6 +1,10 @@
 package com.utn.TPFinal.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
+@Data
+@AllArgsConstructor
 public class PhoneLineByUserDto {
     private Integer user;
     private String lineType;

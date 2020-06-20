@@ -64,7 +64,7 @@ public class UserService {
         userRepository.reactiveClient(dni);
     }
 
-    public List<User> findClientByDni(String dni) {
+    public User findClientByDni(String dni) {
         return userRepository.findClientByDni(dni);
     }
 

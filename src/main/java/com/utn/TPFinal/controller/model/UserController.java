@@ -26,36 +26,35 @@ public class UserController {
     }
 
     public Integer addClient(UserPhoneDto clientPhone) throws JpaSystemException {
-       return userService.addClientPhone(clientPhone);
+        return userService.addClientPhone(clientPhone);
     }
 
-    public void deleteClient(String dni) throws JpaSystemException{
+    public void deleteClient(String dni) throws JpaSystemException {
         userService.deleteClientPhone(dni);
     }
 
-    public void suspendClient(String dni) throws UserNotExistException{
+    public void suspendClient(String dni) throws UserNotExistException {
         userService.suspendClient(dni);
     }
 
-    public void modifyClient(UserPhoneModifyDto clientPhone) throws JpaSystemException{
+    public void modifyClient(UserPhoneModifyDto clientPhone) throws JpaSystemException {
         userService.modifyClientPhone(clientPhone);
     }
 
-    public List<User> getAllEmployee(){
-       return userService.getAllEmployee();
+    public List<User> getAllEmployee() {
+        return userService.getAllEmployee();
     }
 
     public Integer addEmployee(EmployeeDto employee) throws JpaSystemException {
         return userService.addEmployee(employee);
     }
 
-
-    public List<User> getAllClients() throws UserNotExistException{
-       return userService.getAllClient();
+    public List<User> getAllClients() {
+        return userService.getAllClient();
     }
 
     public User getEmployee(String dni) {
-       return userService.getEmployeeDni(dni);
+        return userService.getEmployeeDni(dni);
     }
 
     public User login(LoginRequestDto login) throws UserNotExistException, ValidationException {
@@ -66,7 +65,7 @@ public class UserController {
         }
     }
 
-    public List<User> getClient(String dni) throws UserNotExistException {
+    public User getClient(String dni) {
         return userService.findClientByDni(dni);
     }
 

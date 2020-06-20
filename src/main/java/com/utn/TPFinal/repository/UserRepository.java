@@ -61,7 +61,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     User findEmployeeByDni(@Param("dni") String dni);
 
     @Query(value = "SELECT * FROM users u WHERE u.dni = ? and role_name = 'Client'", nativeQuery = true)
-    List<User> findClientByDni(@Param("dni") String dni);
+    User findClientByDni(@Param("dni") String dni);
 
     @Query(value = "SELECT * FROM users u WHERE role_name = 'Employee'", nativeQuery = true)
     List<User> getAllEmployee();

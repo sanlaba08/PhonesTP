@@ -13,13 +13,13 @@ import java.util.List;
 public interface BillRepository extends JpaRepository<Bill, Integer> {
 
     @Query(value = "select * " + " from v_bills_info where full_number = ?1 and paid = 0", nativeQuery = true)
-    List<BillProjection> getBillByNumber(String line) throws SQLException;
+    List<BillProjection> getBillByNumber(String line);
 
     @Query(value = "select * " + " from v_bills_info where paid = 0", nativeQuery = true)
-    List<BillProjection> getBillAll() throws SQLException;
+    List<BillProjection> getBillAll();
 
     /*Consulta de facturas por rango de fechas*/
     @Query(value ="select * from v_bills_info where dni = ? and DATE(bill_date) BETWEEN ? AND ?;", nativeQuery = true)
-    List<BillProjection> getListBillByDate(String dni,String firstDate, String secondDate) throws SQLException;
+    List<BillProjection> getListBillByDate(String dni,String firstDate, String secondDate) ;
 
 }

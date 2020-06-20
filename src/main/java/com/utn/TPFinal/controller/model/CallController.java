@@ -2,10 +2,8 @@ package com.utn.TPFinal.controller.model;
 
 import com.utn.TPFinal.dto.CallDto;
 import com.utn.TPFinal.projections.CallsProjection;
-import com.utn.TPFinal.projections.DestinationCallProjection;
 import com.utn.TPFinal.service.CallService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.stereotype.Controller;
 import java.util.List;
 
@@ -18,19 +16,19 @@ public class CallController {
         this.callService = callService;
     }
 
-    public List<CallsProjection> getCall(String dni) throws JpaSystemException{
+    public List<CallsProjection> getCall(String dni) {
         return callService.getListCall(dni);
     }
 
-    public Integer addCall(CallDto callDto) throws JpaSystemException {
+    public Integer addCall(CallDto callDto)  {
         return callService.addCall(callDto);
     }
 
-    public List<DestinationCallProjection> getCallByDestination(String dni) throws JpaSystemException{
-        return callService.getCallByDestination(dni);
+    public List<CallsProjection> getTopTenDestinations(String dni) {
+        return callService.getTopTenDestinations(dni);
     }
 
-    public List<CallsProjection> getCallByDate(String dni, String firstDate, String secondDate) throws JpaSystemException{
+    public List<CallsProjection> getCallByDate(String dni, String firstDate, String secondDate) {
         return callService.getListCallByDate(dni,firstDate, secondDate);
     }
 }

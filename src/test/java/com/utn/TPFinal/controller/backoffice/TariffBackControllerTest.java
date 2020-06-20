@@ -59,16 +59,6 @@ class TariffBackControllerTest {
     }
 
     @Test
-    void getAllTariffsEmpty() {
-        List<TariffProjection> tariffList = new ArrayList<TariffProjection>();
-
-        when(tariffController.getAllTariffs()).thenReturn(tariffList);
-        ResponseEntity<List<TariffProjection>> response = tariffBackController.getAllTariffs();
-
-        assertEquals(204, response.getStatusCodeValue());
-    }
-
-    @Test
     void getTariffByIdOk() {
         ProjectionFactory factory = new SpelAwareProxyProjectionFactory();
         TariffProjection tariffProjection = factory.createProjection(TariffProjection.class);
@@ -84,15 +74,31 @@ class TariffBackControllerTest {
     }
 
     @Test
+    void getTariffByNameOk() {
+
+    }
+
+    @Test
+    void getAllTariffsEmpty() {
+        List<TariffProjection> tariffList = new ArrayList<TariffProjection>();
+
+        when(tariffController.getAllTariffs()).thenReturn(tariffList);
+        ResponseEntity<List<TariffProjection>> response = tariffBackController.getAllTariffs();
+
+        assertEquals(204, response.getStatusCodeValue());
+    }
+
+    @Test
     void getTariffByIdBad() {
 //        ResponseEntity responseController = (ResponseEntity) tariffController.getTariffById(null);
 //        when(responseController).thenReturn(null);
 //        ResponseEntity responseBack = tariffBackController.getTariffById(1);
 //        assertEquals(404, responseBack.getStatusCode());
-    }
 
 
-    @Test
-    void getTariffByName() {
+//        responseEntity = ResponseEntity.notFound().build();
+        ResponseEntity responseEntity = ResponseEntity.notFound().build();
+        when(tariffBackController.getTariffById(0)).thenReturn(responseEntity);
     }
+
 }

@@ -3,7 +3,6 @@ package com.utn.TPFinal.controller.web;
 import com.utn.TPFinal.controller.model.CallController;
 import com.utn.TPFinal.model.User;
 import com.utn.TPFinal.projections.CallsProjection;
-import com.utn.TPFinal.projections.DestinationCallProjection;
 import com.utn.TPFinal.session.SessionManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,9 +23,9 @@ public class CallWebController {
     }
 
     @GetMapping("/destination") // localhost:8080/call/dni?=4123
-    public ResponseEntity<List<DestinationCallProjection>> getCallByDestination(@RequestHeader("Authorization") String sessionToken) {
+    public ResponseEntity<List<CallsProjection>> getCallByDestination(@RequestHeader("Authorization") String sessionToken) {
         User session = sessionManager.getCurrentUser(sessionToken);
-        List<DestinationCallProjection> callDestination = callController.getCallByDestination(session.getDni());
+        List<CallsProjection> callDestination = callController.getTopTenDestinations(session.getDni());
         if (callDestination.size() > 0) {
             return ResponseEntity.status(HttpStatus.ACCEPTED).body(callDestination);
         } else {

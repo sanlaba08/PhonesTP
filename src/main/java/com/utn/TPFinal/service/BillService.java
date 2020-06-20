@@ -15,15 +15,15 @@ public class BillService {
         this.billRepository = billRepository;
     }
 
-    public List<BillProjection> getBillByNumber(String line) throws SQLException {
+    public List<BillProjection> getBillByNumber(String line) /*throws SQLException */{
         return billRepository.getBillByNumber(line);
     }
 
-    public List<BillProjection> getBillAll() throws SQLException{
+    public List<BillProjection> getBillAll()/* throws SQLException*/{
         return billRepository.getBillAll();
     }
 
-    public List<BillProjection> getListBillByDate(String dni, String firstDate, String secondDate) throws SQLException{
+    public List<BillProjection> getListBillByDate(String dni, String firstDate, String secondDate){
         return billRepository.getListBillByDate(dni,firstDate, secondDate);
     }
 

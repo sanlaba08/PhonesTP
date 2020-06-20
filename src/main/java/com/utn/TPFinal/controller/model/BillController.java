@@ -17,15 +17,15 @@ public class BillController {
         this.billService = billService;
     }
 
-    public List<BillProjection> getBill(String line) throws SQLException {
+    public List<BillProjection> getBillByNumber(String line)  {
         return billService.getBillByNumber(line);
     }
 
-    public List<BillProjection> getBillAll() throws SQLException {
+    public List<BillProjection> getBillAll()  {
         return billService.getBillAll();
     }
 
-    public List<BillProjection> getBillDate(String dni, String first, String second) throws SQLException {
+    public List<BillProjection> getBillDate(String dni, String first, String second)  {
         return billService.getListBillByDate(dni, first, second);
     }
 }
