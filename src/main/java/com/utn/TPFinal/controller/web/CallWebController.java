@@ -1,8 +1,10 @@
 package com.utn.TPFinal.controller.web;
 
 import com.utn.TPFinal.controller.model.CallController;
+import com.utn.TPFinal.dto.ErrorResponseDto;
 import com.utn.TPFinal.model.User;
 import com.utn.TPFinal.projections.CallsProjection;
+import com.utn.TPFinal.projections.TopTenCallProjection;
 import com.utn.TPFinal.session.SessionManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,27 +25,26 @@ public class CallWebController {
     }
 
     @GetMapping("/destination") // localhost:8080/call/dni?=4123
-    public ResponseEntity<List<CallsProjection>> getCallByDestination(@RequestHeader("Authorization") String sessionToken) {
+    public ResponseEntity<List<TopTenCallProjection>> getTopTenDestinations(@RequestHeader("Authorization") String sessionToken) {
         User session = sessionManager.getCurrentUser(sessionToken);
-        List<CallsProjection> callDestination = callController.getTopTenDestinations(session.getDni());
+        List<TopTenCallProjection> callDestination = callController.getTopTenDestinations(session.getDni());
         if (callDestination.size() > 0) {
-            return ResponseEntity.status(HttpStatus.ACCEPTED).body(callDestination);
+            return ResponseEntity.ok().body(callDestination);
         } else {
             return ResponseEntity.noContent().build();
         }
     }
 
     @GetMapping("/date") // localhost:8080/call/date?first=31-05-2019
-    public ResponseEntity<List<CallsProjection>> getCallByDate(@RequestHeader("Authorization") String sessionToken,
-                                                               @RequestParam String first,
-                                                               @RequestParam String second) {
+    public ResponseEntity<List<CallsProjection>> getCallByDate(@RequestHeader("Authorization") String sessionToken, @RequestParam String first, @RequestParam String second) {
         if (first.compareTo(second) > 0) {
-            return ResponseEntity.badRequest().build(); //revisar jeje
+//            ErrorResponseDto error = new ErrorResponseDto(10, "The first date cannot be greater than the second");
+            return ResponseEntity.badRequest().build();
         } else {
             User session = sessionManager.getCurrentUser(sessionToken);
             List<CallsProjection> callByDate = callController.getCallByDate(session.getDni(), first, second);
             if (callByDate.size() > 0) {
-                return ResponseEntity.status(HttpStatus.ACCEPTED).body(callByDate);
+                return ResponseEntity.ok().body(callByDate);
             } else {
                 return ResponseEntity.noContent().build();
             }

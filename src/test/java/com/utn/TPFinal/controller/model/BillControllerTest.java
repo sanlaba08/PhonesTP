@@ -43,7 +43,7 @@ class BillControllerTest {
         billProjection.setTotal_cost(200);
         billProjection.setBill_date(new Date());
         billProjection.setExpiration_date(new Date());
-        billProjection.setPaid(false);
+
 
         billList = new ArrayList<>();
         billList.add(billProjection);

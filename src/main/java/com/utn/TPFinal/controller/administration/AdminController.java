@@ -11,6 +11,7 @@ import com.utn.TPFinal.exceptions.IncorrectDataCallException;
 import com.utn.TPFinal.exceptions.PhoneLineException;
 import com.utn.TPFinal.exceptions.UserNotExistException;
 import com.utn.TPFinal.model.User;
+import com.utn.TPFinal.projections.TariffProjection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -60,11 +61,12 @@ public class AdminController {
     // Consulta de empleado (Opcional).
     @GetMapping("employee/number")
     public ResponseEntity getEmployee(@RequestParam String dni) {
-        ResponseEntity responseEntity = ResponseEntity.ok(userController.getEmployee(dni));
-        if (responseEntity.getBody() == null) {
-            responseEntity = ResponseEntity.notFound().build();
+        User employee = userController.getEmployee(dni);
+        if(employee == null){
+            return ResponseEntity.notFound().build();
+        } else{
+            return ResponseEntity.ok(employee);
         }
-        return responseEntity;
     }
 
     @PostMapping("tariff/")

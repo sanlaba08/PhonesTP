@@ -16,8 +16,7 @@ public interface CallsProjection {
     Integer getTotal_price();
     Float getTotal_cost();
     Date getCall_date();
-    boolean getBilled();
-    Integer getCant();
+
 
     void getFull_name_o(String Full_name_o);
     void getDni_user_origin(String Dni_user_origin);
@@ -32,6 +31,6 @@ public interface CallsProjection {
     void setTotal_price(Integer totalPrice);
     void setTotal_cost(Float totalCost);
     void setCall_date(Date callDate);
-    void setBilled(boolean b);
+
 
 }

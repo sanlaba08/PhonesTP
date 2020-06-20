@@ -29,7 +29,6 @@ public class CallBackController {
         } else {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }
-
     }
 
 

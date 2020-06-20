@@ -74,7 +74,7 @@ public class ClientBackController {
     }
 
     @GetMapping("/")
-    public ResponseEntity<List<User>> getAllClients() throws UserNotExistException {
+    public ResponseEntity<List<User>> getAllClients() {
         List<User> clients = userController.getAllClients();
 
         if (clients.size() > 0) {
@@ -85,12 +85,12 @@ public class ClientBackController {
     }
 
     @GetMapping("/number")
-    public ResponseEntity<User> getClientPhoneLine(@RequestParam String dni) throws UserNotExistException {
+    public ResponseEntity<User> getClientPhoneLine(@RequestParam String dni){
         User clients = userController.getClient(dni);
         if (clients != null) {
             return ResponseEntity.ok().body(clients);
         } else {
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+            return ResponseEntity.notFound().build();
         }
     }
 

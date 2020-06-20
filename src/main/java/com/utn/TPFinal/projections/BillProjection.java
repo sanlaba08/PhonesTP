@@ -13,9 +13,7 @@ public interface BillProjection {
     Long getTotal_cost();
     Date getBill_date();
     Date getExpiration_date();
-    boolean getPaid();
 
-    //esto es para el test
     void setComplete_name(String name);
     void setDni(String dni);
     void setFull_number(String number);
@@ -24,7 +22,6 @@ public interface BillProjection {
     void setTotal_cost(long total_cost);
     void setBill_date(Date billDate);
     void setExpiration_date(Date expirationDate);
-    void setPaid(boolean paid);
 
 }
 

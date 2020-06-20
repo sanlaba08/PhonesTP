@@ -3,6 +3,7 @@ package com.utn.TPFinal.controller.model;
 import com.utn.TPFinal.controller.backoffice.TariffBackController;
 import com.utn.TPFinal.projections.BillProjection;
 import com.utn.TPFinal.projections.CallsProjection;
+import com.utn.TPFinal.projections.TopTenCallProjection;
 import com.utn.TPFinal.service.CallService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,6 +24,7 @@ class CallControllerTest {
     private CallController callController;
     private CallsProjection callsProjection;
     private List<CallsProjection> calls;
+    private TopTenCallProjection topTenCallProjection;
 
     @Mock
     private CallService callService;
@@ -34,6 +36,9 @@ class CallControllerTest {
 
         ProjectionFactory factory = new SpelAwareProxyProjectionFactory();
         this.callsProjection = factory.createProjection(CallsProjection.class);
+
+        ProjectionFactory factoryTop = new SpelAwareProxyProjectionFactory();
+        this.topTenCallProjection = factory.createProjection(TopTenCallProjection.class);
 
         callsProjection.setOrigin_line("02236493784");
         callsProjection.setOrigin_city("Mar del Plata");
@@ -61,13 +66,19 @@ class CallControllerTest {
 
     @Test
     void getTopTenDestinations() {
+        topTenCallProjection.setFull_name_o("Santiago Labatut");
+        topTenCallProjection.setDestination_city("Mar del Plata");
+        topTenCallProjection.setCant(5);
 
-        when(callService.getTopTenDestinations("42231235")).thenReturn(calls);
+        List<TopTenCallProjection> topCalls = new ArrayList<TopTenCallProjection>();
+        topCalls.add(topTenCallProjection);
 
-        List<CallsProjection> aux = callController.getTopTenDestinations("42231235");
+        when(callService.getTopTenDestinations("42231235")).thenReturn(topCalls);
+
+        List<TopTenCallProjection> aux = callController.getTopTenDestinations("42231235");
 
         assertNotNull(aux);
-        assertEquals(aux, calls);
+        assertEquals(aux, topCalls);
         verify(callService,times(1)).getTopTenDestinations("42231235");
     }
 

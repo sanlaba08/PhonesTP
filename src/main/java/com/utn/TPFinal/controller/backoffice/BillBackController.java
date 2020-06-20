@@ -30,7 +30,7 @@ public class BillBackController {
         if (billsByNumber.size() > 0) {
             return ResponseEntity.ok().body(billsByNumber);
         } else {
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+            return ResponseEntity.noContent().build();
         }
     }
 
@@ -40,7 +40,7 @@ public class BillBackController {
         if (bills.size() > 0) {
             return ResponseEntity.ok().body(bills);
         } else {
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+            return ResponseEntity.noContent().build();
         }
     }
 

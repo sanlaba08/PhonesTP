@@ -2,26 +2,17 @@ package com.utn.TPFinal.controller.backoffice;
 
 import com.utn.TPFinal.controller.model.BillController;
 import com.utn.TPFinal.projections.BillProjection;
-import com.utn.TPFinal.projections.CallsProjection;
-import com.utn.TPFinal.repository.BillRepository;
-import org.junit.Before;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.springframework.data.projection.ProjectionFactory;
 import org.springframework.data.projection.SpelAwareProxyProjectionFactory;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
@@ -51,7 +42,6 @@ class BillBackControllerTest {
        billProjection.setTotal_cost((long) 500);
        billProjection.setBill_date(new Date());
        billProjection.setExpiration_date(new Date());
-       billProjection.setPaid(false);
 
         List<BillProjection> bills = new ArrayList<BillProjection>();
         bills.add(billProjection);
@@ -83,7 +73,6 @@ class BillBackControllerTest {
         billProjection.setTotal_cost((long) 500);
         billProjection.setBill_date(new Date());
         billProjection.setExpiration_date(new Date());
-        billProjection.setPaid(false);
 
         List<BillProjection> bills = new ArrayList<BillProjection>();
         bills.add(billProjection);

@@ -27,7 +27,7 @@ public class BillWebController {
     @GetMapping("/date")
     public ResponseEntity <List<BillProjection>> getBillDate(@RequestHeader("Authorization") String sessionToken,
                                                              @RequestParam String first,
-                                                             @RequestParam String second) throws SQLException {
+                                                             @RequestParam String second){
         User session = sessionManager.getCurrentUser(sessionToken);
         List<BillProjection> billsByDate = billController.getBillDate(session.getDni(),first, second);
         if (billsByDate.size() > 0){
