@@ -1,14 +1,13 @@
 package com.utn.TPFinal.controller.model;
 
+import com.utn.TPFinal.dto.TariffDto;
 import com.utn.TPFinal.projections.TariffProjection;
 import com.utn.TPFinal.service.TariffService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.springframework.data.projection.ProjectionFactory;
 import org.springframework.data.projection.SpelAwareProxyProjectionFactory;
-import org.springframework.http.ResponseEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,11 +41,7 @@ class TariffControllerTest {
 
     @Test
     void getAllTariffsOk() {
-//        tariffProjection.setIdTariff(1);
-//        tariffProjection.setCity_origin("Buenos Aires");
-//        tariffProjection.setCity_destination("Buenos Aires");
-//        tariffProjection.setPrice_per_minute((long) 3);
-//        tariffProjection.setCost_per_minute((float) 0.3);
+
         List<TariffProjection> tarifs = new ArrayList<>();
         tarifs.add(tariffProjection);
 
@@ -61,11 +56,6 @@ class TariffControllerTest {
 
     @Test
     void getTariffByIdOk() {
-//        tariffProjection.setIdTariff(1);
-//        tariffProjection.setCity_origin("Buenos Aires");
-//        tariffProjection.setCity_destination("Buenos Aires");
-//        tariffProjection.setPrice_per_minute((long) 3);
-//        tariffProjection.setCost_per_minute((float) 0.3);
 
         when(tariffService.getTariffById(1)).thenReturn(tariffProjection);
 
@@ -78,11 +68,6 @@ class TariffControllerTest {
 
     @Test
     void getTariffByNameOk() {
-//        tariffProjection.setIdTariff(1);
-//        tariffProjection.setCity_origin("Buenos Aires");
-//        tariffProjection.setCity_destination("Buenos Aires");
-//        tariffProjection.setPrice_per_minute((long) 3);
-//        tariffProjection.setCost_per_minute((float) 0.3);
 
         when(tariffController.getTariffByName("Buenos Aires","Buenos Aires")).thenReturn(tariffProjection);
         TariffProjection aux = tariffService.getTariffByName("Buenos Aires","Buenos Aires");
@@ -93,6 +78,9 @@ class TariffControllerTest {
 
     @Test
     void addTariffOk() {
-        
+        when(tariffService.addTariff(new TariffDto())).thenReturn(1);
+        Integer response = tariffController.addTariff(new TariffDto());
+        assertEquals(response,1);
+        verify(tariffService,times(1)).addTariff(new TariffDto());
     }
 }

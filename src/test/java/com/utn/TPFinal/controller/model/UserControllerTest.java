@@ -1,5 +1,9 @@
 package com.utn.TPFinal.controller.model;
 
+import com.utn.TPFinal.dto.EmployeeDto;
+import com.utn.TPFinal.dto.TariffDto;
+import com.utn.TPFinal.dto.UserPhoneDto;
+import com.utn.TPFinal.dto.UserPhoneModifyDto;
 import com.utn.TPFinal.model.User;
 import com.utn.TPFinal.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
@@ -83,4 +87,52 @@ class UserControllerTest {
         verify(userService,times(1)).findClientByDni("41686701");
 
     }
+
+    @Test
+    void addClientOk() {
+        when(userService.addClientPhone(new UserPhoneDto())).thenReturn(1);
+        Integer response = userController.addClient(new UserPhoneDto());
+        assertEquals(response,1);
+        verify(userService,times(1)).addClientPhone(new UserPhoneDto());
+    }
+
+    @Test
+    void deleteClientOk() {
+        doNothing().when(userService).deleteClientPhone(any());
+        userController.deleteClient(any());
+        verify(userService,times(1)).deleteClientPhone(any());
+    }
+
+    @Test
+    void suspendClient() {
+        doNothing().when(userService).suspendClient("123");
+        userController.suspendClient("123");
+        verify(userService,times(1)).suspendClient("123");
+    }
+
+    @Test
+    void modifyClient() {
+        UserPhoneModifyDto user = new UserPhoneModifyDto(1,"manu","sure","123","321",1,"Mobile");
+        doNothing().when(userService).modifyClientPhone(user);
+        userController.modifyClient(user);
+        verify(userService,times(1)).modifyClientPhone(user);
+    }
+
+    @Test
+    void addEmployee() {
+        EmployeeDto employeeDto = new EmployeeDto("manu","sure","321","321",1);
+        when(userService.addEmployee(employeeDto)).thenReturn(1);
+        Integer response = userController.addEmployee(employeeDto);
+        assertEquals(response,1);
+        verify(userService,times(1)).addEmployee(employeeDto);
+    }
+
+
+    @Test
+    void reactiveClient() {
+        doNothing().when(userService).reactiveClient("123");
+        userController.reactiveClient("123");
+        verify(userService,times(1)).reactiveClient("123");
+    }
+
 }
