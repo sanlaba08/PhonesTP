@@ -1,9 +1,8 @@
 package com.utn.TPFinal.controller.model;
 
-import com.utn.TPFinal.dto.EmployeeDto;
-import com.utn.TPFinal.dto.TariffDto;
-import com.utn.TPFinal.dto.UserPhoneDto;
-import com.utn.TPFinal.dto.UserPhoneModifyDto;
+import com.utn.TPFinal.dto.*;
+import com.utn.TPFinal.exceptions.UserNotExistException;
+import com.utn.TPFinal.exceptions.ValidationException;
 import com.utn.TPFinal.model.User;
 import com.utn.TPFinal.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,6 +12,7 @@ import org.mockito.Mock;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.utn.TPFinal.model.UserType.Admin;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -134,5 +134,37 @@ class UserControllerTest {
         userController.reactiveClient("123");
         verify(userService,times(1)).reactiveClient("123");
     }
+
+    @Test
+    void loginOk() throws UserNotExistException, ValidationException {
+        User loggedUser = new User(1, "Santiago", "Labatut", "41686701", "santi", 1, null, Admin, null);
+        LoginRequestDto login = new LoginRequestDto("41686701", "santi");
+        //Cuando llame al mock service.login devuelvo el logged user
+        when(userService.login(login)).thenReturn(loggedUser);
+
+        User returnedUser = userController.login(login);
+
+        //Hacemos los assert
+        assertEquals(loggedUser.getDni(), returnedUser.getDni());
+        assertEquals(loggedUser.getUserPassword(), returnedUser.getUserPassword());
+        verify(userService, times(1)).login(login);
+    }
+
+    @Test
+    public void testLoginUserNotFound() throws UserNotExistException, ValidationException {
+        LoginRequestDto loginRequestDto = new LoginRequestDto("41686701", "santi");
+        when(userService.login(loginRequestDto)).thenThrow(new UserNotExistException("Incorrect user data"));
+        assertThrows(UserNotExistException.class, () -> {
+            userController.login(loginRequestDto);
+        });
+    }
+
+    @Test
+    public void testLoginInvalidData() throws UserNotExistException, ValidationException {
+        assertThrows(ValidationException.class, () -> {
+            userController.login(new LoginRequestDto(null, "bla"));
+        });
+    }
+
 
 }

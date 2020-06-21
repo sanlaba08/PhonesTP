@@ -15,11 +15,11 @@ public class BillService {
         this.billRepository = billRepository;
     }
 
-    public List<BillProjection> getBillByNumber(String line) /*throws SQLException */{
+    public List<BillProjection> getBillByNumber(String line){
         return billRepository.getBillByNumber(line);
     }
 
-    public List<BillProjection> getBillAll()/* throws SQLException*/{
+    public List<BillProjection> getBillAll(){
         return billRepository.getBillAll();
     }
 

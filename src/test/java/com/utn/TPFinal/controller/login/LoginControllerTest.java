@@ -36,7 +36,7 @@ class LoginControllerTest {
     SessionManager sessionManager;
 
     @Mock
-    private  UserController userController;
+    private UserController userController;
 
     @BeforeEach
     void setUp() {
@@ -56,6 +56,17 @@ class LoginControllerTest {
 
         assertNotNull(response);
         assertEquals(responseEntity.getStatusCode(), response.getStatusCode());
+    }
+
+    @Test
+    void loginBad() throws UserNotExistException, ValidationException, InvalidLoginException {
+        LoginRequestDto loginRequestDto = new LoginRequestDto("41686701", "santi");
+        when(userController.login(loginRequestDto)).thenThrow(new UserNotExistException("Incorrect user data"));
+
+        assertThrows(InvalidLoginException.class, () -> {
+            loginController.login(loginRequestDto);
+        });
+
     }
 
     @Test

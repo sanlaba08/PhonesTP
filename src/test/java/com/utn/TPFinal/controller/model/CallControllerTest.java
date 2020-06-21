@@ -1,6 +1,8 @@
 package com.utn.TPFinal.controller.model;
 
 import com.utn.TPFinal.controller.backoffice.TariffBackController;
+import com.utn.TPFinal.dto.CallDto;
+import com.utn.TPFinal.dto.TariffDto;
 import com.utn.TPFinal.projections.BillProjection;
 import com.utn.TPFinal.projections.CallsProjection;
 import com.utn.TPFinal.projections.TopTenCallProjection;
@@ -95,6 +97,10 @@ class CallControllerTest {
     }
 
     @Test
-    void addCall() {
+    void addCallOk() {
+        when(callService.addCall(new CallDto())).thenReturn(1);
+        Integer response = callController.addCall(new CallDto());
+        assertEquals(response,1);
+        verify(callService,times(1)).addCall(new CallDto());
     }
 }

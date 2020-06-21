@@ -10,6 +10,7 @@ import com.utn.TPFinal.exceptions.EmployeeException;
 import com.utn.TPFinal.exceptions.IncorrectDataCallException;
 import com.utn.TPFinal.exceptions.PhoneLineException;
 import com.utn.TPFinal.model.User;
+import com.utn.TPFinal.service.UserService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -38,6 +39,7 @@ class AdminControllerTest {
     private CallController callController;
     @Mock
     private UserController userController;
+
     @BeforeEach
     void setUp() {
         initMocks(this);
@@ -58,9 +60,8 @@ class AdminControllerTest {
 
 //    @Test()
 //    void addEmployeeExceptionEmployee() throws URISyntaxException, EmployeeException {
-//        EmployeeDto employee = new EmployeeDto("Santiago", "Labatut", "41686701", "santi", 1);
-//
-//        when(userController.addEmployee(employee)).thenThrow(new JpaSystemException(new RuntimeException()));
+//        EmployeeDto employee = new EmployeeDto(null, "", "", "", 1);
+//        when(userController.addEmployee(employee)).thenThrow(new JpaSystemException(new RuntimeException("Incorrect user data")));
 //
 //        assertThrows(EmployeeException.class, () -> {
 //            adminController.addEmployee(employee);
