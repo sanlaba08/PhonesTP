@@ -22,7 +22,6 @@ public class Configuration {
 
     @Autowired
     SessionFilter sessionFilter;
-    SessionManager sessionManager;
 
     @Autowired
     SuperSessionFilter superSessionFilter;

@@ -37,7 +37,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     @Transactional
     @Procedure(procedureName = "sp_client_line_suspend")
-    void suspendClient(@Param("pDni") String dni) throws UserNotExistException;
+    void suspendClient(@Param("pDni") String dni) throws JpaSystemException;
 
     @Transactional
     @Procedure(procedureName = "sp_modify_client")
@@ -50,22 +50,22 @@ public interface UserRepository extends JpaRepository<User, Integer> {
                            @Param("pLineType") String lineType) throws JpaSystemException;
 
 
-    @Query(value = "SELECT * FROM users u WHERE u.dni = ? and u.user_password = ?", nativeQuery = true)
+    @Query(value = "SELECT * FROM users u WHERE u.dni = ? and u.user_password = ? and available = 1", nativeQuery = true)
     User getByUsername(@Param("dni") String dni, @Param("user_password") String password);
 
     @Transactional
     @Procedure(procedureName = "sp_client_reactive")
-    void reactiveClient(@Param("pDni") String dni) throws UserNotExistException;
+    void reactiveClient(@Param("pDni") String dni) throws JpaSystemException;
 
-    @Query(value = "SELECT * FROM users u WHERE u.dni = ? and role_name = 'Employee'", nativeQuery = true)
+    @Query(value = "SELECT * FROM users u WHERE u.dni = ? and role_name = 'Employee' and available = 1 ", nativeQuery = true)
     User findEmployeeByDni(@Param("dni") String dni);
 
-    @Query(value = "SELECT * FROM users u WHERE u.dni = ? and role_name = 'Client'", nativeQuery = true)
+    @Query(value = "SELECT * FROM users u WHERE u.dni = ? and role_name = 'Client' and available = 1", nativeQuery = true)
     User findClientByDni(@Param("dni") String dni);
 
-    @Query(value = "SELECT * FROM users u WHERE role_name = 'Employee'", nativeQuery = true)
+    @Query(value = "SELECT * FROM users u WHERE role_name = 'Employee' and available = 1", nativeQuery = true)
     List<User> getAllEmployee();
 
-    @Query(value = "SELECT * FROM users u WHERE role_name = 'Client'", nativeQuery = true)
+    @Query(value = "SELECT * FROM users u WHERE role_name = 'Client' and available = 1", nativeQuery = true)
     List<User> getAllClient();
 }

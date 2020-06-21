@@ -1,7 +1,9 @@
 package com.utn.TPFinal.controller.backoffice;
 
 import com.utn.TPFinal.controller.model.BillController;
+import com.utn.TPFinal.controller.model.UserController;
 import com.utn.TPFinal.exceptions.BillNotExistException;
+import com.utn.TPFinal.model.User;
 import com.utn.TPFinal.projections.BillProjection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,23 +27,23 @@ public class BillBackController {
     }
 
     @GetMapping("/number") // localhost:8080/bill/number?line=4123
-    public ResponseEntity<List<BillProjection>> getBillbyNumber(@RequestParam String line){
-        List<BillProjection> billsByNumber = billController.getBillByNumber(line);
-        if (billsByNumber.size() > 0) {
-            return ResponseEntity.ok().body(billsByNumber);
-        } else {
-            return ResponseEntity.noContent().build();
+    public ResponseEntity<List<BillProjection>> getBillbyNumber(@RequestParam String line) {
+            List<BillProjection> billsByNumber = billController.getBillByNumber(line);
+            if (billsByNumber.size() > 0) {
+                return ResponseEntity.ok().body(billsByNumber);
+            } else {
+                return ResponseEntity.noContent().build();
+            }
         }
-    }
 
-    @GetMapping("/")
-    public ResponseEntity<List<BillProjection>> getBillAll(){
-        List<BillProjection> bills = billController.getBillAll();
-        if (bills.size() > 0) {
-            return ResponseEntity.ok().body(bills);
-        } else {
-            return ResponseEntity.noContent().build();
+        @GetMapping("/")
+        public ResponseEntity<List<BillProjection>> getBillAll () {
+            List<BillProjection> bills = billController.getBillAll();
+            if (bills.size() > 0) {
+                return ResponseEntity.ok().body(bills);
+            } else {
+                return ResponseEntity.noContent().build();
+            }
         }
-    }
 
-}
+    }

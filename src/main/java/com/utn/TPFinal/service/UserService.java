@@ -34,7 +34,7 @@ public class UserService {
         userRepository.deleteClientPhone(dni);
     }
 
-    public void suspendClient(String dni) throws UserNotExistException {
+    public void suspendClient(String dni) throws JpaSystemException {
         userRepository.suspendClient(dni);
     }
 
@@ -60,7 +60,7 @@ public class UserService {
     }
 
 
-    public void reactiveClient(String dni) throws UserNotExistException{
+    public void reactiveClient(String dni) throws JpaSystemException{
         userRepository.reactiveClient(dni);
     }
 

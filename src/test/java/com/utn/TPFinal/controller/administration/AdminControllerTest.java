@@ -3,9 +3,12 @@ package com.utn.TPFinal.controller.administration;
 import com.utn.TPFinal.controller.model.CallController;
 import com.utn.TPFinal.controller.model.TariffController;
 import com.utn.TPFinal.controller.model.UserController;
+import com.utn.TPFinal.dto.CallDto;
 import com.utn.TPFinal.dto.EmployeeDto;
 import com.utn.TPFinal.dto.TariffDto;
 import com.utn.TPFinal.exceptions.EmployeeException;
+import com.utn.TPFinal.exceptions.IncorrectDataCallException;
+import com.utn.TPFinal.exceptions.PhoneLineException;
 import com.utn.TPFinal.model.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,6 +21,7 @@ import org.springframework.orm.jpa.JpaSystemException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static com.utn.TPFinal.model.UserType.Admin;
@@ -52,16 +56,16 @@ class AdminControllerTest {
         verify(userController, times(1)).addEmployee(employee);
     }
 
-    @Test()
-    void addEmployeeExceptionEmployee() throws URISyntaxException, EmployeeException {
-        EmployeeDto employee = new EmployeeDto("Santiago", "Labatut", "41686701", "santi", 1);
-
-        when(userController.addEmployee(employee)).thenThrow(new JpaSystemException(new RuntimeException()));
-
-        assertThrows(EmployeeException.class, () -> {
-            adminController.addEmployee(employee);
-        });
-    }
+//    @Test()
+//    void addEmployeeExceptionEmployee() throws URISyntaxException, EmployeeException {
+//        EmployeeDto employee = new EmployeeDto("Santiago", "Labatut", "41686701", "santi", 1);
+//
+//        when(userController.addEmployee(employee)).thenThrow(new JpaSystemException(new RuntimeException()));
+//
+//        assertThrows(EmployeeException.class, () -> {
+//            adminController.addEmployee(employee);
+//        });
+//    }
 
 
     @Test
@@ -108,18 +112,26 @@ class AdminControllerTest {
     }
 
     @Test
-    void addTariff() {
-//        TariffDto employee = new TariffDto("Mar del Plata", "Buenos Aires", 10, 30);
-//        Integer idUser = 1;
-//        when(userController.addEmployee(employee)).thenReturn(idUser);
-//        ResponseEntity responseEntity = ResponseEntity.created(new URI("http://localhost:8080/admin/employee/" + idUser)).body(employee);
-//
-//        assertNotNull(responseEntity);
-//        assertEquals(responseEntity, adminController.addEmployee(employee));
-//        verify(userController, times(1)).addEmployee(employee);
+    void addTariffOk() throws URISyntaxException, PhoneLineException {
+        TariffDto tariff = new TariffDto("Mar del Plata", "Buenos Aires", 10, 30);
+        Integer idTariff = 1;
+        when(tariffController.addTariff(tariff)).thenReturn(idTariff);
+        ResponseEntity responseEntity = ResponseEntity.created(new URI("http://localhost:8080/admin/tariff/" + idTariff)).body(tariff);
+
+        assertNotNull(responseEntity);
+        assertEquals(responseEntity, adminController.addTariff(tariff));
+        verify(tariffController, times(1)).addTariff(tariff);
     }
 
     @Test
-    void addCall() {
+    void addCallOk() throws IncorrectDataCallException, URISyntaxException {
+        CallDto call = new CallDto("02235351545", "02236162410", (long) 1200, new Date());
+        Integer idCall = 1;
+        when(callController.addCall(call)).thenReturn(idCall);
+        ResponseEntity responseEntity = ResponseEntity.created(new URI("http://localhost:8080/admin/call/" + idCall)).body(call);
+
+        assertNotNull(responseEntity);
+        assertEquals(responseEntity, adminController.addCall(call));
+        verify(callController, times(1)).addCall(call);
     }
 }

@@ -6,7 +6,6 @@ import com.utn.TPFinal.dto.UserPhoneModifyDto;
 import com.utn.TPFinal.exceptions.UserAllReadyExistException;
 import com.utn.TPFinal.exceptions.UserNotExistException;
 import com.utn.TPFinal.model.User;
-import com.utn.TPFinal.session.SessionManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,12 +19,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/backoffice/client")
 public class ClientBackController {
-    private final SessionManager sessionManager;
     private final UserController userController;
 
     @Autowired
-    public ClientBackController(SessionManager sessionManager, UserController userController) {
-        this.sessionManager = sessionManager;
+    public ClientBackController(UserController userController) {
         this.userController = userController;
     }
 

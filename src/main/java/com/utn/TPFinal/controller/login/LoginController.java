@@ -26,11 +26,10 @@ public class LoginController {
 
     @PostMapping("/")
     public ResponseEntity login(@RequestBody LoginRequestDto loginRequestDto) throws InvalidLoginException, ValidationException {
-        String token = null;
         ResponseEntity response;
         try {
             User u = userController.login(loginRequestDto);
-            token = sessionManager.createSession(u);
+            String token = sessionManager.createSession(u);
             response = ResponseEntity.ok().headers(createHeaders(token)).build();
         } catch (UserNotExistException e) {
             throw new InvalidLoginException(e);
