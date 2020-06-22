@@ -1,6 +1,7 @@
 package com.utn.TPFinal.controller.model;
 
 import com.utn.TPFinal.dto.PhoneLineByUserDto;
+import com.utn.TPFinal.projections.ClientProjection;
 import com.utn.TPFinal.service.PhoneLineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.jpa.JpaSystemException;
@@ -25,5 +26,9 @@ public class PhoneLineController {
 
     public void enablePhoneLine(Integer idLine) throws JpaSystemException {
         phoneLineService.enablePhoneLine(idLine);
+    }
+
+    public ClientProjection getClientLine(String line) {
+        return phoneLineService.getClientLine(line);
     }
 }

@@ -60,8 +60,9 @@ class AdminControllerTest {
 
 //    @Test()
 //    void addEmployeeExceptionEmployee() throws URISyntaxException, EmployeeException {
-//        EmployeeDto employee = new EmployeeDto(null, "", "", "", 1);
-//        when(userController.addEmployee(employee)).thenThrow(new JpaSystemException(new RuntimeException("Incorrect user data")));
+//        EmployeeDto employee = new EmployeeDto("Santi", "Labatut", "41686701", "santi", 1);
+//        when(userController.addEmployee(employee)).thenThrow(new JpaSystemException(
+//                new RuntimeException("Incorrect user data")));
 //
 //        assertThrows(EmployeeException.class, () -> {
 //            adminController.addEmployee(employee);

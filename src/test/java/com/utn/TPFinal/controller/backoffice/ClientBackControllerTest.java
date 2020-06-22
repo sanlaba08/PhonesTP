@@ -127,7 +127,12 @@ class ClientBackControllerTest {
     }
 
     @Test
-    void reactiveClient() {
+    void reactiveClient() throws UserNotExistException {
+        doNothing().when(userController).reactiveClient("41686701");
+        ResponseEntity responseEntity = clientBackController.reactiveClient("41686701");
+
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        verify(userController, times(1)).reactiveClient("41686701");
     }
 
 }

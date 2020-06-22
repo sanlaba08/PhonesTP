@@ -9,11 +9,13 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
@@ -43,10 +45,21 @@ class PhoneLineBackControllerTest {
     }
 
     @Test
-    void deletePhoneLine() {
+    void deletePhoneLine() throws PhoneLineException {
+        doNothing().when(phoneLineController).deletePhoneLine(1);
+        ResponseEntity responseEntity = phoneLineBackController.deletePhoneLine(1);
+
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        verify(phoneLineController, times(1)).deletePhoneLine(1);
     }
 
+
     @Test
-    void enablePhoneLine() {
+    void enablePhoneLine() throws PhoneLineException {
+        doNothing().when(phoneLineController).enablePhoneLine(1);
+        ResponseEntity responseEntity = phoneLineBackController.enablePhoneLine(1);
+
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        verify(phoneLineController, times(1)).enablePhoneLine(1);
     }
 }

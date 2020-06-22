@@ -1,8 +1,10 @@
 package com.utn.TPFinal.controller.backoffice;
 
 import com.utn.TPFinal.controller.model.BillController;
+import com.utn.TPFinal.controller.model.PhoneLineController;
 import com.utn.TPFinal.projections.BillProjection;
 
+import com.utn.TPFinal.projections.ClientProjection;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -20,16 +22,23 @@ class BillBackControllerTest {
 
     private BillBackController billBackController;
     private BillProjection billProjection;
+    private ClientProjection clientProjection;
 
     @Mock
     private BillController billController;
 
+    @Mock
+    private PhoneLineController phoneLineController;
+
     @BeforeEach
     void setUp() {
         initMocks(this);
-        billBackController = new BillBackController(billController);
-        ProjectionFactory factory = new SpelAwareProxyProjectionFactory();
-        billProjection = factory.createProjection(BillProjection.class);
+        billBackController = new BillBackController(billController, phoneLineController);
+        ProjectionFactory factoryBill = new SpelAwareProxyProjectionFactory();
+        billProjection = factoryBill.createProjection(BillProjection.class);
+
+        ProjectionFactory factoryClient = new SpelAwareProxyProjectionFactory();
+        clientProjection = factoryClient.createProjection(ClientProjection.class);
     }
 
     @Test
@@ -65,6 +74,15 @@ class BillBackControllerTest {
 
     @Test
     void getBillbyNumberOk() {
+        clientProjection.setName("Santiago");
+        clientProjection.setLastName("Labatut");
+        clientProjection.setDni("41686701");
+        clientProjection.setCity("Mar del Plata");
+        clientProjection.setFullNumber("02235351545");
+        clientProjection.setLineType("Home");
+
+        when(phoneLineController.getClientLine(clientProjection.getDni())).thenReturn(clientProjection);
+
         billProjection.setComplete_name("Santiago Labatut");
         billProjection.setDni("41686701");
         billProjection.setFull_number("02235351545");
@@ -77,20 +95,45 @@ class BillBackControllerTest {
         List<BillProjection> bills = new ArrayList<BillProjection>();
         bills.add(billProjection);
 
-        when(billController.getBillByNumber("02235351545")).thenReturn(bills);
+        when(billController.getBillByNumber(clientProjection.getDni())).thenReturn(bills);
 
-        ResponseEntity<List<BillProjection>> response = billBackController.getBillbyNumber("02235351545");
+        ResponseEntity<List<BillProjection>> response = billBackController.getBillbyNumber(clientProjection.getDni());
         assertEquals(200, response.getStatusCodeValue());
         assertEquals(bills, response.getBody());
     }
 
     @Test
     void getBillByNumberEmpty() {
+        clientProjection.setName("Santiago");
+        clientProjection.setLastName("Labatut");
+        clientProjection.setDni("41686701");
+        clientProjection.setCity("Mar del Plata");
+        clientProjection.setFullNumber("02235351545");
+        clientProjection.setLineType("Home");
+
+        when(phoneLineController.getClientLine(clientProjection.getDni())).thenReturn(clientProjection);
+
         List<BillProjection> billList = new ArrayList<BillProjection>();
 
-        when(billController.getBillByNumber("02236162410")).thenReturn(billList);
-        ResponseEntity<List<BillProjection>> response = billBackController.getBillbyNumber("02236162410");
+        when(billController.getBillByNumber(clientProjection.getDni())).thenReturn(billList);
+        ResponseEntity<List<BillProjection>> response = billBackController.getBillbyNumber(clientProjection.getDni());
 
         assertEquals(204, response.getStatusCodeValue());
+    }
+
+    @Test
+    void getBillByNumberBad() {
+        clientProjection.setName("Santiago");
+        clientProjection.setLastName("Labatut");
+        clientProjection.setDni("41686701");
+        clientProjection.setCity("Mar del Plata");
+        clientProjection.setFullNumber("02235351545");
+        clientProjection.setLineType("Home");
+
+        when(phoneLineController.getClientLine(clientProjection.getDni())).thenReturn(null);
+
+        ResponseEntity<List<BillProjection>> response = billBackController.getBillbyNumber(clientProjection.getDni());
+
+        assertEquals(404, response.getStatusCodeValue());
     }
 }

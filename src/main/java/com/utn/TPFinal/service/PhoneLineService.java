@@ -1,6 +1,7 @@
 package com.utn.TPFinal.service;
 
 import com.utn.TPFinal.dto.PhoneLineByUserDto;
+import com.utn.TPFinal.projections.ClientProjection;
 import com.utn.TPFinal.repository.PhoneLineRepository;
 import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.stereotype.Service;
@@ -23,5 +24,9 @@ public class PhoneLineService {
 
     public void enablePhoneLine(Integer idLine) throws JpaSystemException {
         phoneLineRepository.enablePhoneLine(idLine);
+    }
+
+    public ClientProjection getClientLine(String line) {
+        return phoneLineRepository.getClientLine(line);
     }
 }
