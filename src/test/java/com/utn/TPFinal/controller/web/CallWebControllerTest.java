@@ -1,13 +1,8 @@
 package com.utn.TPFinal.controller.web;
 
-import com.utn.TPFinal.controller.backoffice.BillBackController;
-import com.utn.TPFinal.controller.model.BillController;
 import com.utn.TPFinal.controller.model.CallController;
-import com.utn.TPFinal.model.City;
 import com.utn.TPFinal.model.User;
-import com.utn.TPFinal.projections.BillProjection;
 import com.utn.TPFinal.projections.CallsProjection;
-import com.utn.TPFinal.projections.TopTenCallProjection;
 import com.utn.TPFinal.session.SessionManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,15 +18,13 @@ import java.util.List;
 
 import static com.utn.TPFinal.model.UserType.Client;
 import static org.junit.Assert.assertEquals;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.calls;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 class CallWebControllerTest {
     private CallWebController callWebController;
     private CallsProjection callsProjection;
-    private TopTenCallProjection topTenCallProjection;
+    private CallsProjection topTenCallProjection;
 
     @Mock
     private SessionManager sessionManager;
@@ -48,7 +41,7 @@ class CallWebControllerTest {
         callsProjection = factoryCall.createProjection(CallsProjection.class);
 
         ProjectionFactory factoryTopCall = new SpelAwareProxyProjectionFactory();
-        topTenCallProjection = factoryTopCall.createProjection(TopTenCallProjection.class);
+        topTenCallProjection = factoryTopCall.createProjection(CallsProjection.class);
     }
 
     @Test
@@ -61,11 +54,11 @@ class CallWebControllerTest {
         topTenCallProjection.setDestination_city("Mar del Plata");
         topTenCallProjection.setCant(5);
 
-        List<TopTenCallProjection> topCalls = new ArrayList<TopTenCallProjection>();
+        List<CallsProjection> topCalls = new ArrayList<CallsProjection>();
         topCalls.add(topTenCallProjection);
 
         when(callController.getTopTenDestinations(user.getDni())).thenReturn(topCalls);
-        ResponseEntity<List<TopTenCallProjection>> response = callWebController.getTopTenDestinations(token);
+        ResponseEntity<List<CallsProjection>> response = callWebController.getTopTenDestinations(token);
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(topCalls, response.getBody());
     }
@@ -76,10 +69,10 @@ class CallWebControllerTest {
         String token = sessionManager.createSession(user);
         when(sessionManager.getCurrentUser(token)).thenReturn(user);
 
-        List<TopTenCallProjection> topCalls = new ArrayList<TopTenCallProjection>();
+        List<CallsProjection> topCalls = new ArrayList<CallsProjection>();
 
         when(callController.getTopTenDestinations(user.getDni())).thenReturn(topCalls);
-        ResponseEntity<List<TopTenCallProjection>> response = callWebController.getTopTenDestinations(token);
+        ResponseEntity<List<CallsProjection>> response = callWebController.getTopTenDestinations(token);
         assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
     }
 

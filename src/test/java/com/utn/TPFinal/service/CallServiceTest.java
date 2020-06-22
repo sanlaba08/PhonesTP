@@ -2,7 +2,6 @@ package com.utn.TPFinal.service;
 
 import com.utn.TPFinal.dto.CallDto;
 import com.utn.TPFinal.projections.CallsProjection;
-import com.utn.TPFinal.projections.TopTenCallProjection;
 import com.utn.TPFinal.repository.CallRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,7 +25,7 @@ class CallServiceTest {
     private CallsProjection callsProjection;
     private List<CallsProjection> calls;
 
-    private TopTenCallProjection topTenCallProjection;
+    private CallsProjection topTenCallProjection;
 
     @Mock
     private CallRepository callRepository;
@@ -38,7 +37,7 @@ class CallServiceTest {
 
         ProjectionFactory factory = new SpelAwareProxyProjectionFactory();
         this.callsProjection = factory.createProjection(CallsProjection.class);
-        this.topTenCallProjection = factory.createProjection(TopTenCallProjection.class);
+        this.topTenCallProjection = factory.createProjection(CallsProjection.class);
 
         callsProjection.setOrigin_line("02236493784");
         callsProjection.setOrigin_city("Mar del Plata");
@@ -86,12 +85,12 @@ class CallServiceTest {
         topTenCallProjection.setDestination_city("Atalp led Ram");
         topTenCallProjection.setCant(5);
 
-        List<TopTenCallProjection> topCalls = new ArrayList<TopTenCallProjection>();
+        List<CallsProjection> topCalls = new ArrayList<CallsProjection>();
         topCalls.add(topTenCallProjection);
 
         when(callRepository.getTopTenDestinations("42231235")).thenReturn(topCalls);
 
-        List<TopTenCallProjection> aux = callService.getTopTenDestinations("42231235");
+        List<CallsProjection> aux = callService.getTopTenDestinations("42231235");
 
         assertNotNull(aux);
         assertEquals(aux, topCalls);

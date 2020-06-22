@@ -2,7 +2,6 @@ package com.utn.TPFinal.controller.model;
 
 import com.utn.TPFinal.dto.CallDto;
 import com.utn.TPFinal.projections.CallsProjection;
-import com.utn.TPFinal.projections.TopTenCallProjection;
 import com.utn.TPFinal.service.CallService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,7 +24,7 @@ public class CallController {
         return callService.addCall(callDto);
     }
 
-    public List<TopTenCallProjection> getTopTenDestinations(String dni) {
+    public List<CallsProjection> getTopTenDestinations(String dni) {
         return callService.getTopTenDestinations(dni);
     }
 

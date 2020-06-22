@@ -1,11 +1,7 @@
 package com.utn.TPFinal.controller.model;
 
-import com.utn.TPFinal.controller.backoffice.TariffBackController;
 import com.utn.TPFinal.dto.CallDto;
-import com.utn.TPFinal.dto.TariffDto;
-import com.utn.TPFinal.projections.BillProjection;
 import com.utn.TPFinal.projections.CallsProjection;
-import com.utn.TPFinal.projections.TopTenCallProjection;
 import com.utn.TPFinal.service.CallService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,7 +22,7 @@ class CallControllerTest {
     private CallController callController;
     private CallsProjection callsProjection;
     private List<CallsProjection> calls;
-    private TopTenCallProjection topTenCallProjection;
+    private CallsProjection topTenCallProjection;
 
     @Mock
     private CallService callService;
@@ -40,7 +36,7 @@ class CallControllerTest {
         this.callsProjection = factory.createProjection(CallsProjection.class);
 
         ProjectionFactory factoryTop = new SpelAwareProxyProjectionFactory();
-        this.topTenCallProjection = factory.createProjection(TopTenCallProjection.class);
+        this.topTenCallProjection = factory.createProjection(CallsProjection.class);
 
         callsProjection.setOrigin_line("02236493784");
         callsProjection.setOrigin_city("Mar del Plata");
@@ -72,12 +68,12 @@ class CallControllerTest {
         topTenCallProjection.setDestination_city("Mar del Plata");
         topTenCallProjection.setCant(5);
 
-        List<TopTenCallProjection> topCalls = new ArrayList<TopTenCallProjection>();
+        List<CallsProjection> topCalls = new ArrayList<CallsProjection>();
         topCalls.add(topTenCallProjection);
 
         when(callService.getTopTenDestinations("42231235")).thenReturn(topCalls);
 
-        List<TopTenCallProjection> aux = callController.getTopTenDestinations("42231235");
+        List<CallsProjection> aux = callController.getTopTenDestinations("42231235");
 
         assertNotNull(aux);
         assertEquals(aux, topCalls);

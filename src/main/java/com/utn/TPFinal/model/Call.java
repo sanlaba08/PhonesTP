@@ -2,6 +2,7 @@ package com.utn.TPFinal.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,6 +22,7 @@ public class Call {
     @Id
     @GeneratedValue()
     @Column(name = "id_call")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer idCall;
 
     @Column(name = "call_date")

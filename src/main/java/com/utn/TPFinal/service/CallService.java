@@ -2,7 +2,6 @@ package com.utn.TPFinal.service;
 
 import com.utn.TPFinal.dto.CallDto;
 import com.utn.TPFinal.projections.CallsProjection;
-import com.utn.TPFinal.projections.TopTenCallProjection;
 import com.utn.TPFinal.repository.CallRepository;
 import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.stereotype.Service;
@@ -25,7 +24,7 @@ public class CallService {
        return callRepository.addCall(callDto.getLineOrigin(), callDto.getLineDestination(), callDto.getDuration(), callDto.getCallDate());
     }
 
-    public List<TopTenCallProjection> getTopTenDestinations(String dni) {
+    public List<CallsProjection> getTopTenDestinations(String dni) {
         return callRepository.getTopTenDestinations(dni);
     }
 
