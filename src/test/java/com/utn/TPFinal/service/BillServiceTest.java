@@ -1,8 +1,7 @@
-package com.utn.TPFinal.controller.model;
+package com.utn.TPFinal.service;
 
 import com.utn.TPFinal.projections.BillProjection;
-import com.utn.TPFinal.projections.TariffProjection;
-import com.utn.TPFinal.service.BillService;
+import com.utn.TPFinal.repository.BillRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -13,24 +12,25 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
 
-class BillControllerTest {
+class BillServiceTest {
 
-    private BillController billController;
+    private BillService billService;
+
     private BillProjection billProjection;
     private List<BillProjection> billList;
 
+
     @Mock
-    private BillService billService;
+    private BillRepository billRepository;
 
     @BeforeEach
     void setUp() {
         initMocks(this);
-        billController = new BillController(billService);
+        billService = new BillService(billRepository);
 
         ProjectionFactory factory = new SpelAwareProxyProjectionFactory();
         this.billProjection = factory.createProjection(BillProjection.class);
@@ -50,38 +50,38 @@ class BillControllerTest {
     }
 
     @Test
-    void getBill() {
+    void getBillByNumber() {
+        when(billRepository.getBillByNumber("022351651")).thenReturn(billList);
 
-        when(billService.getBillByNumber("02236493784")).thenReturn(billList);
+        List<BillProjection> response = new ArrayList<>();
+        response = billService.getBillByNumber("022351651");
 
-        List<BillProjection> aux = billController.getBillByNumber("02236493784");
-
-        assertNotNull(aux);
-        assertEquals(aux, billList);
-        verify(billService,times(1)).getBillByNumber("02236493784");
-
+        assertNotNull(response);
+        assertEquals(response,billList);
+        verify(billRepository,times(1)).getBillByNumber("022351651");
     }
 
     @Test
     void getBillAll() {
+        when(billRepository.getBillAll()).thenReturn(billList);
 
-        when(billService.getBillAll()).thenReturn(billList);
+        List<BillProjection> response = new ArrayList<>();
+        response = billService.getBillAll();
 
-        List<BillProjection> aux = billController.getBillAll();
-
-        assertNotNull(aux);
-        assertEquals(aux, billList);
-        verify(billService,times(1)).getBillAll();
+        assertNotNull(response);
+        assertEquals(response,billList);
+        verify(billRepository,times(1)).getBillAll();
     }
 
     @Test
-    void getBillDate() {
-        when(billService.getListBillByDate("42231235","2020-06-16","2020-06-18")).thenReturn(billList);
+    void getListBillByDate() {
+        when(billRepository.getListBillByDate("123","2020-07-05","2020-01-05")).thenReturn(billList);
 
-        List<BillProjection> aux = billController.getBillDate("42231235","2020-06-16","2020-06-18");
+        List<BillProjection> response = new ArrayList<>();
+        response = billService.getListBillByDate("123","2020-07-05","2020-01-05");
 
-        assertNotNull(aux);
-        assertEquals(aux, billList);
-        verify(billService,times(1)).getListBillByDate("42231235","2020-06-16","2020-06-18");
+        assertNotNull(response);
+        assertEquals(response,billList);
+        verify(billRepository,times(1)).getListBillByDate("123","2020-07-05","2020-01-05");
     }
 }
