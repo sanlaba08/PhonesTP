@@ -6,10 +6,7 @@ import com.utn.TPFinal.controller.model.UserController;
 import com.utn.TPFinal.dto.CallDto;
 import com.utn.TPFinal.dto.EmployeeDto;
 import com.utn.TPFinal.dto.TariffDto;
-import com.utn.TPFinal.exceptions.EmployeeException;
-import com.utn.TPFinal.exceptions.IncorrectDataCallException;
-import com.utn.TPFinal.exceptions.PhoneLineException;
-import com.utn.TPFinal.exceptions.UserNotExistException;
+import com.utn.TPFinal.exceptions.*;
 import com.utn.TPFinal.model.User;
 import com.utn.TPFinal.projections.TariffProjection;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,9 +35,9 @@ public class AdminController {
 
     // Alta de Empleado (Opcional).
     @PostMapping("employee/")
-    public ResponseEntity addEmployee(@RequestBody EmployeeDto employee) throws EmployeeException, URISyntaxException {
+    public ResponseEntity addEmployee(@RequestBody EmployeeDto employee) throws JpaSystemException,EmployeeException, URISyntaxException {
         try {
-           Integer idEmployee = userController.addEmployee(employee);
+            Integer idEmployee = userController.addEmployee(employee);
            return ResponseEntity.created(new URI("http://localhost:8080/admin/employee/" + idEmployee)).body(employee);
         } catch (JpaSystemException e) {
             throw new EmployeeException(e.getCause().getCause().getMessage());
@@ -70,12 +67,12 @@ public class AdminController {
     }
 
     @PostMapping("tariff/")
-    public ResponseEntity addTariff(@RequestBody TariffDto tariffDto) throws PhoneLineException, URISyntaxException {
+    public ResponseEntity addTariff(@RequestBody TariffDto tariffDto) throws TariffException, URISyntaxException {
         try {
             Integer idTariff = tariffController.addTariff(tariffDto);
             return ResponseEntity.created(new URI("http://localhost:8080/admin/tariff/" + idTariff)).body(tariffDto);
         } catch (JpaSystemException e) {
-            throw new PhoneLineException(e.getCause().getCause().getMessage());
+            throw new TariffException(e.getCause().getCause().getMessage());
         }
     }
 

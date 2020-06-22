@@ -1,9 +1,9 @@
 package com.utn.TPFinal.controller.backoffice;
 
 import com.utn.TPFinal.controller.model.UserController;
-import com.utn.TPFinal.dto.CallDto;
-import com.utn.TPFinal.dto.UserPhoneDto;
-import com.utn.TPFinal.dto.UserPhoneModifyDto;
+import com.utn.TPFinal.dto.*;
+import com.utn.TPFinal.exceptions.EmployeeException;
+import com.utn.TPFinal.exceptions.TariffException;
 import com.utn.TPFinal.exceptions.UserAllReadyExistException;
 import com.utn.TPFinal.exceptions.UserNotExistException;
 import com.utn.TPFinal.model.User;
@@ -12,11 +12,14 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
+import org.mockito.internal.stubbing.answers.DoesNothing;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.orm.jpa.JpaSystemException;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -52,6 +55,19 @@ class ClientBackControllerTest {
         verify(userController, times(1)).addClient(userPhone);
     }
 
+    @Test()
+    void addClientException() throws JpaSystemException{
+        UserPhoneDto userPhone = new UserPhoneDto("Santiago", "Labatut", "41686701", "santi",1, "Home");
+
+        when(userController.addClient(userPhone)).thenThrow(new JpaSystemException(new RuntimeException(new SQLException())));
+
+        assertThrows(UserAllReadyExistException.class, () -> {
+            clientBackController.addClient(userPhone);
+        });
+
+    }
+
+
     @Test
     void deleteClient() throws UserNotExistException {
         doNothing().when(userController).deleteClient("41686701");
@@ -59,6 +75,17 @@ class ClientBackControllerTest {
 
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         verify(userController, times(1)).deleteClient("41686701");
+    }
+
+    @Test()
+    void deleteClientException() throws JpaSystemException{
+        String dni = "41686701";
+        doThrow(new JpaSystemException(new RuntimeException(new SQLException()))).when(userController).deleteClient(dni);
+
+        assertThrows(UserNotExistException.class, () -> {
+            clientBackController.deleteClient(dni);
+        });
+
     }
 
     @Test
@@ -70,6 +97,16 @@ class ClientBackControllerTest {
         verify(userController, times(1)).suspendClient("41686701");
     }
 
+    @Test()
+    void suspendClientException() throws JpaSystemException{
+        String dni = "41686701";
+        doThrow(new JpaSystemException(new RuntimeException(new SQLException()))).when(userController).suspendClient(dni);
+
+        assertThrows(UserNotExistException.class, () -> {
+            clientBackController.suspendClient(dni);
+        });
+    }
+
     @Test
     void modifyClient() throws UserNotExistException {
         UserPhoneModifyDto userPhoneModify = new UserPhoneModifyDto(1,"Santiago", "Labatut", "41686701", "santi",1, "Home");
@@ -79,7 +116,17 @@ class ClientBackControllerTest {
 
         assertEquals(HttpStatus.ACCEPTED, responseEntity.getStatusCode());
         verify(userController, times(1)).modifyClient(userPhoneModify);
+    }
 
+    @Test()
+    void modifyClientException() throws JpaSystemException{
+        UserPhoneModifyDto userPhone = new UserPhoneModifyDto(1, "Santiago", "Labatut", "41686701", "santi", 3, "Home");
+
+        doThrow(new JpaSystemException(new RuntimeException(new SQLException()))).when(userController).modifyClient(userPhone);
+
+        assertThrows(UserNotExistException.class, () -> {
+            clientBackController.modifyClient(userPhone);
+        });
     }
 
     @Test
@@ -133,6 +180,16 @@ class ClientBackControllerTest {
 
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         verify(userController, times(1)).reactiveClient("41686701");
+    }
+
+    @Test()
+    void reactiveClientException() throws JpaSystemException{
+        String dni = "41686701";
+        doThrow(new JpaSystemException(new RuntimeException(new SQLException()))).when(userController).reactiveClient(dni);
+
+        assertThrows(UserNotExistException.class, () -> {
+            clientBackController.reactiveClient(dni);
+        });
     }
 
 }

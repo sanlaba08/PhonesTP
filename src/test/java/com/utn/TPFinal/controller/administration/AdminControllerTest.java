@@ -6,9 +6,7 @@ import com.utn.TPFinal.controller.model.UserController;
 import com.utn.TPFinal.dto.CallDto;
 import com.utn.TPFinal.dto.EmployeeDto;
 import com.utn.TPFinal.dto.TariffDto;
-import com.utn.TPFinal.exceptions.EmployeeException;
-import com.utn.TPFinal.exceptions.IncorrectDataCallException;
-import com.utn.TPFinal.exceptions.PhoneLineException;
+import com.utn.TPFinal.exceptions.*;
 import com.utn.TPFinal.model.User;
 import com.utn.TPFinal.service.UserService;
 import org.junit.jupiter.api.Assertions;
@@ -19,8 +17,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.orm.jpa.JpaSystemException;
 
+import javax.management.RuntimeErrorException;
+import javax.persistence.PersistenceException;
+import javax.validation.constraints.Null;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -58,17 +60,17 @@ class AdminControllerTest {
         verify(userController, times(1)).addEmployee(employee);
     }
 
-//    @Test()
-//    void addEmployeeExceptionEmployee() throws URISyntaxException, EmployeeException {
-//        EmployeeDto employee = new EmployeeDto("Santi", "Labatut", "41686701", "santi", 1);
-//        when(userController.addEmployee(employee)).thenThrow(new JpaSystemException(
-//                new RuntimeException("Incorrect user data")));
-//
-//        assertThrows(EmployeeException.class, () -> {
-//            adminController.addEmployee(employee);
-//        });
-//    }
+    @Test()
+    void addEmployeeExceptionEmployee() throws JpaSystemException, EmployeeException {
+        EmployeeDto employee = new EmployeeDto("Santi", "Labatut", "41686701", "santi", 1);
 
+        when(userController.addEmployee(employee)).thenThrow(new JpaSystemException(new RuntimeException(new SQLException())));
+
+        assertThrows(EmployeeException.class, () -> {
+            adminController.addEmployee(employee);
+        });
+
+    }
 
     @Test
     void getAllEmployeeOk() {
@@ -114,7 +116,7 @@ class AdminControllerTest {
     }
 
     @Test
-    void addTariffOk() throws URISyntaxException, PhoneLineException {
+    void addTariffOk() throws URISyntaxException, TariffException {
         TariffDto tariff = new TariffDto("Mar del Plata", "Buenos Aires", 10, 30);
         Integer idTariff = 1;
         when(tariffController.addTariff(tariff)).thenReturn(idTariff);
@@ -123,6 +125,18 @@ class AdminControllerTest {
         assertNotNull(responseEntity);
         assertEquals(responseEntity, adminController.addTariff(tariff));
         verify(tariffController, times(1)).addTariff(tariff);
+    }
+
+    @Test()
+    void addTariffException() throws JpaSystemException{
+        TariffDto tariff = new TariffDto("Mar del Plata", "China", 30, 40);
+
+        when(tariffController.addTariff(tariff)).thenThrow(new JpaSystemException(new RuntimeException(new SQLException())));
+
+        assertThrows(TariffException.class, () -> {
+            adminController.addTariff(tariff);
+        });
+
     }
 
     @Test
@@ -135,5 +149,17 @@ class AdminControllerTest {
         assertNotNull(responseEntity);
         assertEquals(responseEntity, adminController.addCall(call));
         verify(callController, times(1)).addCall(call);
+    }
+
+    @Test()
+    void addCallException() throws JpaSystemException{
+        CallDto call = new CallDto("02235351545", "02236162410", (long) 1200, new Date());
+
+        when(callController.addCall(call)).thenThrow(new JpaSystemException(new RuntimeException(new SQLException())));
+
+        assertThrows(IncorrectDataCallException.class, () -> {
+            adminController.addCall(call);
+        });
+
     }
 }
