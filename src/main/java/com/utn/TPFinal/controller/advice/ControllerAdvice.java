@@ -13,11 +13,11 @@ import java.sql.SQLException;
 @RestControllerAdvice
 public class ControllerAdvice extends ResponseEntityExceptionHandler {
 
-    @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    @ExceptionHandler(IncorrectDataClientPhoneException.class)
-    public ErrorResponseDto handleLoginException(IncorrectDataClientPhoneException exc) {
-        return new ErrorResponseDto(1, exc.getCause().getCause().getMessage());
-    }
+//    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+//    @ExceptionHandler(IncorrectDataClientPhoneException.class)
+//    public ErrorResponseDto handleLoginException(IncorrectDataClientPhoneException exc) {
+//       return new ErrorResponseDto(1, exc.getCause().getCause().getMessage());
+//    }
 
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(InvalidLoginException.class)
@@ -43,16 +43,10 @@ public class ControllerAdvice extends ResponseEntityExceptionHandler {
         return new ErrorResponseDto(5, e.getMessage());
     }
 
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    @ExceptionHandler(SQLException.class)
-    public ErrorResponseDto handleSQLExeption(SQLException e) {
-        return new ErrorResponseDto(789, "Error interno en la base de datos");//esto no lo tirara siempre no?
-    }
-
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(PhoneLineException.class)
     public ErrorResponseDto handlePhoneLineException(PhoneLineException e) {
-        return new ErrorResponseDto(6, e.getMessage());//esto no lo tirara siempre no?
+        return new ErrorResponseDto(6, e.getMessage());
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -60,4 +54,20 @@ public class ControllerAdvice extends ResponseEntityExceptionHandler {
     public ErrorResponseDto handleIncorrectDataCallException(IncorrectDataCallException e) {
         return new ErrorResponseDto(7, e.getMessage());
     }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(TariffException.class)
+    public ErrorResponseDto handleIncorrectDataTariffException(TariffException e) {
+        return new ErrorResponseDto(8, e.getMessage());
+    }
+
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(SQLException.class)
+    public ErrorResponseDto handleSQLExeption(SQLException e) {
+        return new ErrorResponseDto(9, "Error interno en la base de datos");//esto no lo tirara siempre no?
+    }
+/////////////////////////////////////////////////////////
+
+
+
 }
