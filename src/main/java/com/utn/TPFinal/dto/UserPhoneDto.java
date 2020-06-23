@@ -1,7 +1,5 @@
 package com.utn.TPFinal.dto;
 
-import com.utn.TPFinal.model.City;
-import com.utn.TPFinal.model.LineType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

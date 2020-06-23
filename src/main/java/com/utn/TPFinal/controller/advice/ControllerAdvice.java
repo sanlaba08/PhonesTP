@@ -66,8 +66,4 @@ public class ControllerAdvice extends ResponseEntityExceptionHandler {
     public ErrorResponseDto handleSQLExeption(SQLException e) {
         return new ErrorResponseDto(9, "Error interno en la base de datos");//esto no lo tirara siempre no?
     }
-/////////////////////////////////////////////////////////
-
-
-
 }

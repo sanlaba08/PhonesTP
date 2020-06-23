@@ -7,13 +7,11 @@ import com.utn.TPFinal.dto.UserPhoneModifyDto;
 import com.utn.TPFinal.exceptions.UserNotExistException;
 import com.utn.TPFinal.exceptions.ValidationException;
 import com.utn.TPFinal.model.User;
-import com.utn.TPFinal.model.UserType;
 import com.utn.TPFinal.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.stereotype.Controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller

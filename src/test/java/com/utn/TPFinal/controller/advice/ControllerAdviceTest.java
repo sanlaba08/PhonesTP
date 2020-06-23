@@ -25,9 +25,6 @@ class ControllerAdviceTest {
 
         ErrorResponseDto ans = controllerAdvice.handleLoginException(e);
 
-        String ans2 = "Invalid login";
-        
-
         assertEquals(responseDto,ans);
         assertEquals(responseDto.getDescription(),e.getMessage());
     }
