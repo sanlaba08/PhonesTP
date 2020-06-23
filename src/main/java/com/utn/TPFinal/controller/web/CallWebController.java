@@ -21,6 +21,7 @@ public class CallWebController {
         this.callController = callController;
     }
 
+    //Consulta del top 10 de destinos mas llamados del usuario logeado
     @GetMapping("/destination") // localhost:8080/call/dni?=4123
     public ResponseEntity<List<CallsProjection>> getTopTenDestinations(@RequestHeader("Authorization") String sessionToken) {
         User session = sessionManager.getCurrentUser(sessionToken);
@@ -32,6 +33,7 @@ public class CallWebController {
         }
     }
 
+    //Consulta del llamadas por rango de fecha del usuario logeado
     @GetMapping("/date") // localhost:8080/call/date?first=31-05-2019
     public ResponseEntity<List<CallsProjection>> getCallByDate(@RequestHeader("Authorization") String sessionToken, @RequestParam String first, @RequestParam String second) {
         if (first.compareTo(second) > 0) {

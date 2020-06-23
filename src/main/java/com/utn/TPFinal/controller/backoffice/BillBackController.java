@@ -23,6 +23,7 @@ public class BillBackController {
         this.phoneLineController = phoneLineController;
     }
 
+    //Consulta de tarifa por numero telefonico
     @GetMapping("/number") // localhost:8080/bill/number?line=4123
     public ResponseEntity<List<BillProjection>> getBillbyNumber(@RequestParam String line) {
         ClientProjection clientLine = phoneLineController.getClientLine(line);
@@ -38,6 +39,7 @@ public class BillBackController {
         }
     }
 
+    //Consulta de todas las tarifas
     @GetMapping("/")
     public ResponseEntity<List<BillProjection>> getBillAll() {
         List<BillProjection> bills = billController.getBillAll();

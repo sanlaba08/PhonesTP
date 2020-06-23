@@ -22,6 +22,7 @@ public class BillWebController {
         this.billController = billController;
     }
 
+    //Consulta de facturas por rango de fechas del usuario logeado
     @GetMapping("/date")
     public ResponseEntity <List<BillProjection>> getBillDate(@RequestHeader("Authorization") String sessionToken,
                                                              @RequestParam String first,

@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Service
-public class adminSessionFilter extends OncePerRequestFilter {
+public class AdminSessionFilter extends OncePerRequestFilter {
     @Autowired
     private SessionManager sessionManager;
 

@@ -9,7 +9,6 @@ import java.util.*;
 @Component
 public class SessionManager {
 
-
     Map<String, Session> sessionMap;
     int sessionExpiration = 999999999;
 

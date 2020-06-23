@@ -12,6 +12,10 @@ public class SessionScheduler {
     @Autowired
     SessionManager sessionManager;
 
+    public SessionScheduler(SessionManager sessionManager) {
+        this.sessionManager = sessionManager;
+    }
+
     @Async
     @Scheduled(fixedRate = 300000)
     public void expiresSessions() {

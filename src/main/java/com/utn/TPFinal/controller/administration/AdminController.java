@@ -66,6 +66,7 @@ public class AdminController {
         }
     }
 
+    //Alta de tarifas (Opcional)
     @PostMapping("tariff/")
     public ResponseEntity addTariff(@RequestBody TariffDto tariffDto) throws TariffException, URISyntaxException {
         try {
@@ -76,6 +77,7 @@ public class AdminController {
         }
     }
 
+    //INFRAESTRUCTURA = Realizar llamada.
     @PostMapping("call/")
     public ResponseEntity addCall(@RequestBody CallDto callDto) throws IncorrectDataCallException, URISyntaxException {
         try{

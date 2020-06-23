@@ -25,6 +25,7 @@ public class CallBackController {
         this.userController = userController;
     }
 
+    //Consulta de llamadas por dni
     @GetMapping("/") // localhost:8080/call/dni?=4123
     public ResponseEntity<List<CallsProjection>> getCall(@RequestParam String dni) {
         User client = userController.getClient(dni);

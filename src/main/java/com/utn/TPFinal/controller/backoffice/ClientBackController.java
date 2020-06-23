@@ -26,7 +26,6 @@ public class ClientBackController {
         this.userController = userController;
     }
 
-    /* 2) Manejo de Clientes (Controller)*/
     // Alta de Cliente con su respectiva linea telefonica.
     @PostMapping("/")
     public ResponseEntity addClient(@RequestBody UserPhoneDto clientPhone) throws UserAllReadyExistException,  URISyntaxException {
@@ -49,6 +48,7 @@ public class ClientBackController {
         }
     }
 
+    // Suspension de Cliente con su respectiva linea telefonica.
     @PutMapping("/number")///number?dni=.....
     public ResponseEntity suspendClient(@RequestParam String dni) throws UserNotExistException {
         try {
@@ -59,7 +59,7 @@ public class ClientBackController {
         }
     }
 
-    // Modificacion del Cliente y la linea telefonica.
+    // Modificacion del Cliente y el tipo de linea telefonica.
     @PutMapping("/")
     public ResponseEntity modifyClient(@RequestBody UserPhoneModifyDto clientPhone) throws UserNotExistException {
         try {
@@ -70,6 +70,7 @@ public class ClientBackController {
         }
     }
 
+    // Consulta de todos los clientes
     @GetMapping("/")
     public ResponseEntity<List<User>> getAllClients() {
         List<User> clients = userController.getAllClients();
@@ -81,6 +82,7 @@ public class ClientBackController {
         }
     }
 
+    // Consulta de cliente por dni
     @GetMapping("/number")
     public ResponseEntity<User> getClientPhoneLine(@RequestParam String dni){
         User clients = userController.getClient(dni);
@@ -91,6 +93,7 @@ public class ClientBackController {
         }
     }
 
+    // Reactivar un cliente por dni
     @PostMapping("/number")
     public ResponseEntity reactiveClient(@RequestParam String dni) throws UserNotExistException {
         try {

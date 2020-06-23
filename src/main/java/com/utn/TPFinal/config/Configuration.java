@@ -1,23 +1,21 @@
 package com.utn.TPFinal.config;
 
-import com.utn.TPFinal.model.User;
-import com.utn.TPFinal.model.UserType;
-import com.utn.TPFinal.session.adminSessionFilter;
+import com.utn.TPFinal.session.AdminSessionFilter;
 import com.utn.TPFinal.session.SessionFilter;
-import com.utn.TPFinal.session.SessionManager;
 import com.utn.TPFinal.session.SuperSessionFilter;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.web.bind.annotation.RequestHeader;
 
 @org.springframework.context.annotation.Configuration
 @PropertySource("application.properties")
 @EnableScheduling
 @EnableCaching
+@AllArgsConstructor
 public class Configuration {
 
     @Autowired
@@ -27,7 +25,9 @@ public class Configuration {
     SuperSessionFilter superSessionFilter;
 
     @Autowired
-    adminSessionFilter adminSessionFilter;
+    AdminSessionFilter adminSessionFilter;
+
+
 
     @Bean
     public FilterRegistrationBean myFilterEmployee() {

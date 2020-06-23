@@ -1,7 +1,6 @@
 package com.utn.TPFinal.controller.backoffice;
 
 import com.utn.TPFinal.controller.model.TariffController;
-import com.utn.TPFinal.exceptions.TariffNotExistException;
 import com.utn.TPFinal.projections.TariffProjection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,6 +19,7 @@ public class TariffBackController {
         this.tariffController = tariffController;
     }
 
+    //Consulta de todas las tarifas
     @GetMapping("/")
     public ResponseEntity<List<TariffProjection>> getAllTariffs() {
         List<TariffProjection> tariffs = tariffController.getAllTariffs();
@@ -30,6 +30,7 @@ public class TariffBackController {
         }
     }
 
+    //Consulta de tarifa por id
     @GetMapping("/{idTariff}")
     public ResponseEntity getTariffById(@PathVariable Integer idTariff) {
         TariffProjection tariffById = tariffController.getTariffById(idTariff);
@@ -40,6 +41,7 @@ public class TariffBackController {
         }
     }
 
+    //Consulta de tarifa por ciudad de origen y ciudad de destino
     @GetMapping("/city")
     public ResponseEntity getTariffByName(@RequestParam String originCityName, @RequestParam String destinationCityName){
         TariffProjection tariffByName = tariffController.getTariffByName(originCityName, destinationCityName);

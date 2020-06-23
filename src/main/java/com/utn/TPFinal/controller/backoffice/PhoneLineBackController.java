@@ -22,7 +22,6 @@ public class PhoneLineBackController {
         this.phoneLineController = phoneLineController;
     }
 
-    /* 3) Alta y baja de Lineas (Controller)*/
     // Alta de Linea con su respectivo usuario.
     @PostMapping("/")
     public ResponseEntity addPhoneLine(@RequestBody PhoneLineByUserDto phoneLine) throws PhoneLineException, URISyntaxException {
