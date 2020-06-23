@@ -1,6 +1,5 @@
 package com.utn.TPFinal.repository;
 
-import com.utn.TPFinal.exceptions.UserNotExistException;
 import com.utn.TPFinal.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
