@@ -31,6 +31,7 @@ public class City {
     private Province province;
 
     @OneToMany(mappedBy = "city")
+    @JsonBackReference
     List<User> users = new ArrayList<User>();
 
 }

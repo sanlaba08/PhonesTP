@@ -41,7 +41,6 @@ public class User{
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_city")
-    @JsonBackReference
     private City city;
 
     @Column(name = "role_name")
