@@ -5,6 +5,7 @@ import com.utn.TPFinal.dto.EmployeeDto;
 import com.utn.TPFinal.dto.LoginRequestDto;
 import com.utn.TPFinal.dto.UserPhoneDto;
 import com.utn.TPFinal.dto.UserPhoneModifyDto;
+import com.utn.TPFinal.exceptions.EmployeeException;
 import com.utn.TPFinal.exceptions.UserNotExistException;
 import com.utn.TPFinal.exceptions.ValidationException;
 import com.utn.TPFinal.model.User;
@@ -181,6 +182,17 @@ class UserServiceTest {
         assertEquals(loggedUser.getDni(), returnedUser.getDni());
         assertEquals(loggedUser.getUserPassword(), returnedUser.getUserPassword());
         verify(userRepository, times(1)).getByUsername(login.getDni(),login.getPassword());
+    }
+
+    @Test
+    void loginException() throws UserNotExistException {
+        LoginRequestDto login = new LoginRequestDto("41686701", "santi");
+        when(userRepository.getByUsername(login.getDni(),login.getPassword())).thenReturn(null);
+
+        assertThrows(UserNotExistException.class, () -> {
+            userService.login(login);
+        });
+
     }
 
 
