@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CallService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">springboot</a> &gt; <a href="index.source.html" class="el_package">com.utn.TPFinal.service</a> &gt; <span class="el_source">CallService.java</span></div><h1>CallService.java</h1><pre class="source lang-java linenums">package com.utn.TPFinal.service;
+
+import com.utn.TPFinal.dto.CallDto;
+import com.utn.TPFinal.projections.CallsProjection;
+import com.utn.TPFinal.repository.CallRepository;
+import org.springframework.orm.jpa.JpaSystemException;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class CallService {
+    private final CallRepository callRepository;
+
+<span class="fc" id="L15">    public CallService(CallRepository callRepository) {</span>
+<span class="fc" id="L16">        this.callRepository = callRepository;</span>
+<span class="fc" id="L17">    }</span>
+
+    public List&lt;CallsProjection&gt; getListCall(String dni) {
+<span class="fc" id="L20">        return callRepository.getListCall(dni);</span>
+    }
+
+    public Integer addCall(CallDto callDto) throws JpaSystemException {
+<span class="fc" id="L24">       return callRepository.addCall(callDto.getLineOrigin(), callDto.getLineDestination(), callDto.getDuration(), callDto.getCallDate());</span>
+    }
+
+    public List&lt;CallsProjection&gt; getTopTenDestinations(String dni) {
+<span class="fc" id="L28">        return callRepository.getTopTenDestinations(dni);</span>
+    }
+
+    public List&lt;CallsProjection&gt; getListCallByDate(String dni, String firstDate, String secondDate) {
+<span class="fc" id="L32">        return callRepository.getListCallByDate(dni, firstDate, secondDate);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

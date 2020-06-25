@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PhoneLineBackController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">springboot</a> &gt; <a href="index.source.html" class="el_package">com.utn.TPFinal.controller.backoffice</a> &gt; <span class="el_source">PhoneLineBackController.java</span></div><h1>PhoneLineBackController.java</h1><pre class="source lang-java linenums">package com.utn.TPFinal.controller.backoffice;
+
+import com.utn.TPFinal.controller.model.PhoneLineController;
+import com.utn.TPFinal.dto.PhoneLineByUserDto;
+import com.utn.TPFinal.exceptions.PhoneLineException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.orm.jpa.JpaSystemException;
+import org.springframework.web.bind.annotation.*;
+
+import java.net.URI;
+import java.net.URISyntaxException;
+
+@RestController
+@RequestMapping(&quot;/backoffice/phoneline&quot;)
+public class PhoneLineBackController {
+    private final PhoneLineController phoneLineController;
+
+    @Autowired
+<span class="fc" id="L20">    public PhoneLineBackController(PhoneLineController phoneLineController) {</span>
+<span class="fc" id="L21">        this.phoneLineController = phoneLineController;</span>
+<span class="fc" id="L22">    }</span>
+
+    // Alta de Linea con su respectivo usuario.
+    @PostMapping(&quot;/&quot;)
+    public ResponseEntity addPhoneLine(@RequestBody PhoneLineByUserDto phoneLine) throws PhoneLineException, URISyntaxException {
+        try {
+<span class="fc" id="L28">            Integer idLine = phoneLineController.addPhoneLine(phoneLine);</span>
+<span class="fc" id="L29">            return ResponseEntity.created(new URI(&quot;http://localhost:8080/backoffice/phoneline/&quot; + idLine)).body(phoneLine);</span>
+<span class="fc" id="L30">        } catch (JpaSystemException e) {</span>
+<span class="fc" id="L31">            throw new PhoneLineException(e.getCause().getCause().getMessage());</span>
+        }
+    }
+
+    // Baja de Linea con su respectivo usuario.
+    @DeleteMapping(&quot;/{idLine}&quot;)
+    public ResponseEntity deletePhoneLine(@PathVariable Integer idLine) throws PhoneLineException {
+        try {
+<span class="fc" id="L39">            phoneLineController.deletePhoneLine(idLine);</span>
+<span class="fc" id="L40">            return ResponseEntity.ok().build();</span>
+<span class="fc" id="L41">        } catch (JpaSystemException e) {</span>
+<span class="fc" id="L42">            throw new PhoneLineException(e.getCause().getCause().getMessage());</span>
+        }
+    }
+
+    // Activar una Linea con su respectivo usuario.
+    @PostMapping(&quot;/{idLine}&quot;)
+    public ResponseEntity enablePhoneLine(@PathVariable Integer idLine) throws PhoneLineException {
+        try {
+<span class="fc" id="L50">            phoneLineController.enablePhoneLine(idLine);</span>
+<span class="fc" id="L51">            return ResponseEntity.ok().build();</span>
+<span class="fc" id="L52">        } catch (JpaSystemException e) {</span>
+<span class="fc" id="L53">            throw new PhoneLineException(e.getCause().getCause().getMessage());</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

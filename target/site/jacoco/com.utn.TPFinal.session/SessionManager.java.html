@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SessionManager.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">springboot</a> &gt; <a href="index.source.html" class="el_package">com.utn.TPFinal.session</a> &gt; <span class="el_source">SessionManager.java</span></div><h1>SessionManager.java</h1><pre class="source lang-java linenums">package com.utn.TPFinal.session;
+
+import com.utn.TPFinal.model.User;
+import com.utn.TPFinal.model.UserType;
+import org.springframework.stereotype.Component;
+
+import java.util.*;
+
+@Component
+public class SessionManager {
+
+    Map&lt;String, Session&gt; sessionMap;
+<span class="fc" id="L13">    int sessionExpiration = 999999999;</span>
+
+
+<span class="fc" id="L16">    public SessionManager() {</span>
+<span class="fc" id="L17">        sessionMap = new Hashtable&lt;&gt;();</span>
+<span class="fc" id="L18">        createSession(new User(), &quot;1&quot;);</span>
+<span class="fc" id="L19">    }</span>
+
+    public String createSession(User user) {
+<span class="fc" id="L22">        String token = UUID.randomUUID().toString();</span>
+<span class="fc" id="L23">        sessionMap.put(token, new Session(token, user, new Date(System.currentTimeMillis())));</span>
+<span class="fc" id="L24">        return token;</span>
+    }
+
+    public String createSession(User user, String token) {
+<span class="fc" id="L28">        sessionMap.put(token, new Session(token, user, new Date(System.currentTimeMillis())));</span>
+<span class="fc" id="L29">        return token;</span>
+    }
+
+    public Session getSession(String token) {
+<span class="fc bfc" id="L33" title="All 2 branches covered.">        if (token == null) {</span>
+<span class="fc" id="L34">            return null;</span>
+        }
+<span class="fc" id="L36">        Session session = sessionMap.get(token);</span>
+<span class="pc bpc" id="L37" title="1 of 2 branches missed.">        if (session != null) {</span>
+<span class="fc" id="L38">            session.setLastAction(new Date(System.currentTimeMillis()));</span>
+        }
+<span class="fc" id="L40">        return session;</span>
+    }
+
+    public void removeSession(String token) {
+<span class="fc" id="L44">        sessionMap.remove(token);</span>
+<span class="fc" id="L45">    }</span>
+
+    public void expireSessions() {
+<span class="nc bnc" id="L48" title="All 2 branches missed.">        for (String k : sessionMap.keySet()) {</span>
+<span class="nc" id="L49">            Session v = sessionMap.get(k);</span>
+<span class="nc bnc" id="L50" title="All 2 branches missed.">            if (v.getLastAction().getTime() + (sessionExpiration * 1000) &lt; System.currentTimeMillis()) {</span>
+<span class="nc" id="L51">                System.out.println(&quot;Expiring session &quot; + k);</span>
+<span class="nc" id="L52">                sessionMap.remove(k);</span>
+            }
+<span class="nc" id="L54">        }</span>
+<span class="nc" id="L55">    }</span>
+
+    public User getCurrentUser(String token) {
+<span class="fc" id="L58">        return getSession(token).getLoggedUser();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

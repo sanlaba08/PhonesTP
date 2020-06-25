@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AdminController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">springboot</a> &gt; <a href="index.source.html" class="el_package">com.utn.TPFinal.controller.administration</a> &gt; <span class="el_source">AdminController.java</span></div><h1>AdminController.java</h1><pre class="source lang-java linenums">package com.utn.TPFinal.controller.administration;
+
+import com.utn.TPFinal.controller.model.CallController;
+import com.utn.TPFinal.controller.model.TariffController;
+import com.utn.TPFinal.controller.model.UserController;
+import com.utn.TPFinal.dto.CallDto;
+import com.utn.TPFinal.dto.EmployeeDto;
+import com.utn.TPFinal.dto.TariffDto;
+import com.utn.TPFinal.exceptions.*;
+import com.utn.TPFinal.model.User;
+import com.utn.TPFinal.projections.TariffProjection;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.orm.jpa.JpaSystemException;
+import org.springframework.web.bind.annotation.*;
+
+import javax.websocket.server.PathParam;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
+
+@RestController
+@RequestMapping(&quot;/admin/&quot;)
+public class AdminController {
+    private final UserController userController;
+    private final TariffController tariffController;
+    private final CallController callController;
+
+    @Autowired
+<span class="fc" id="L31">    public AdminController(UserController userController, TariffController tariffController, CallController callController) {</span>
+<span class="fc" id="L32">        this.userController = userController;</span>
+<span class="fc" id="L33">        this.tariffController = tariffController;</span>
+<span class="fc" id="L34">        this.callController = callController;</span>
+<span class="fc" id="L35">    }</span>
+
+    // Alta de Empleado (Opcional).
+    @PostMapping(&quot;employee/&quot;)
+    public ResponseEntity addEmployee(@RequestBody EmployeeDto employee) throws JpaSystemException,EmployeeException, URISyntaxException {
+        try {
+<span class="fc" id="L41">            Integer idEmployee = userController.addEmployee(employee);</span>
+<span class="fc" id="L42">           return ResponseEntity.created(new URI(&quot;http://localhost:8080/admin/employee/&quot; + idEmployee)).body(employee);</span>
+<span class="fc" id="L43">        } catch (JpaSystemException e) {</span>
+<span class="fc" id="L44">            throw new EmployeeException(e.getCause().getCause().getMessage());</span>
+        }
+    }
+
+    // Consulta de todos los empleados (Opcional).
+    @GetMapping(&quot;employee/&quot;)
+    public ResponseEntity&lt;List&lt;User&gt;&gt; getAllEmployee() {
+<span class="fc" id="L51">        List&lt;User&gt; employees = userController.getAllEmployee();</span>
+<span class="fc bfc" id="L52" title="All 2 branches covered.">        if (employees.size() &gt; 0) {</span>
+<span class="fc" id="L53">            return ResponseEntity.ok().body(employees);</span>
+        } else {
+<span class="fc" id="L55">            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();</span>
+        }
+    }
+
+    // Consulta de empleado (Opcional).
+    @GetMapping(&quot;employee/number&quot;)
+    public ResponseEntity getEmployee(@PathParam(&quot;dni&quot;) String dni) {
+<span class="fc" id="L62">        User employee = userController.getEmployee(dni);</span>
+<span class="fc bfc" id="L63" title="All 2 branches covered.">        if(employee == null){</span>
+<span class="fc" id="L64">            return ResponseEntity.notFound().build();</span>
+        } else{
+<span class="fc" id="L66">            return ResponseEntity.ok(employee);</span>
+        }
+    }
+
+    //Alta de tarifas (Opcional)
+    @PostMapping(&quot;tariff/&quot;)
+    public ResponseEntity addTariff(@RequestBody TariffDto tariffDto) throws TariffException, URISyntaxException {
+        try {
+<span class="fc" id="L74">            Integer idTariff = tariffController.addTariff(tariffDto);</span>
+<span class="fc" id="L75">            return ResponseEntity.created(new URI(&quot;http://localhost:8080/admin/tariff/&quot; + idTariff)).body(tariffDto);</span>
+<span class="fc" id="L76">        } catch (JpaSystemException e) {</span>
+<span class="fc" id="L77">            throw new TariffException(e.getCause().getCause().getMessage());</span>
+        }
+    }
+
+    //INFRAESTRUCTURA = Realizar llamada.
+    @PostMapping(&quot;call/&quot;)
+    public ResponseEntity addCall(@RequestBody CallDto callDto) throws IncorrectDataCallException, URISyntaxException {
+        try{
+<span class="fc" id="L85">            Integer idCall = callController.addCall(callDto);</span>
+<span class="fc" id="L86">            return ResponseEntity.created(new URI(&quot;http://localhost:8080/admin/call/&quot; + idCall)).body(callDto);</span>
+<span class="fc" id="L87">        } catch (JpaSystemException e){</span>
+<span class="fc" id="L88">            throw new IncorrectDataCallException(e.getCause().getCause().getMessage());</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

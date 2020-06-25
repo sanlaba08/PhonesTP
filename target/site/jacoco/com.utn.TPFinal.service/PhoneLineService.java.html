@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PhoneLineService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">springboot</a> &gt; <a href="index.source.html" class="el_package">com.utn.TPFinal.service</a> &gt; <span class="el_source">PhoneLineService.java</span></div><h1>PhoneLineService.java</h1><pre class="source lang-java linenums">package com.utn.TPFinal.service;
+
+import com.utn.TPFinal.dto.PhoneLineByUserDto;
+import com.utn.TPFinal.projections.ClientProjection;
+import com.utn.TPFinal.repository.PhoneLineRepository;
+import org.springframework.orm.jpa.JpaSystemException;
+import org.springframework.stereotype.Service;
+
+@Service
+public class PhoneLineService {
+    private final PhoneLineRepository phoneLineRepository;
+
+<span class="fc" id="L13">    public PhoneLineService(PhoneLineRepository phoneLineRepository) {</span>
+<span class="fc" id="L14">        this.phoneLineRepository = phoneLineRepository;</span>
+<span class="fc" id="L15">    }</span>
+
+    public Integer addPhoneLine(PhoneLineByUserDto phoneLine) throws JpaSystemException {
+<span class="fc" id="L18">        return phoneLineRepository.addPhoneLine(phoneLine.getUser(), phoneLine.getLineType());</span>
+    }
+
+    public void deletePhoneLine(Integer idLine) throws JpaSystemException {
+<span class="fc" id="L22">        phoneLineRepository.deletePhoneLine(idLine);</span>
+<span class="fc" id="L23">    }</span>
+
+    public void enablePhoneLine(Integer idLine) throws JpaSystemException {
+<span class="fc" id="L26">        phoneLineRepository.enablePhoneLine(idLine);</span>
+<span class="fc" id="L27">    }</span>
+
+    public ClientProjection getClientLine(String line) {
+<span class="fc" id="L30">        return phoneLineRepository.getClientLine(line);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

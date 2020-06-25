@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BillBackController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">springboot</a> &gt; <a href="index.source.html" class="el_package">com.utn.TPFinal.controller.backoffice</a> &gt; <span class="el_source">BillBackController.java</span></div><h1>BillBackController.java</h1><pre class="source lang-java linenums">package com.utn.TPFinal.controller.backoffice;
+
+import com.utn.TPFinal.controller.model.BillController;
+import com.utn.TPFinal.controller.model.PhoneLineController;
+import com.utn.TPFinal.projections.BillProjection;
+import com.utn.TPFinal.projections.ClientProjection;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.websocket.server.PathParam;
+import java.util.List;
+
+@RestController
+@RequestMapping(&quot;/backoffice/bill&quot;)
+public class BillBackController {
+    private final BillController billController;
+    private final PhoneLineController phoneLineController;
+
+<span class="fc" id="L22">    public BillBackController(BillController billController, PhoneLineController phoneLineController) {</span>
+<span class="fc" id="L23">        this.billController = billController;</span>
+<span class="fc" id="L24">        this.phoneLineController = phoneLineController;</span>
+<span class="fc" id="L25">    }</span>
+
+    //Consulta de tarifa por numero telefonico
+    @GetMapping(&quot;/number&quot;) // localhost:8080/bill/number?line=4123
+    public ResponseEntity&lt;List&lt;BillProjection&gt;&gt; getBillbyNumber(@PathParam(&quot;line&quot;) String line) {
+<span class="fc" id="L30">        ClientProjection clientLine = phoneLineController.getClientLine(line);</span>
+<span class="fc bfc" id="L31" title="All 2 branches covered.">        if (clientLine == null) {</span>
+<span class="fc" id="L32">            return ResponseEntity.notFound().build();</span>
+        } else {
+<span class="fc" id="L34">            List&lt;BillProjection&gt; billsByNumber = billController.getBillByNumber(line);</span>
+<span class="fc bfc" id="L35" title="All 2 branches covered.">            if (billsByNumber.size() &gt; 0) {</span>
+<span class="fc" id="L36">                return ResponseEntity.ok().body(billsByNumber);</span>
+            } else {
+<span class="fc" id="L38">                return ResponseEntity.noContent().build();</span>
+            }
+        }
+    }
+
+    //Consulta de todas las tarifas
+    @GetMapping(&quot;/&quot;)
+    public ResponseEntity&lt;List&lt;BillProjection&gt;&gt; getBillAll() {
+<span class="fc" id="L46">        List&lt;BillProjection&gt; bills = billController.getBillAll();</span>
+<span class="fc bfc" id="L47" title="All 2 branches covered.">        if (bills.size() &gt; 0) {</span>
+<span class="fc" id="L48">            return ResponseEntity.ok().body(bills);</span>
+        } else {
+<span class="fc" id="L50">            return ResponseEntity.noContent().build();</span>
+        }
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

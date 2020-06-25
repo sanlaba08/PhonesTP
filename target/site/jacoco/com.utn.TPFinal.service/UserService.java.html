@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UserService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">springboot</a> &gt; <a href="index.source.html" class="el_package">com.utn.TPFinal.service</a> &gt; <span class="el_source">UserService.java</span></div><h1>UserService.java</h1><pre class="source lang-java linenums">package com.utn.TPFinal.service;
+
+import com.utn.TPFinal.dto.EmployeeDto;
+import com.utn.TPFinal.dto.LoginRequestDto;
+import com.utn.TPFinal.dto.UserPhoneDto;
+import com.utn.TPFinal.dto.UserPhoneModifyDto;
+import com.utn.TPFinal.exceptions.UserNotExistException;
+import com.utn.TPFinal.model.User;
+import com.utn.TPFinal.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.jpa.JpaSystemException;
+import org.springframework.stereotype.Service;
+import java.util.List;
+import java.util.Optional;
+
+@Service
+public class UserService {
+    private final UserRepository userRepository;
+
+    @Autowired
+<span class="fc" id="L21">    public UserService(UserRepository userRepository) {</span>
+<span class="fc" id="L22">        this.userRepository = userRepository;</span>
+<span class="fc" id="L23">    }</span>
+
+    /* 2) Manejo de Clientes (Service)*/
+
+    // Alta de Cliente con su respectiva linea telefonica.
+    public Integer addClientPhone(UserPhoneDto userPhone) throws JpaSystemException {
+<span class="fc" id="L29">        return userRepository.addClientPhone(userPhone.getName(), userPhone.getLastName(), userPhone.getDni(), userPhone.getPassword(), userPhone.getCity(), userPhone.getLineType());</span>
+    }
+
+    // Baja de Cliente con su respectiva linea telefonica.
+    public void deleteClientPhone(String dni) throws JpaSystemException {
+<span class="fc" id="L34">        userRepository.deleteClientPhone(dni);</span>
+<span class="fc" id="L35">    }</span>
+
+    public void suspendClient(String dni) throws JpaSystemException {
+<span class="fc" id="L38">        userRepository.suspendClient(dni);</span>
+<span class="fc" id="L39">    }</span>
+
+    // Modificacion del Cliente y la linea telefonica.
+    public void modifyClientPhone(UserPhoneModifyDto clientPhone) throws JpaSystemException {
+<span class="fc" id="L43">        userRepository.modifyClientPhone(clientPhone.getUser(),</span>
+<span class="fc" id="L44">                clientPhone.getName(),</span>
+<span class="fc" id="L45">                clientPhone.getLastName(),</span>
+<span class="fc" id="L46">                clientPhone.getDni(),</span>
+<span class="fc" id="L47">                clientPhone.getPassword(),</span>
+<span class="fc" id="L48">                clientPhone.getCity(),</span>
+<span class="fc" id="L49">                clientPhone.getLineType());</span>
+<span class="fc" id="L50">    }</span>
+
+
+    public Integer addEmployee(EmployeeDto employee) throws JpaSystemException{
+<span class="fc" id="L54">       return userRepository.addEmployee(employee.getName(), employee.getLastName(), employee.getDni(), employee.getPassword(), employee.getCity());</span>
+    }
+
+    public User login(LoginRequestDto login) throws UserNotExistException {
+<span class="fc" id="L58">        User user = userRepository.getByUsername(login.getDni(), login.getPassword());</span>
+<span class="pc" id="L59">        return Optional.ofNullable(user).orElseThrow(() -&gt; new UserNotExistException(&quot;User not exist&quot;));</span>
+    }
+
+
+    public void reactiveClient(String dni) throws JpaSystemException{
+<span class="fc" id="L64">        userRepository.reactiveClient(dni);</span>
+<span class="fc" id="L65">    }</span>
+
+    public User findClientByDni(String dni) {
+<span class="fc" id="L68">        return userRepository.findClientByDni(dni);</span>
+    }
+
+    public User getEmployeeDni(String dni) {
+<span class="fc" id="L72">        return userRepository.findEmployeeByDni(dni);</span>
+    }
+
+    public List&lt;User&gt; getAllClient() {
+<span class="fc" id="L76">        return userRepository.getAllClient();</span>
+    }
+
+    public List&lt;User&gt; getAllEmployee() {
+<span class="fc" id="L80">        return userRepository.getAllEmployee();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

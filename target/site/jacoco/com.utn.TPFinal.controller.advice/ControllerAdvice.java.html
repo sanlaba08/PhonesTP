@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ControllerAdvice.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">springboot</a> &gt; <a href="index.source.html" class="el_package">com.utn.TPFinal.controller.advice</a> &gt; <span class="el_source">ControllerAdvice.java</span></div><h1>ControllerAdvice.java</h1><pre class="source lang-java linenums">package com.utn.TPFinal.controller.advice;
+
+import com.utn.TPFinal.dto.ErrorResponseDto;
+import com.utn.TPFinal.exceptions.*;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+
+import java.sql.SQLException;
+
+@RestControllerAdvice
+<span class="fc" id="L14">public class ControllerAdvice extends ResponseEntityExceptionHandler {</span>
+
+//    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+//    @ExceptionHandler(IncorrectDataClientPhoneException.class)
+//    public ErrorResponseDto handleLoginException(IncorrectDataClientPhoneException exc) {
+//       return new ErrorResponseDto(1, exc.getCause().getCause().getMessage());
+//    }
+
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ExceptionHandler(InvalidLoginException.class)
+    public ErrorResponseDto handleLoginException(InvalidLoginException exc) {
+<span class="fc" id="L25">        return new ErrorResponseDto(2, &quot;Invalid login&quot;);</span>
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(UserAllReadyExistException.class)
+    public ErrorResponseDto handleUserAllReadyExistException(UserAllReadyExistException e) {
+<span class="fc" id="L31">        return new ErrorResponseDto(3, e.getMessage());</span>
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(UserNotExistException.class)
+    public ErrorResponseDto handleUserNotExistException(UserNotExistException e) {
+<span class="fc" id="L37">        return new ErrorResponseDto(4, e.getMessage());</span>
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(EmployeeException.class)
+    public ErrorResponseDto handleEmployeeException(EmployeeException e) {
+<span class="fc" id="L43">        return new ErrorResponseDto(5, e.getMessage());</span>
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(PhoneLineException.class)
+    public ErrorResponseDto handlePhoneLineException(PhoneLineException e) {
+<span class="fc" id="L49">        return new ErrorResponseDto(6, e.getMessage());</span>
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(IncorrectDataCallException.class)
+    public ErrorResponseDto handleIncorrectDataCallException(IncorrectDataCallException e) {
+<span class="fc" id="L55">        return new ErrorResponseDto(7, e.getMessage());</span>
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(TariffException.class)
+    public ErrorResponseDto handleIncorrectDataTariffException(TariffException e) {
+<span class="fc" id="L61">        return new ErrorResponseDto(8, e.getMessage());</span>
+    }
+
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(SQLException.class)
+    public ErrorResponseDto handleSQLExeption(SQLException e) {
+<span class="fc" id="L67">        return new ErrorResponseDto(9, &quot;Error interno en la base de datos&quot;);//esto no lo tirara siempre no?</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
