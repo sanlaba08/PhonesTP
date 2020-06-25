@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.websocket.server.PathParam;
 import java.util.List;
 
 @RestController
@@ -43,7 +44,8 @@ public class TariffBackController {
 
     //Consulta de tarifa por ciudad de origen y ciudad de destino
     @GetMapping("/city")
-    public ResponseEntity getTariffByName(@RequestParam String originCityName, @RequestParam String destinationCityName){
+    public ResponseEntity getTariffByName(@PathParam("originCityName") String originCityName,
+                                          @PathParam("destinationCityName") String destinationCityName){
         TariffProjection tariffByName = tariffController.getTariffByName(originCityName, destinationCityName);
         if(tariffByName == null){
             return ResponseEntity.notFound().build();

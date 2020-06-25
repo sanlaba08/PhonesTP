@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.web.bind.annotation.*;
 
+import javax.websocket.server.PathParam;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -39,7 +40,7 @@ public class ClientBackController {
 
     // Baja de Cliente con su respectiva linea telefonica.
     @DeleteMapping("/")
-    public ResponseEntity deleteClient(@RequestParam String dni) throws UserNotExistException {
+    public ResponseEntity deleteClient(@PathParam("dni") String dni) throws UserNotExistException {
         try {
             userController.deleteClient(dni);
             return ResponseEntity.ok().build();
@@ -50,7 +51,7 @@ public class ClientBackController {
 
     // Suspension de Cliente con su respectiva linea telefonica.
     @PutMapping("/number")///number?dni=.....
-    public ResponseEntity suspendClient(@RequestParam String dni) throws UserNotExistException {
+    public ResponseEntity suspendClient(@PathParam("dni") String dni) throws UserNotExistException {
         try {
             userController.suspendClient(dni);
             return ResponseEntity.ok().build();
@@ -84,7 +85,7 @@ public class ClientBackController {
 
     // Consulta de cliente por dni
     @GetMapping("/number")
-    public ResponseEntity<User> getClientPhoneLine(@RequestParam String dni){
+    public ResponseEntity<User> getClientPhoneLine(@PathParam("dni") String dni){
         User clients = userController.getClient(dni);
         if (clients != null) {
             return ResponseEntity.ok().body(clients);
@@ -95,7 +96,7 @@ public class ClientBackController {
 
     // Reactivar un cliente por dni
     @PostMapping("/number")
-    public ResponseEntity reactiveClient(@RequestParam String dni) throws UserNotExistException {
+    public ResponseEntity reactiveClient(@PathParam("dni") String dni) throws UserNotExistException {
         try {
             userController.reactiveClient(dni);
             return ResponseEntity.ok().build();

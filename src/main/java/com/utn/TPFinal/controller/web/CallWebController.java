@@ -7,6 +7,8 @@ import com.utn.TPFinal.session.SessionManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.websocket.server.PathParam;
 import java.util.List;
 
 @RestController
@@ -22,7 +24,7 @@ public class CallWebController {
     }
 
     //Consulta del top 10 de destinos mas llamados del usuario logeado
-    @GetMapping("/destination") // localhost:8080/call/dni?=4123
+    @GetMapping("/destination")
     public ResponseEntity<List<CallsProjection>> getTopTenDestinations(@RequestHeader("Authorization") String sessionToken) {
         User session = sessionManager.getCurrentUser(sessionToken);
         List<CallsProjection> callDestination = callController.getTopTenDestinations(session.getDni());
@@ -35,13 +37,15 @@ public class CallWebController {
 
     //Consulta del llamadas por rango de fecha del usuario logeado
     @GetMapping("/date") // localhost:8080/call/date?first=31-05-2019
-    public ResponseEntity<List<CallsProjection>> getCallByDate(@RequestHeader("Authorization") String sessionToken, @RequestParam String first, @RequestParam String second) {
-        if (first.compareTo(second) > 0) {
+    public ResponseEntity<List<CallsProjection>> getCallByDate(@RequestHeader("Authorization") String sessionToken,
+                                                               @PathParam("from") String from,
+                                                               @PathParam("to") String to) {
+        if (from.compareTo(to) > 0) {
 //            ErrorResponseDto error = new ErrorResponseDto(10, "The first date cannot be greater than the second");
             return ResponseEntity.badRequest().build();
         } else {
             User session = sessionManager.getCurrentUser(sessionToken);
-            List<CallsProjection> callByDate = callController.getCallByDate(session.getDni(), first, second);
+            List<CallsProjection> callByDate = callController.getCallByDate(session.getDni(), from, to);
             if (callByDate.size() > 0) {
                 return ResponseEntity.ok().body(callByDate);
             } else {

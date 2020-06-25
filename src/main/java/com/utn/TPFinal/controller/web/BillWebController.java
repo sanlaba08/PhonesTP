@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.websocket.server.PathParam;
 import java.util.List;
 
 @RestController
@@ -25,10 +26,10 @@ public class BillWebController {
     //Consulta de facturas por rango de fechas del usuario logeado
     @GetMapping("/date")
     public ResponseEntity <List<BillProjection>> getBillDate(@RequestHeader("Authorization") String sessionToken,
-                                                             @RequestParam String first,
-                                                             @RequestParam String second){
+                                                             @PathParam("from") String from,
+                                                             @PathParam("to") String to){
         User session = sessionManager.getCurrentUser(sessionToken);
-        List<BillProjection> billsByDate = billController.getBillDate(session.getDni(),first, second);
+        List<BillProjection> billsByDate = billController.getBillDate(session.getDni(),from, to);
         if (billsByDate.size() > 0){
              return ResponseEntity.ok().body(billsByDate);
         }else{
