@@ -1,0 +1,277 @@
+
+db.createCollection('provinces')
+
+db.provinces.insert(
+{
+	_id: ObjectId("the object id"),
+	province_name: string
+})
+
+db.createCollection('cities')
+
+db.cities.insert(
+{
+	_id: ObjectId("the object id"),
+	id_province: ObjectId("the object id"),
+	province: {
+			    _id: ObjectId("the object id"),
+			    province_name: string
+	          },
+	city_name: string,
+	prefix: string
+})
+
+db.createCollection('users')
+
+db.users.insert(
+{
+    _id: ObjectId("the object id"),
+    name: string,
+    last_name: string,
+    dni: string,
+    user_password: string,
+    available: Boolean,
+    role_name: ["Client", "Employee", "Admin"],
+    id_city: ObjectId("the object id"),
+    city: {
+            _id: ObjectId("the object id"),
+            id_province: ObjectId("the object id"),
+            province: {
+            			_id: ObjectId("the object id"),
+            			province_name: string
+            	      },
+            city_name: string,
+            prefix: string
+          }
+})
+
+db.createCollection('phone_lines')
+
+db.phone_lines.insert(
+{
+    _id: ObjectId("the object id"),
+    number_line: string,
+    available: Boolean,
+    line_type: ["Mobile", "Home", "Admin"],
+    id_user: ObjectId("the object id"),
+    user: {
+                _id: ObjectId("the object id"),
+                name: string,
+                last_name: string,
+                dni: string,
+                user_password: string,
+                available: Boolean,
+                role_name: ["Client", "Employee", "Admin"],
+                id_city: ObjectId("the object id"),
+                city: {
+                        _id: ObjectId("the object id"),
+                        id_province: ObjectId("the object id"),
+                        province: {
+                        			_id: ObjectId("the object id"),
+                        			province_name: string
+                        	      },
+                        city_name: string,
+                        prefix: string
+                      }
+          }
+})
+
+db.createCollection('tariffs')
+
+db.tariffs.insert(
+{
+    _id: ObjectId("the object id"),
+    id_city_origin: ObjectId("the object id"),
+    city_origin: {
+                    _id: ObjectId("the object id"),
+                 	id_province: ObjectId("the object id"),
+                 	province: {
+                 			    _id: ObjectId("the object id"),
+                 			    province_name: string
+                 	          },
+                 	city_name: string,
+                 	prefix: string
+                 },
+    id_city_destination: ObjectId("the object id"),
+    city_destination: {
+                        _id: ObjectId("the object id"),
+                      	id_province: ObjectId("the object id"),
+                      	province: {
+                      			    _id: ObjectId("the object id"),
+                      			    province_name: string
+                      	          },
+                      	city_name: string,
+                      	prefix: string
+                      },
+    price_per_minute: long,
+    cost_per_minute: long
+})
+
+db.createCollection('bills')
+
+db.bills.insert(
+{
+    _id: ObjectId("the object id"),
+    id_phone_line: ObjectId("the object id"),
+    phone_line: {
+                    _id: ObjectId("the object id"),
+                    number_line: string,
+                    available: Boolean,
+                    line_type: ["Mobile", "Home", "Admin"],
+                    id_user: ObjectId("the object id"),
+                    user: {
+                                _id: ObjectId("the object id"),
+                                name: string,
+                                last_name: string,
+                                dni: string,
+                                user_password: string,
+                                available: Boolean,
+                                role_name: ["Client", "Employee", "Admin"],
+                                id_city: ObjectId("the object id"),
+                                city: {
+                                        _id: ObjectId("the object id"),
+                                        id_province: ObjectId("the object id"),
+                                        province: {
+                                        			_id: ObjectId("the object id"),
+                                        			province_name: string
+                                        	      },
+                                        city_name: string,
+                                        prefix: string
+                                      }
+                          }
+                },
+    calls_quantity: int,
+    total_cost: long,
+    total_price: long,
+    bill_date: new Date("<YYYY-mm-dd>"),
+    expiration_date: new Date("<YYYY-mm-dd>"),
+    paid: Boolean
+})
+
+db.createCollection('calls')
+
+db.calls.insert(
+{
+    _id: ObjectId("the object id"),
+    call_date: new Date("<YYYY-mm-dd>"),
+    id_line_origin: ObjectId("the object id"),
+    line_origin: {
+                     _id: ObjectId("the object id"),
+                     number_line: string,
+                     available: Boolean,
+                     line_type: ["Mobile", "Home", "Admin"],
+                     id_user: ObjectId("the object id"),
+                     user: {
+                                 _id: ObjectId("the object id"),
+                                 name: string,
+                                 last_name: string,
+                                 dni: string,
+                                 user_password: string,
+                                 available: Boolean,
+                                 role_name: ["Client", "Employee", "Admin"],
+                                 id_city: ObjectId("the object id"),
+                                 city: {
+                                         _id: ObjectId("the object id"),
+                                         id_province: ObjectId("the object id"),
+                                         province: {
+                                         			_id: ObjectId("the object id"),
+                                         			province_name: string
+                                         	      },
+                                         city_name: string,
+                                         prefix: string
+                                       }
+                           }
+                 },
+    id_line_destination: ObjectId("the object id"),
+    line_destination: {
+                           _id: ObjectId("the object id"),
+                           number_line: string,
+                           available: Boolean,
+                           line_type: ["Mobile", "Home", "Admin"],
+                           id_user: ObjectId("the object id"),
+                           user: {
+                                       _id: ObjectId("the object id"),
+                                       name: string,
+                                       last_name: string,
+                                       dni: string,
+                                       user_password: string,
+                                       available: Boolean,
+                                       role_name: ["Client", "Employee", "Admin"],
+                                       id_city: ObjectId("the object id"),
+                                       city: {
+                                               _id: ObjectId("the object id"),
+                                               id_province: ObjectId("the object id"),
+                                               province: {
+                                               			_id: ObjectId("the object id"),
+                                               			province_name: string
+                                               	      },
+                                               city_name: string,
+                                               prefix: string
+                                             }
+                                 }
+                      },
+    duration: long,
+    total_price: long,
+    total_cost: 'long',
+    id_city_origin: ObjectId("the object id"),
+    city_origin: {
+                    	_id: ObjectId("the object id"),
+                    	id_province: ObjectId("the object id"),
+                    	province: {
+                    			    _id: ObjectId("the object id"),
+                    			    province_name: string
+                    	          },
+                    	city_name: string,
+                    	prefix: string
+                 },
+    id_city_destination: ObjectId("the object id"),
+    city_destination: {
+                        	_id: ObjectId("the object id"),
+                        	id_province: ObjectId("the object id"),
+                        	province: {
+                        			    _id: ObjectId("the object id"),
+                        			    province_name: string
+                        	          },
+                        	city_name: string,
+                        	prefix: string
+                      },
+    billed: Boolean,
+    id_bill: ObjectId("the object id"),
+    bill: {
+               _id: ObjectId("the object id"),
+               id_phone_line: ObjectId("the object id"),
+               phone_line: {
+                               _id: ObjectId("the object id"),
+                               number_line: string,
+                               available: Boolean,
+                               line_type: ["Mobile", "Home", "Admin"],
+                               id_user: ObjectId("the object id"),
+                               user: {
+                                           _id: ObjectId("the object id"),
+                                           name: string,
+                                           last_name: string,
+                                           dni: string,
+                                           user_password: string,
+                                           available: Boolean,
+                                           role_name: ["Client", "Employee", "Admin"],
+                                           id_city: ObjectId("the object id"),
+                                           city: {
+                                                   _id: ObjectId("the object id"),
+                                                   id_province: ObjectId("the object id"),
+                                                   province: {
+                                                   			_id: ObjectId("the object id"),
+                                                   			province_name: string
+                                                   	      },
+                                                   city_name: string,
+                                                   prefix: string
+                                                 }
+                                     }
+                           },
+               calls_quantity: int,
+               total_cost: long,
+               total_price: long,
+               bill_date: new Date("<YYYY-mm-dd>"),
+               expiration_date: new Date("<YYYY-mm-dd>"),
+               paid: Boolean
+          }
+})
