@@ -1,5 +1,7 @@
 package com.utn.TPFinal.controller.model;
 
+import com.utn.TPFinal.dto.LoginRequestDto;
+import com.utn.TPFinal.exceptions.UserNotExistException;
 import com.utn.TPFinal.exceptions.ValidationException;
 import com.utn.TPFinal.projections.BillProjection;
 import com.utn.TPFinal.projections.TariffProjection;
@@ -84,5 +86,33 @@ class BillControllerTest {
         assertNotNull(aux);
         assertEquals(aux, billList);
         verify(billService,times(1)).getListBillByDate("42231235","2020-06-16","2020-06-18");
+    }
+
+    @Test
+    void getBillEmpty() {
+        assertThrows(ValidationException.class, () -> {
+            billController.getBillDate("", "", "");
+        });
+    }
+
+    @Test
+    void getBillDateDniEmpty() {
+        assertThrows(ValidationException.class, () -> {
+            billController.getBillDate("", "2020-6-25", "2020-6-27");
+        });
+    }
+
+    @Test
+    void getBillDateFirstEmpty() {
+        assertThrows(ValidationException.class, () -> {
+            billController.getBillDate("41686701", "", "2020-6-27");
+        });
+    }
+
+    @Test
+    void getBillDateSecondEmpty() {
+        assertThrows(ValidationException.class, () -> {
+            billController.getBillDate("41686701", "2020-6-27", "");
+        });
     }
 }

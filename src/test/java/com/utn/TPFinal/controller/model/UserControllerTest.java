@@ -77,6 +77,13 @@ class UserControllerTest {
     }
 
     @Test
+    void getEmployeeEmpty() {
+        assertThrows(ValidationException.class, () -> {
+            userController.getEmployee("");
+        });
+    }
+
+    @Test
     void getClient() throws ValidationException {
         User client = new User();
         when(userService.findClientByDni("41686701")).thenReturn(client);
@@ -85,7 +92,13 @@ class UserControllerTest {
         assertNotNull(aux);
         assertEquals(aux, client);
         verify(userService, times(1)).findClientByDni("41686701");
+    }
 
+    @Test
+    void getClientEmpty() {
+        assertThrows(ValidationException.class, () -> {
+            userController.getClient("");
+        });
     }
 
     @Test
@@ -98,6 +111,13 @@ class UserControllerTest {
     }
 
     @Test
+    void addClientEmpty() {
+        assertThrows(ValidationException.class, () -> {
+            userController.addClient(new UserPhoneDto("","","","",null,""));
+        });
+    }
+
+    @Test
     void deleteClientOk() throws ValidationException {
         doNothing().when(userService).deleteClientPhone("123");
         userController.deleteClient("123");
@@ -105,10 +125,24 @@ class UserControllerTest {
     }
 
     @Test
+    void deleteClientEmpty() {
+        assertThrows(ValidationException.class, () -> {
+            userController.deleteClient("");
+        });
+    }
+
+    @Test
     void suspendClient() throws ValidationException {
         doNothing().when(userService).suspendClient("123");
         userController.suspendClient("123");
         verify(userService, times(1)).suspendClient("123");
+    }
+
+    @Test
+    void suspendClientEmpty() {
+        assertThrows(ValidationException.class, () -> {
+            userController.suspendClient("");
+        });
     }
 
     @Test
@@ -120,6 +154,13 @@ class UserControllerTest {
     }
 
     @Test
+    void modifyClientEmpty() {
+        assertThrows(ValidationException.class, () -> {
+            userController.modifyClient(new UserPhoneModifyDto(3,"","","","",null));
+        });
+    }
+
+    @Test
     void addEmployee() throws ValidationException {
         EmployeeDto employeeDto = new EmployeeDto("manu", "sure", "321", "321", 1);
         when(userService.addEmployee(employeeDto)).thenReturn(1);
@@ -128,12 +169,25 @@ class UserControllerTest {
         verify(userService, times(1)).addEmployee(employeeDto);
     }
 
+    @Test
+    void addEmployeeEmpty() {
+        assertThrows(ValidationException.class, () -> {
+            userController.addEmployee(new EmployeeDto("", "", "", "", null));
+        });
+    }
 
     @Test
     void reactiveClient() throws ValidationException {
         doNothing().when(userService).reactiveClient("123");
         userController.reactiveClient("123");
         verify(userService, times(1)).reactiveClient("123");
+    }
+
+    @Test
+    void reactiveClientEmpty() {
+        assertThrows(ValidationException.class, () -> {
+            userController.reactiveClient("");
+        });
     }
 
     @Test

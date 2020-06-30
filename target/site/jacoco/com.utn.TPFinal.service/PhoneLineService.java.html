@@ -18,8 +18,8 @@ public class PhoneLineService {
 <span class="fc" id="L18">        return phoneLineRepository.addPhoneLine(phoneLine.getUser(), phoneLine.getLineType());</span>
     }
 
-    public void deletePhoneLine(Integer idLine) throws JpaSystemException {
-<span class="fc" id="L22">        phoneLineRepository.deletePhoneLine(idLine);</span>
+    public void suspendPhoneLine(Integer idLine) throws JpaSystemException {
+<span class="fc" id="L22">        phoneLineRepository.suspendPhoneLine(idLine);</span>
 <span class="fc" id="L23">    }</span>
 
     public void enablePhoneLine(Integer idLine) throws JpaSystemException {

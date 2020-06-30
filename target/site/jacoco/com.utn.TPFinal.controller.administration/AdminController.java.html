@@ -5,6 +5,7 @@ import com.utn.TPFinal.controller.model.TariffController;
 import com.utn.TPFinal.controller.model.UserController;
 import com.utn.TPFinal.dto.CallDto;
 import com.utn.TPFinal.dto.EmployeeDto;
+import com.utn.TPFinal.dto.ModifyTariffDto;
 import com.utn.TPFinal.dto.TariffDto;
 import com.utn.TPFinal.exceptions.*;
 import com.utn.TPFinal.model.User;
@@ -28,65 +29,76 @@ public class AdminController {
     private final CallController callController;
 
     @Autowired
-<span class="fc" id="L31">    public AdminController(UserController userController, TariffController tariffController, CallController callController) {</span>
-<span class="fc" id="L32">        this.userController = userController;</span>
-<span class="fc" id="L33">        this.tariffController = tariffController;</span>
-<span class="fc" id="L34">        this.callController = callController;</span>
-<span class="fc" id="L35">    }</span>
+<span class="fc" id="L32">    public AdminController(UserController userController, TariffController tariffController, CallController callController) {</span>
+<span class="fc" id="L33">        this.userController = userController;</span>
+<span class="fc" id="L34">        this.tariffController = tariffController;</span>
+<span class="fc" id="L35">        this.callController = callController;</span>
+<span class="fc" id="L36">    }</span>
 
     // Alta de Empleado (Opcional).
     @PostMapping(&quot;employee/&quot;)
-    public ResponseEntity addEmployee(@RequestBody EmployeeDto employee) throws JpaSystemException,EmployeeException, URISyntaxException {
+    public ResponseEntity addEmployee(@RequestBody EmployeeDto employee) throws JpaSystemException, EmployeeException, URISyntaxException, ValidationException {
         try {
-<span class="fc" id="L41">            Integer idEmployee = userController.addEmployee(employee);</span>
-<span class="fc" id="L42">           return ResponseEntity.created(new URI(&quot;http://localhost:8080/admin/employee/&quot; + idEmployee)).body(employee);</span>
-<span class="fc" id="L43">        } catch (JpaSystemException e) {</span>
-<span class="fc" id="L44">            throw new EmployeeException(e.getCause().getCause().getMessage());</span>
+<span class="fc" id="L42">            Integer idEmployee = userController.addEmployee(employee);</span>
+<span class="fc" id="L43">           return ResponseEntity.created(new URI(&quot;http://localhost:8080/admin/employee/&quot; + idEmployee)).body(employee);</span>
+<span class="fc" id="L44">        } catch (JpaSystemException e) {</span>
+<span class="fc" id="L45">            throw new EmployeeException(e.getCause().getCause().getMessage());</span>
         }
     }
 
     // Consulta de todos los empleados (Opcional).
     @GetMapping(&quot;employee/&quot;)
     public ResponseEntity&lt;List&lt;User&gt;&gt; getAllEmployee() {
-<span class="fc" id="L51">        List&lt;User&gt; employees = userController.getAllEmployee();</span>
-<span class="fc bfc" id="L52" title="All 2 branches covered.">        if (employees.size() &gt; 0) {</span>
-<span class="fc" id="L53">            return ResponseEntity.ok().body(employees);</span>
+<span class="fc" id="L52">        List&lt;User&gt; employees = userController.getAllEmployee();</span>
+<span class="fc bfc" id="L53" title="All 2 branches covered.">        if (employees.size() &gt; 0) {</span>
+<span class="fc" id="L54">            return ResponseEntity.ok().body(employees);</span>
         } else {
-<span class="fc" id="L55">            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();</span>
+<span class="fc" id="L56">            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();</span>
         }
     }
 
     // Consulta de empleado (Opcional).
     @GetMapping(&quot;employee/number&quot;)
-    public ResponseEntity getEmployee(@PathParam(&quot;dni&quot;) String dni) {
-<span class="fc" id="L62">        User employee = userController.getEmployee(dni);</span>
-<span class="fc bfc" id="L63" title="All 2 branches covered.">        if(employee == null){</span>
-<span class="fc" id="L64">            return ResponseEntity.notFound().build();</span>
+    public ResponseEntity getEmployee(@RequestParam String dni) throws ValidationException {
+<span class="fc" id="L63">        User employee = userController.getEmployee(dni);</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">        if(employee == null){</span>
+<span class="fc" id="L65">            return ResponseEntity.notFound().build();</span>
         } else{
-<span class="fc" id="L66">            return ResponseEntity.ok(employee);</span>
+<span class="fc" id="L67">            return ResponseEntity.ok(employee);</span>
         }
     }
 
     //Alta de tarifas (Opcional)
     @PostMapping(&quot;tariff/&quot;)
-    public ResponseEntity addTariff(@RequestBody TariffDto tariffDto) throws TariffException, URISyntaxException {
+    public ResponseEntity addTariff(@RequestBody TariffDto tariffDto) throws TariffException, URISyntaxException, ValidationException {
         try {
-<span class="fc" id="L74">            Integer idTariff = tariffController.addTariff(tariffDto);</span>
-<span class="fc" id="L75">            return ResponseEntity.created(new URI(&quot;http://localhost:8080/admin/tariff/&quot; + idTariff)).body(tariffDto);</span>
-<span class="fc" id="L76">        } catch (JpaSystemException e) {</span>
-<span class="fc" id="L77">            throw new TariffException(e.getCause().getCause().getMessage());</span>
+<span class="fc" id="L75">            Integer idTariff = tariffController.addTariff(tariffDto);</span>
+<span class="fc" id="L76">            return ResponseEntity.created(new URI(&quot;http://localhost:8080/admin/tariff/&quot; + idTariff)).body(tariffDto);</span>
+<span class="fc" id="L77">        } catch (JpaSystemException e) {</span>
+<span class="fc" id="L78">            throw new TariffException(e.getCause().getCause().getMessage());</span>
+        }
+    }
+
+    @PutMapping(&quot;tariff/&quot;)
+    public ResponseEntity modifyTariff(@RequestBody ModifyTariffDto modifyTariffDto) throws TariffException, ValidationException {
+        try {
+<span class="fc" id="L85">            tariffController.modifyTariff(modifyTariffDto);</span>
+<span class="fc" id="L86">            return ResponseEntity.status(HttpStatus.ACCEPTED).build();</span>
+<span class="fc" id="L87">        } catch (JpaSystemException e) {</span>
+<span class="fc" id="L88">            throw new TariffException(e.getCause().getCause().getMessage());</span>
         }
     }
 
     //INFRAESTRUCTURA = Realizar llamada.
     @PostMapping(&quot;call/&quot;)
-    public ResponseEntity addCall(@RequestBody CallDto callDto) throws IncorrectDataCallException, URISyntaxException {
+    public ResponseEntity addCall(@RequestBody CallDto callDto) throws IncorrectDataCallException, URISyntaxException, ValidationException {
         try{
-<span class="fc" id="L85">            Integer idCall = callController.addCall(callDto);</span>
-<span class="fc" id="L86">            return ResponseEntity.created(new URI(&quot;http://localhost:8080/admin/call/&quot; + idCall)).body(callDto);</span>
-<span class="fc" id="L87">        } catch (JpaSystemException e){</span>
-<span class="fc" id="L88">            throw new IncorrectDataCallException(e.getCause().getCause().getMessage());</span>
+<span class="fc" id="L96">            Integer idCall = callController.addCall(callDto);</span>
+<span class="fc" id="L97">            return ResponseEntity.created(new URI(&quot;http://localhost:8080/admin/call/&quot; + idCall)).body(callDto);</span>
+<span class="fc" id="L98">        } catch (JpaSystemException e){</span>
+<span class="fc" id="L99">            throw new IncorrectDataCallException(e.getCause().getCause().getMessage());</span>
         }
     }
+
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

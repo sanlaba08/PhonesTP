@@ -1,5 +1,6 @@
 package com.utn.TPFinal.controller.model;
 
+import com.utn.TPFinal.dto.CallDto;
 import com.utn.TPFinal.dto.ModifyTariffDto;
 import com.utn.TPFinal.dto.TariffDto;
 import com.utn.TPFinal.dto.UserPhoneModifyDto;
@@ -70,6 +71,20 @@ class TariffControllerTest {
     }
 
     @Test
+    void getTariffByIdNull() {
+        assertThrows(ValidationException.class, () -> {
+            tariffController.getTariffById(null);
+        });
+    }
+
+    @Test
+    void getTariffByIdNegativeId() {
+        assertThrows(ValidationException.class, () -> {
+            tariffController.getTariffById(-30);
+        });
+    }
+
+    @Test
     void getTariffByNameOk() throws ValidationException {
 
         when(tariffController.getTariffByName("Buenos Aires","Buenos Aires")).thenReturn(tariffProjection);
@@ -80,11 +95,28 @@ class TariffControllerTest {
     }
 
     @Test
+    void getTariffByNameEmpty() {
+        assertThrows(ValidationException.class, () -> {
+            tariffController.getTariffByName("", "");
+        });
+    }
+
+    @Test
+    void getTariffByFirstCityNameEmpty() {
+        assertThrows(ValidationException.class, () -> {
+            tariffController.getTariffByName("Mar del Plata", "");
+        });
+    }
+
+    @Test
+    void getTariffBySecondCityNameEmpty() {
+        assertThrows(ValidationException.class, () -> {
+            tariffController.getTariffByName("", "Mar del Plata");
+        });
+    }
+
+    @Test
     void addTariffOk() throws ValidationException {
-//        Integer idOriginCity;
-//        Integer idDestinationCity;
-//        long pricePerMinute;
-//        float costPerMinute
         TariffDto dto =  new TariffDto(1,2,3,2);
         when(tariffService.addTariff(dto)).thenReturn(1);
         Integer response = tariffController.addTariff(dto);
@@ -93,10 +125,24 @@ class TariffControllerTest {
     }
 
     @Test
+    void addTariffNull() {
+        assertThrows(ValidationException.class, () -> {
+            tariffController.addTariff(new TariffDto(null, null, -19, -32));
+        });
+    }
+
+    @Test
     void modifyTariff() throws ValidationException {
         ModifyTariffDto modifyTariffDto = new ModifyTariffDto(1,4,3);
         doNothing().when(tariffService).modifyTariff(modifyTariffDto);
         tariffController.modifyTariff(modifyTariffDto);
         verify(tariffService, times(1)).modifyTariff(modifyTariffDto);
+    }
+
+    @Test
+    void modifyTariffNegative() {
+        assertThrows(ValidationException.class, () -> {
+            tariffController.modifyTariff(new ModifyTariffDto(-6, -19, -32));
+        });
     }
 }

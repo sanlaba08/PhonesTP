@@ -45,39 +45,38 @@ public class UserService {
 <span class="fc" id="L45">                clientPhone.getLastName(),</span>
 <span class="fc" id="L46">                clientPhone.getDni(),</span>
 <span class="fc" id="L47">                clientPhone.getPassword(),</span>
-<span class="fc" id="L48">                clientPhone.getCity(),</span>
-<span class="fc" id="L49">                clientPhone.getLineType());</span>
-<span class="fc" id="L50">    }</span>
+<span class="fc" id="L48">                clientPhone.getCity());</span>
+<span class="fc" id="L49">    }</span>
 
 
     public Integer addEmployee(EmployeeDto employee) throws JpaSystemException{
-<span class="fc" id="L54">       return userRepository.addEmployee(employee.getName(), employee.getLastName(), employee.getDni(), employee.getPassword(), employee.getCity());</span>
+<span class="fc" id="L53">       return userRepository.addEmployee(employee.getName(), employee.getLastName(), employee.getDni(), employee.getPassword(), employee.getCity());</span>
     }
 
     public User login(LoginRequestDto login) throws UserNotExistException {
-<span class="fc" id="L58">        User user = userRepository.getByUsername(login.getDni(), login.getPassword());</span>
-<span class="fc" id="L59">        return Optional.ofNullable(user).orElseThrow(() -&gt; new UserNotExistException(&quot;User not exist&quot;));</span>
+<span class="fc" id="L57">        User user = userRepository.getByUsername(login.getDni(), login.getPassword());</span>
+<span class="fc" id="L58">        return Optional.ofNullable(user).orElseThrow(() -&gt; new UserNotExistException(&quot;User not exist&quot;));</span>
     }
 
 
     public void reactiveClient(String dni) throws JpaSystemException{
-<span class="fc" id="L64">        userRepository.reactiveClient(dni);</span>
-<span class="fc" id="L65">    }</span>
+<span class="fc" id="L63">        userRepository.reactiveClient(dni);</span>
+<span class="fc" id="L64">    }</span>
 
     public User findClientByDni(String dni) {
-<span class="fc" id="L68">        return userRepository.findClientByDni(dni);</span>
+<span class="fc" id="L67">        return userRepository.findClientByDni(dni);</span>
     }
 
     public User getEmployeeDni(String dni) {
-<span class="fc" id="L72">        return userRepository.findEmployeeByDni(dni);</span>
+<span class="fc" id="L71">        return userRepository.findEmployeeByDni(dni);</span>
     }
 
     public List&lt;User&gt; getAllClient() {
-<span class="fc" id="L76">        return userRepository.getAllClient();</span>
+<span class="fc" id="L75">        return userRepository.getAllClient();</span>
     }
 
     public List&lt;User&gt; getAllEmployee() {
-<span class="fc" id="L80">        return userRepository.getAllEmployee();</span>
+<span class="fc" id="L79">        return userRepository.getAllEmployee();</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

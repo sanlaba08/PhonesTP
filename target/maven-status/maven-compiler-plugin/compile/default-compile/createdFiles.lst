@@ -46,6 +46,7 @@ com\utn\TPFinal\service\TariffService.class
 com\utn\TPFinal\controller\advice\ControllerAdvice.class
 com\utn\TPFinal\service\UserService.class
 com\utn\TPFinal\dto\UserPhoneDto.class
+com\utn\TPFinal\dto\ModifyTariffDto.class
 com\utn\TPFinal\model\City.class
 com\utn\TPFinal\session\Session.class
 com\utn\TPFinal\controller\model\CallController.class

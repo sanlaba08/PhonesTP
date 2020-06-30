@@ -64,6 +64,13 @@ class CallControllerTest {
     }
 
     @Test
+    void getCallEmpty() {
+        assertThrows(ValidationException.class, () -> {
+            callController.getCall("");
+        });
+    }
+
+    @Test
     void getTopTenDestinations() throws ValidationException {
         topTenCallProjection.setFull_name_o("Santiago Labatut");
         topTenCallProjection.setDestination_city("Mar del Plata");
@@ -82,6 +89,13 @@ class CallControllerTest {
     }
 
     @Test
+    void getTopTenCallEmpty() {
+        assertThrows(ValidationException.class, () -> {
+            callController.getTopTenDestinations("");
+        });
+    }
+
+    @Test
     void getCallByDate() throws ValidationException {
 
         when(callService.getListCallByDate("42231235","2020-04-01","2020-06-20")).thenReturn(calls);
@@ -94,15 +108,46 @@ class CallControllerTest {
     }
 
     @Test
+    void getCallByDateEmpty() {
+        assertThrows(ValidationException.class, () -> {
+            callController.getCallByDate("", "", "");
+        });
+    }
+
+    @Test
+    void getCallByDateDniEmpty() {
+        assertThrows(ValidationException.class, () -> {
+            callController.getCallByDate("", "2020-6-25", "2020-6-27");
+        });
+    }
+
+    @Test
+    void getCallByDateFirstEmpty() {
+        assertThrows(ValidationException.class, () -> {
+            callController.getCallByDate("41686701", "", "2020-6-27");
+        });
+    }
+
+    @Test
+    void getCallByDateSecondEmpty() {
+        assertThrows(ValidationException.class, () -> {
+            callController.getCallByDate("41686701", "2020-6-27", "");
+        });
+    }
+
+    @Test
     void addCallOk() throws ValidationException {
-//        String lineOrigin;
-//        String lineDestination;
-//        Long duration;
-//        Date callDate
         CallDto dto = new CallDto("123","321", (long) 3,new Date());
         when(callService.addCall(dto)).thenReturn(1);
         Integer response = callController.addCall(dto);
         assertEquals(response,1);
         verify(callService,times(1)).addCall(dto);
+    }
+
+    @Test
+    void getAddCallEmpty() {
+        assertThrows(ValidationException.class, () -> {
+            callController.addCall(new CallDto("", "", null,null));
+        });
     }
 }

@@ -1,5 +1,6 @@
 package com.utn.TPFinal.controller.model;
 
+import com.utn.TPFinal.dto.CallDto;
 import com.utn.TPFinal.dto.EmployeeDto;
 import com.utn.TPFinal.dto.PhoneLineByUserDto;
 import com.utn.TPFinal.exceptions.ValidationException;
@@ -50,6 +51,13 @@ class PhoneLineControllerTest {
     }
 
     @Test
+    void addPhoneLineEmpty() {
+        assertThrows(ValidationException.class, () -> {
+            phoneLineController.addPhoneLine(new PhoneLineByUserDto(1, ""));
+        });
+    }
+
+    @Test
     void suspendPhoneLine() throws ValidationException {
 
         doNothing().when(phoneLineService).suspendPhoneLine(1);
@@ -58,10 +66,38 @@ class PhoneLineControllerTest {
     }
 
     @Test
+    void suspendPhoneLineNull() {
+        assertThrows(ValidationException.class, () -> {
+            phoneLineController.suspendPhoneLine(null);
+        });
+    }
+
+    @Test
+    void suspendPhoneLineNegativeId() {
+        assertThrows(ValidationException.class, () -> {
+            phoneLineController.suspendPhoneLine(-30);
+        });
+    }
+
+    @Test
     void enablePhoneLine() throws ValidationException {
         doNothing().when(phoneLineService).enablePhoneLine(1);
         phoneLineController.enablePhoneLine(1);
         verify(phoneLineService,times(1)).enablePhoneLine(1);
+    }
+
+    @Test
+    void enablePhoneLineNull() {
+        assertThrows(ValidationException.class, () -> {
+            phoneLineController.enablePhoneLine(null);
+        });
+    }
+
+    @Test
+    void enablePhoneLineNegativeId() {
+        assertThrows(ValidationException.class, () -> {
+            phoneLineController.enablePhoneLine(-30);
+        });
     }
 
     @Test
@@ -81,5 +117,12 @@ class PhoneLineControllerTest {
         assertEquals(aux, clientProjection);
         verify(phoneLineService,times(1)).getClientLine(clientProjection.getDni());
 
+    }
+
+    @Test
+    void getClientLineEmpty() {
+        assertThrows(ValidationException.class, () -> {
+            phoneLineController.getClientLine("");
+        });
     }
 }
