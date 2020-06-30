@@ -1,17 +1,15 @@
 package com.utn.TPFinal.session;
 
 
-import com.utn.TPFinal.model.User;
+import com.utn.TPFinal.domain.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
 import java.util.Date;
-import java.util.Hashtable;
-import java.util.Map;
 import java.util.UUID;
 
-import static com.utn.TPFinal.model.UserType.Admin;
+import static com.utn.TPFinal.domain.UserType.Admin;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.MockitoAnnotations.initMocks;

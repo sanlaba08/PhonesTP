@@ -2,7 +2,7 @@ package com.utn.TPFinal.controller.web;
 
 import com.utn.TPFinal.controller.model.CallController;
 import com.utn.TPFinal.exceptions.ValidationException;
-import com.utn.TPFinal.model.User;
+import com.utn.TPFinal.domain.User;
 import com.utn.TPFinal.projections.CallsProjection;
 import com.utn.TPFinal.session.SessionManager;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static com.utn.TPFinal.model.UserType.Client;
+import static com.utn.TPFinal.domain.UserType.Client;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
@@ -100,19 +100,6 @@ class CallWebControllerTest {
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(calls, response.getBody());
 
-    }
-
-    @Test
-    void getCallByDateBad() throws ValidationException {
-        User user = new User(16,"Santiago", "Labatut", "41686701", "santi", 1,null, Client, null);
-        String token = sessionManager.createSession(user);
-        when(sessionManager.getCurrentUser(token)).thenReturn(user);
-
-        List<CallsProjection> calls = new ArrayList<CallsProjection>();
-
-        when(callController.getCallByDate(user.getDni(), "2020-12-20", "2020-07-20")).thenReturn(calls);
-        ResponseEntity<List<CallsProjection>> response = callWebController.getCallByDate(token,"2020-12-20", "2020-07-20" );
-        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
     }
 
     @Test

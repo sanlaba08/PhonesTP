@@ -3,7 +3,7 @@ package com.utn.TPFinal.controller.model;
 import com.utn.TPFinal.dto.*;
 import com.utn.TPFinal.exceptions.UserNotExistException;
 import com.utn.TPFinal.exceptions.ValidationException;
-import com.utn.TPFinal.model.User;
+import com.utn.TPFinal.domain.User;
 import com.utn.TPFinal.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,7 +12,7 @@ import org.mockito.Mock;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.utn.TPFinal.model.UserType.Admin;
+import static com.utn.TPFinal.domain.UserType.Admin;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;

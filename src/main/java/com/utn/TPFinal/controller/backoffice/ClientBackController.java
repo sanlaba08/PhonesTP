@@ -6,14 +6,13 @@ import com.utn.TPFinal.dto.UserPhoneModifyDto;
 import com.utn.TPFinal.exceptions.UserAllReadyExistException;
 import com.utn.TPFinal.exceptions.UserNotExistException;
 import com.utn.TPFinal.exceptions.ValidationException;
-import com.utn.TPFinal.model.User;
+import com.utn.TPFinal.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.web.bind.annotation.*;
 
-import javax.websocket.server.PathParam;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -50,7 +49,6 @@ public class ClientBackController {
         }
     }
 
-    // Suspension de Cliente con su respectiva linea telefonica.
     @PutMapping("/number")///number?dni=.....
     public ResponseEntity suspendClient(@RequestParam String dni) throws UserNotExistException, ValidationException {
         try {
@@ -61,7 +59,16 @@ public class ClientBackController {
         }
     }
 
-    // Modificacion del Cliente y el tipo de linea telefonica.
+    @PutMapping("/{dni}")
+    public ResponseEntity reactiveClient(@PathVariable String dni) throws UserNotExistException, ValidationException {
+        try {
+            userController.reactiveClient(dni);
+            return ResponseEntity.ok().build();
+        } catch (JpaSystemException e) {
+            throw new UserNotExistException(e.getCause().getCause().getMessage());
+        }
+    }
+
     @PutMapping("/")
     public ResponseEntity modifyClient(@RequestBody UserPhoneModifyDto clientPhone) throws UserNotExistException, ValidationException {
         try {
@@ -72,7 +79,6 @@ public class ClientBackController {
         }
     }
 
-    // Consulta de todos los clientes
     @GetMapping("/")
     public ResponseEntity<List<User>> getAllClients() {
         List<User> clients = userController.getAllClients();
@@ -84,7 +90,6 @@ public class ClientBackController {
         }
     }
 
-    // Consulta de cliente por dni
     @GetMapping("/number")
     public ResponseEntity<User> getClientPhoneLine(@RequestParam String dni) throws ValidationException {
         User clients = userController.getClient(dni);
@@ -92,17 +97,6 @@ public class ClientBackController {
             return ResponseEntity.ok().body(clients);
         } else {
             return ResponseEntity.notFound().build();
-        }
-    }
-
-    // Reactivar un cliente por dni
-    @PostMapping("/number")
-    public ResponseEntity reactiveClient(@RequestParam String dni) throws UserNotExistException, ValidationException {
-        try {
-            userController.reactiveClient(dni);
-            return ResponseEntity.ok().build();
-        } catch (JpaSystemException e) {
-            throw new UserNotExistException(e.getCause().getCause().getMessage());
         }
     }
 

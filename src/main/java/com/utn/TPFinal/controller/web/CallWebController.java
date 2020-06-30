@@ -2,17 +2,15 @@ package com.utn.TPFinal.controller.web;
 
 import com.utn.TPFinal.controller.model.CallController;
 import com.utn.TPFinal.exceptions.ValidationException;
-import com.utn.TPFinal.model.User;
+import com.utn.TPFinal.domain.User;
 import com.utn.TPFinal.projections.CallsProjection;
 import com.utn.TPFinal.session.SessionManager;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.websocket.server.PathParam;
 import java.util.List;
 
 @RestController
@@ -45,16 +43,14 @@ public class CallWebController {
     public ResponseEntity<List<CallsProjection>> getCallByDate(@RequestHeader("Authorization") String sessionToken,
                                                                @RequestParam String from,
                                                                @RequestParam String to) throws ValidationException {
-        if (from.compareTo(to) > 0) {
-            return ResponseEntity.badRequest().build();
+
+        User session = sessionManager.getCurrentUser(sessionToken);
+        List<CallsProjection> callByDate = callController.getCallByDate(session.getDni(), from, to);
+        if (callByDate.size() > 0) {
+            return ResponseEntity.ok().body(callByDate);
         } else {
-            User session = sessionManager.getCurrentUser(sessionToken);
-            List<CallsProjection> callByDate = callController.getCallByDate(session.getDni(), from, to);
-            if (callByDate.size() > 0) {
-                return ResponseEntity.ok().body(callByDate);
-            } else {
-                return ResponseEntity.noContent().build();
-            }
+            return ResponseEntity.noContent().build();
         }
+
     }
 }

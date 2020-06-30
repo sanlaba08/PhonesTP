@@ -13,6 +13,6 @@ public class PhoneLineByUserDto {
     private String lineType;
 
     public Boolean isValid() {
-        return user > 0 && user!=null && !StringUtils.isBlank(lineType);
+        return user > 0 && (user!=null) && !StringUtils.isBlank(lineType);
     }
 }

@@ -1,6 +1,6 @@
 package com.utn.TPFinal.session;
 
-import com.utn.TPFinal.model.User;
+import com.utn.TPFinal.domain.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

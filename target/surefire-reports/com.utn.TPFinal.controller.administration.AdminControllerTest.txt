@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.utn.TPFinal.controller.administration.AdminControllerTest
 -------------------------------------------------------------------------------
-Tests run: 12, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.394 s - in com.utn.TPFinal.controller.administration.AdminControllerTest
+Tests run: 12, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.222 s - in com.utn.TPFinal.controller.administration.AdminControllerTest

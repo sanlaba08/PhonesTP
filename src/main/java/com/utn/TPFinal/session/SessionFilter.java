@@ -1,6 +1,6 @@
 package com.utn.TPFinal.session;
 
-import com.utn.TPFinal.model.UserType;
+import com.utn.TPFinal.domain.UserType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;

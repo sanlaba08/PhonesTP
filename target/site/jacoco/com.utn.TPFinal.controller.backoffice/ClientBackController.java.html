@@ -6,14 +6,13 @@ import com.utn.TPFinal.dto.UserPhoneModifyDto;
 import com.utn.TPFinal.exceptions.UserAllReadyExistException;
 import com.utn.TPFinal.exceptions.UserNotExistException;
 import com.utn.TPFinal.exceptions.ValidationException;
-import com.utn.TPFinal.model.User;
+import com.utn.TPFinal.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.web.bind.annotation.*;
 
-import javax.websocket.server.PathParam;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -24,18 +23,18 @@ public class ClientBackController {
     private final UserController userController;
 
     @Autowired
-<span class="fc" id="L27">    public ClientBackController(UserController userController) {</span>
-<span class="fc" id="L28">        this.userController = userController;</span>
-<span class="fc" id="L29">    }</span>
+<span class="fc" id="L26">    public ClientBackController(UserController userController) {</span>
+<span class="fc" id="L27">        this.userController = userController;</span>
+<span class="fc" id="L28">    }</span>
 
     // Alta de Cliente con su respectiva linea telefonica.
     @PostMapping(&quot;/&quot;)
     public ResponseEntity addClient(@RequestBody UserPhoneDto clientPhone) throws UserAllReadyExistException, URISyntaxException, ValidationException {
         try {
-<span class="fc" id="L35">            Integer idClient = userController.addClient(clientPhone);</span>
-<span class="fc" id="L36">            return ResponseEntity.created(new URI(&quot;http://localhost:8080/backoffice/client/&quot; + idClient)).body(clientPhone);</span>
-<span class="fc" id="L37">        } catch (JpaSystemException e) {</span>
-<span class="fc" id="L38">            throw new UserAllReadyExistException(e.getCause().getCause().getMessage());</span>
+<span class="fc" id="L34">            Integer idClient = userController.addClient(clientPhone);</span>
+<span class="fc" id="L35">            return ResponseEntity.created(new URI(&quot;http://localhost:8080/backoffice/client/&quot; + idClient)).body(clientPhone);</span>
+<span class="fc" id="L36">        } catch (JpaSystemException e) {</span>
+<span class="fc" id="L37">            throw new UserAllReadyExistException(e.getCause().getCause().getMessage());</span>
         }
     }
 
@@ -43,66 +42,61 @@ public class ClientBackController {
     @DeleteMapping(&quot;/&quot;)
     public ResponseEntity deleteClient(@RequestParam String dni) throws UserNotExistException, ValidationException {
         try {
-<span class="fc" id="L46">            userController.deleteClient(dni);</span>
-<span class="fc" id="L47">            return ResponseEntity.ok().build();</span>
-<span class="fc" id="L48">        } catch (JpaSystemException e) {</span>
-<span class="fc" id="L49">            throw new UserNotExistException(e.getCause().getCause().getMessage());</span>
+<span class="fc" id="L45">            userController.deleteClient(dni);</span>
+<span class="fc" id="L46">            return ResponseEntity.ok().build();</span>
+<span class="fc" id="L47">        } catch (JpaSystemException e) {</span>
+<span class="fc" id="L48">            throw new UserNotExistException(e.getCause().getCause().getMessage());</span>
         }
     }
 
-    // Suspension de Cliente con su respectiva linea telefonica.
     @PutMapping(&quot;/number&quot;)///number?dni=.....
     public ResponseEntity suspendClient(@RequestParam String dni) throws UserNotExistException, ValidationException {
         try {
-<span class="fc" id="L57">            userController.suspendClient(dni);</span>
-<span class="fc" id="L58">            return ResponseEntity.ok().build();</span>
-<span class="fc" id="L59">        } catch (JpaSystemException e) {</span>
-<span class="fc" id="L60">            throw new UserNotExistException(e.getCause().getCause().getMessage());</span>
+<span class="fc" id="L55">            userController.suspendClient(dni);</span>
+<span class="fc" id="L56">            return ResponseEntity.ok().build();</span>
+<span class="fc" id="L57">        } catch (JpaSystemException e) {</span>
+<span class="fc" id="L58">            throw new UserNotExistException(e.getCause().getCause().getMessage());</span>
         }
     }
 
-    // Modificacion del Cliente y el tipo de linea telefonica.
+    @PutMapping(&quot;/{dni}&quot;)
+    public ResponseEntity reactiveClient(@PathVariable String dni) throws UserNotExistException, ValidationException {
+        try {
+<span class="fc" id="L65">            userController.reactiveClient(dni);</span>
+<span class="fc" id="L66">            return ResponseEntity.ok().build();</span>
+<span class="fc" id="L67">        } catch (JpaSystemException e) {</span>
+<span class="fc" id="L68">            throw new UserNotExistException(e.getCause().getCause().getMessage());</span>
+        }
+    }
+
     @PutMapping(&quot;/&quot;)
     public ResponseEntity modifyClient(@RequestBody UserPhoneModifyDto clientPhone) throws UserNotExistException, ValidationException {
         try {
-<span class="fc" id="L68">            userController.modifyClient(clientPhone);</span>
-<span class="fc" id="L69">            return ResponseEntity.status(HttpStatus.ACCEPTED).build();</span>
-<span class="fc" id="L70">        } catch (JpaSystemException e) {</span>
-<span class="fc" id="L71">            throw new UserNotExistException(e.getCause().getCause().getMessage());</span>
+<span class="fc" id="L75">            userController.modifyClient(clientPhone);</span>
+<span class="fc" id="L76">            return ResponseEntity.status(HttpStatus.ACCEPTED).build();</span>
+<span class="fc" id="L77">        } catch (JpaSystemException e) {</span>
+<span class="fc" id="L78">            throw new UserNotExistException(e.getCause().getCause().getMessage());</span>
         }
     }
 
-    // Consulta de todos los clientes
     @GetMapping(&quot;/&quot;)
     public ResponseEntity&lt;List&lt;User&gt;&gt; getAllClients() {
-<span class="fc" id="L78">        List&lt;User&gt; clients = userController.getAllClients();</span>
+<span class="fc" id="L84">        List&lt;User&gt; clients = userController.getAllClients();</span>
 
-<span class="fc bfc" id="L80" title="All 2 branches covered.">        if (clients.size() &gt; 0) {</span>
-<span class="fc" id="L81">            return ResponseEntity.ok().body(clients);</span>
+<span class="fc bfc" id="L86" title="All 2 branches covered.">        if (clients.size() &gt; 0) {</span>
+<span class="fc" id="L87">            return ResponseEntity.ok().body(clients);</span>
         } else {
-<span class="fc" id="L83">            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();</span>
+<span class="fc" id="L89">            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();</span>
         }
     }
 
-    // Consulta de cliente por dni
     @GetMapping(&quot;/number&quot;)
     public ResponseEntity&lt;User&gt; getClientPhoneLine(@RequestParam String dni) throws ValidationException {
-<span class="fc" id="L90">        User clients = userController.getClient(dni);</span>
-<span class="fc bfc" id="L91" title="All 2 branches covered.">        if (clients != null) {</span>
-<span class="fc" id="L92">            return ResponseEntity.ok().body(clients);</span>
+<span class="fc" id="L95">        User clients = userController.getClient(dni);</span>
+<span class="fc bfc" id="L96" title="All 2 branches covered.">        if (clients != null) {</span>
+<span class="fc" id="L97">            return ResponseEntity.ok().body(clients);</span>
         } else {
-<span class="fc" id="L94">            return ResponseEntity.notFound().build();</span>
-        }
-    }
-
-    // Reactivar un cliente por dni
-    @PostMapping(&quot;/number&quot;)
-    public ResponseEntity reactiveClient(@RequestParam String dni) throws UserNotExistException, ValidationException {
-        try {
-<span class="fc" id="L102">            userController.reactiveClient(dni);</span>
-<span class="fc" id="L103">            return ResponseEntity.ok().build();</span>
-<span class="fc" id="L104">        } catch (JpaSystemException e) {</span>
-<span class="fc" id="L105">            throw new UserNotExistException(e.getCause().getCause().getMessage());</span>
+<span class="fc" id="L99">            return ResponseEntity.notFound().build();</span>
         }
     }
 

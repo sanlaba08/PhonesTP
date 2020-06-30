@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PhoneLineBackController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">springboot</a> &gt; <a href="index.source.html" class="el_package">com.utn.TPFinal.controller.backoffice</a> &gt; <span class="el_source">PhoneLineBackController.java</span></div><h1>PhoneLineBackController.java</h1><pre class="source lang-java linenums">package com.utn.TPFinal.controller.backoffice;
 
 import com.utn.TPFinal.controller.model.PhoneLineController;
+import com.utn.TPFinal.dto.AddPhoneLineDto;
 import com.utn.TPFinal.dto.ModifyTariffDto;
 import com.utn.TPFinal.dto.PhoneLineByUserDto;
 import com.utn.TPFinal.exceptions.PhoneLineException;
@@ -19,18 +20,28 @@ public class PhoneLineBackController {
     private final PhoneLineController phoneLineController;
 
     @Autowired
-<span class="fc" id="L22">    public PhoneLineBackController(PhoneLineController phoneLineController) {</span>
-<span class="fc" id="L23">        this.phoneLineController = phoneLineController;</span>
-<span class="fc" id="L24">    }</span>
+<span class="fc" id="L23">    public PhoneLineBackController(PhoneLineController phoneLineController) {</span>
+<span class="fc" id="L24">        this.phoneLineController = phoneLineController;</span>
+<span class="fc" id="L25">    }</span>
 
     // Alta de Linea con su respectivo usuario.
     @PostMapping(&quot;/&quot;)
     public ResponseEntity addPhoneLine(@RequestBody PhoneLineByUserDto phoneLine) throws PhoneLineException, URISyntaxException, ValidationException {
         try {
-<span class="fc" id="L30">            Integer idLine = phoneLineController.addPhoneLine(phoneLine);</span>
-<span class="fc" id="L31">            return ResponseEntity.created(new URI(&quot;http://localhost:8080/backoffice/phoneline/&quot; + idLine)).body(phoneLine);</span>
-<span class="fc" id="L32">        } catch (JpaSystemException e) {</span>
-<span class="fc" id="L33">            throw new PhoneLineException(e.getCause().getCause().getMessage());</span>
+<span class="fc" id="L31">            Integer idLine = phoneLineController.addPhoneLine(phoneLine);</span>
+<span class="fc" id="L32">            return ResponseEntity.created(new URI(&quot;http://localhost:8080/backoffice/phoneline/&quot; + idLine)).body(phoneLine);</span>
+<span class="fc" id="L33">        } catch (JpaSystemException e) {</span>
+<span class="fc" id="L34">            throw new PhoneLineException(e.getCause().getCause().getMessage());</span>
+        }
+    }
+
+    @PostMapping(&quot;/dni/&quot;)
+    public ResponseEntity addPhoneLineByDni(@RequestBody AddPhoneLineDto phoneLine) throws PhoneLineException, URISyntaxException, ValidationException {
+        try {
+<span class="fc" id="L41">            Integer idLine = phoneLineController.addPhoneLineByDni(phoneLine);</span>
+<span class="fc" id="L42">            return ResponseEntity.created(new URI(&quot;http://localhost:8080/backoffice/phoneline/dni/&quot; + idLine)).body(phoneLine);</span>
+<span class="fc" id="L43">        } catch (JpaSystemException e) {</span>
+<span class="fc" id="L44">            throw new PhoneLineException(e.getCause().getCause().getMessage());</span>
         }
     }
 
@@ -38,21 +49,21 @@ public class PhoneLineBackController {
     @DeleteMapping(&quot;/{idLine}&quot;)
     public ResponseEntity suspendPhoneLine(@PathVariable Integer idLine) throws PhoneLineException, ValidationException {
         try {
-<span class="fc" id="L41">            phoneLineController.suspendPhoneLine(idLine);</span>
-<span class="fc" id="L42">            return ResponseEntity.ok().build();</span>
-<span class="fc" id="L43">        } catch (JpaSystemException e) {</span>
-<span class="fc" id="L44">            throw new PhoneLineException(e.getCause().getCause().getMessage());</span>
+<span class="fc" id="L52">            phoneLineController.suspendPhoneLine(idLine);</span>
+<span class="fc" id="L53">            return ResponseEntity.ok().build();</span>
+<span class="fc" id="L54">        } catch (JpaSystemException e) {</span>
+<span class="fc" id="L55">            throw new PhoneLineException(e.getCause().getCause().getMessage());</span>
         }
     }
 
     // Activar una Linea con su respectivo usuario.
-    @PostMapping(&quot;/{idLine}&quot;)
+    @PutMapping(&quot;/{idLine}&quot;)
     public ResponseEntity enablePhoneLine(@PathVariable Integer idLine) throws PhoneLineException, ValidationException {
         try {
-<span class="fc" id="L52">            phoneLineController.enablePhoneLine(idLine);</span>
-<span class="fc" id="L53">            return ResponseEntity.ok().build();</span>
-<span class="fc" id="L54">        } catch (JpaSystemException e) {</span>
-<span class="fc" id="L55">            throw new PhoneLineException(e.getCause().getCause().getMessage());</span>
+<span class="fc" id="L63">            phoneLineController.enablePhoneLine(idLine);</span>
+<span class="fc" id="L64">            return ResponseEntity.ok().build();</span>
+<span class="fc" id="L65">        } catch (JpaSystemException e) {</span>
+<span class="fc" id="L66">            throw new PhoneLineException(e.getCause().getCause().getMessage());</span>
         }
     }
 }

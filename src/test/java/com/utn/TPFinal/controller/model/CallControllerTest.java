@@ -136,6 +136,13 @@ class CallControllerTest {
     }
 
     @Test
+    void getCallByDateFirstBiggerThanSecond() {
+        assertThrows(ValidationException.class, () -> {
+            callController.getCallByDate("41686701", "2020-8-27", "2020-08-01");
+        });
+    }
+
+    @Test
     void addCallOk() throws ValidationException {
         CallDto dto = new CallDto("123","321", (long) 3,new Date());
         when(callService.addCall(dto)).thenReturn(1);

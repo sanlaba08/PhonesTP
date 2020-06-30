@@ -96,7 +96,7 @@
                 <configuration>
                     <excludes>
                         <exclude>**/config/**</exclude>
-                        <exclude>**/model/**/*</exclude>
+                        <exclude>**/domain/**</exclude>
                         <exclude>**/dto/**</exclude>
                         <exclude>**/session/**</exclude>
                         <exclude>**/TpFinalApplication.class</exclude>

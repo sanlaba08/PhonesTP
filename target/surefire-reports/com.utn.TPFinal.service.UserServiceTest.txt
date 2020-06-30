@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.utn.TPFinal.service.UserServiceTest
 -------------------------------------------------------------------------------
-Tests run: 12, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.129 s - in com.utn.TPFinal.service.UserServiceTest
+Tests run: 12, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.071 s - in com.utn.TPFinal.service.UserServiceTest

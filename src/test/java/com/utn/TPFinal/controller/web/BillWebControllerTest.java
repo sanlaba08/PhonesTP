@@ -2,7 +2,7 @@ package com.utn.TPFinal.controller.web;
 
 import com.utn.TPFinal.controller.model.BillController;
 import com.utn.TPFinal.exceptions.ValidationException;
-import com.utn.TPFinal.model.User;
+import com.utn.TPFinal.domain.User;
 import com.utn.TPFinal.projections.BillProjection;
 import com.utn.TPFinal.session.SessionManager;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static com.utn.TPFinal.model.UserType.Client;
+import static com.utn.TPFinal.domain.UserType.Client;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;

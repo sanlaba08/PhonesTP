@@ -8,15 +8,13 @@ import com.utn.TPFinal.dto.EmployeeDto;
 import com.utn.TPFinal.dto.ModifyTariffDto;
 import com.utn.TPFinal.dto.TariffDto;
 import com.utn.TPFinal.exceptions.*;
-import com.utn.TPFinal.model.User;
-import com.utn.TPFinal.projections.TariffProjection;
+import com.utn.TPFinal.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.web.bind.annotation.*;
 
-import javax.websocket.server.PathParam;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;

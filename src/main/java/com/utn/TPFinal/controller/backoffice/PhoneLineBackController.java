@@ -1,6 +1,7 @@
 package com.utn.TPFinal.controller.backoffice;
 
 import com.utn.TPFinal.controller.model.PhoneLineController;
+import com.utn.TPFinal.dto.AddPhoneLineDto;
 import com.utn.TPFinal.dto.ModifyTariffDto;
 import com.utn.TPFinal.dto.PhoneLineByUserDto;
 import com.utn.TPFinal.exceptions.PhoneLineException;
@@ -34,6 +35,16 @@ public class PhoneLineBackController {
         }
     }
 
+    @PostMapping("/dni/")
+    public ResponseEntity addPhoneLineByDni(@RequestBody AddPhoneLineDto phoneLine) throws PhoneLineException, URISyntaxException, ValidationException {
+        try {
+            Integer idLine = phoneLineController.addPhoneLineByDni(phoneLine);
+            return ResponseEntity.created(new URI("http://localhost:8080/backoffice/phoneline/dni/" + idLine)).body(phoneLine);
+        } catch (JpaSystemException e) {
+            throw new PhoneLineException(e.getCause().getCause().getMessage());
+        }
+    }
+
     // Baja de Linea con su respectivo usuario.
     @DeleteMapping("/{idLine}")
     public ResponseEntity suspendPhoneLine(@PathVariable Integer idLine) throws PhoneLineException, ValidationException {
@@ -46,7 +57,7 @@ public class PhoneLineBackController {
     }
 
     // Activar una Linea con su respectivo usuario.
-    @PostMapping("/{idLine}")
+    @PutMapping("/{idLine}")
     public ResponseEntity enablePhoneLine(@PathVariable Integer idLine) throws PhoneLineException, ValidationException {
         try {
             phoneLineController.enablePhoneLine(idLine);

@@ -1,5 +1,6 @@
 package com.utn.TPFinal.controller.model;
 
+import com.utn.TPFinal.dto.AddPhoneLineDto;
 import com.utn.TPFinal.dto.CallDto;
 import com.utn.TPFinal.dto.EmployeeDto;
 import com.utn.TPFinal.dto.PhoneLineByUserDto;
@@ -51,9 +52,25 @@ class PhoneLineControllerTest {
     }
 
     @Test
+    void addPhoneLineByDni() throws ValidationException {
+        AddPhoneLineDto phoneLineByUserDto = new AddPhoneLineDto("1","Mobile");
+        when(phoneLineService.addPhoneLineByDni(phoneLineByUserDto)).thenReturn(1);
+        Integer response = phoneLineController.addPhoneLineByDni(phoneLineByUserDto);
+        assertEquals(response,1);
+        verify(phoneLineService,times(1)).addPhoneLineByDni(phoneLineByUserDto);
+    }
+
+    @Test
     void addPhoneLineEmpty() {
         assertThrows(ValidationException.class, () -> {
             phoneLineController.addPhoneLine(new PhoneLineByUserDto(1, ""));
+        });
+    }
+
+    @Test
+    void addPhoneLineByDniException() {
+        assertThrows(ValidationException.class, () -> {
+            phoneLineController.addPhoneLineByDni(new AddPhoneLineDto("", ""));
         });
     }
 

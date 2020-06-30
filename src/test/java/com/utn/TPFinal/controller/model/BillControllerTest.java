@@ -1,10 +1,7 @@
 package com.utn.TPFinal.controller.model;
 
-import com.utn.TPFinal.dto.LoginRequestDto;
-import com.utn.TPFinal.exceptions.UserNotExistException;
 import com.utn.TPFinal.exceptions.ValidationException;
 import com.utn.TPFinal.projections.BillProjection;
-import com.utn.TPFinal.projections.TariffProjection;
 import com.utn.TPFinal.service.BillService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,7 +14,8 @@ import java.util.Date;
 import java.util.List;
 
 import static org.junit.Assert.assertNotNull;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
 
@@ -113,6 +111,20 @@ class BillControllerTest {
     void getBillDateSecondEmpty() {
         assertThrows(ValidationException.class, () -> {
             billController.getBillDate("41686701", "2020-6-27", "");
+        });
+    }
+
+    @Test
+    void getBillDateFirstBiggerThanSecond() {
+        assertThrows(ValidationException.class, () -> {
+            billController.getBillDate("41686701", "2020-06-27", "2020-05-27");
+        });
+    }
+
+    @Test
+    void getBillByNumberException() {
+        assertThrows(ValidationException.class, () -> {
+            billController.getBillByNumber(null);
         });
     }
 }

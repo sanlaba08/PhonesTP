@@ -1,29 +1,20 @@
 package com.utn.TPFinal.controller.login;
 
-import com.utn.TPFinal.controller.backoffice.BillBackController;
-import com.utn.TPFinal.controller.model.BillController;
 import com.utn.TPFinal.controller.model.UserController;
 import com.utn.TPFinal.dto.LoginRequestDto;
 import com.utn.TPFinal.exceptions.InvalidLoginException;
 import com.utn.TPFinal.exceptions.UserNotExistException;
 import com.utn.TPFinal.exceptions.ValidationException;
-import com.utn.TPFinal.model.User;
-import com.utn.TPFinal.projections.BillProjection;
-import com.utn.TPFinal.projections.CallsProjection;
+import com.utn.TPFinal.domain.User;
 import com.utn.TPFinal.session.SessionManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.springframework.data.projection.ProjectionFactory;
-import org.springframework.data.projection.SpelAwareProxyProjectionFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import sun.rmi.runtime.Log;
 
-import java.util.List;
-
-import static com.utn.TPFinal.model.UserType.Admin;
+import static com.utn.TPFinal.domain.UserType.Admin;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;

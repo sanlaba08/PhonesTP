@@ -1,5 +1,6 @@
 package com.utn.TPFinal.controller.model;
 
+import com.utn.TPFinal.dto.AddPhoneLineDto;
 import com.utn.TPFinal.dto.PhoneLineByUserDto;
 import com.utn.TPFinal.exceptions.ValidationException;
 import com.utn.TPFinal.projections.ClientProjection;
@@ -21,6 +22,14 @@ public class PhoneLineController {
     public Integer addPhoneLine(PhoneLineByUserDto phoneLine) throws JpaSystemException, ValidationException {
         if (phoneLine.isValid()) {
             return phoneLineService.addPhoneLine(phoneLine);
+        } else {
+            throw new ValidationException("Wrong parameters (empty, null, or wrong)");
+        }
+    }
+
+    public Integer addPhoneLineByDni(AddPhoneLineDto phoneLine) throws JpaSystemException, ValidationException {
+        if (phoneLine.isValid()) {
+            return phoneLineService.addPhoneLineByDni(phoneLine);
         } else {
             throw new ValidationException("Wrong parameters (empty, null, or wrong)");
         }

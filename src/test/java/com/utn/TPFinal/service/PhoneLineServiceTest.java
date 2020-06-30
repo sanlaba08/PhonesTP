@@ -1,9 +1,8 @@
 package com.utn.TPFinal.service;
 
-import ch.qos.logback.core.net.server.Client;
+import com.utn.TPFinal.dto.AddPhoneLineDto;
 import com.utn.TPFinal.dto.PhoneLineByUserDto;
 import com.utn.TPFinal.projections.ClientProjection;
-import com.utn.TPFinal.projections.TariffProjection;
 import com.utn.TPFinal.repository.PhoneLineRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,7 +11,7 @@ import org.springframework.data.projection.ProjectionFactory;
 import org.springframework.data.projection.SpelAwareProxyProjectionFactory;
 
 import static org.junit.Assert.assertNotNull;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
 
@@ -41,6 +40,17 @@ class PhoneLineServiceTest {
         assertNotNull(response);
         assertEquals(1,response);
         verify(phoneLineRepository,times(1)).addPhoneLine(phoneLine.getUser(),phoneLine.getLineType());
+    }
+
+    @Test
+    void addPhoneLineByDni() {
+        AddPhoneLineDto phoneLine = new AddPhoneLineDto("1","Mobile");
+        when(phoneLineRepository.addPhoneLineByDni(phoneLine.getDni(),phoneLine.getLineType())).thenReturn(1);
+        Integer response = phoneLineService.addPhoneLineByDni(phoneLine);
+
+        assertNotNull(response);
+        assertEquals(1,response);
+        verify(phoneLineRepository,times(1)).addPhoneLineByDni(phoneLine.getDni(),phoneLine.getLineType());
     }
 
     @Test

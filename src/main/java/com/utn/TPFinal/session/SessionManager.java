@@ -1,7 +1,6 @@
 package com.utn.TPFinal.session;
 
-import com.utn.TPFinal.model.User;
-import com.utn.TPFinal.model.UserType;
+import com.utn.TPFinal.domain.User;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -10,7 +9,7 @@ import java.util.*;
 public class SessionManager {
 
     Map<String, Session> sessionMap;
-    int sessionExpiration = 999999999;
+    int sessionExpiration = 2147483;
 
 
     public SessionManager() {

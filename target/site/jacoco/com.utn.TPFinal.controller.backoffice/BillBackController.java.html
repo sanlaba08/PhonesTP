@@ -5,6 +5,7 @@ import com.utn.TPFinal.controller.model.PhoneLineController;
 import com.utn.TPFinal.exceptions.ValidationException;
 import com.utn.TPFinal.projections.BillProjection;
 import com.utn.TPFinal.projections.ClientProjection;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,23 +21,23 @@ public class BillBackController {
     private final BillController billController;
     private final PhoneLineController phoneLineController;
 
-<span class="fc" id="L23">    public BillBackController(BillController billController, PhoneLineController phoneLineController) {</span>
-<span class="fc" id="L24">        this.billController = billController;</span>
-<span class="fc" id="L25">        this.phoneLineController = phoneLineController;</span>
-<span class="fc" id="L26">    }</span>
+<span class="fc" id="L24">    public BillBackController(BillController billController, PhoneLineController phoneLineController) {</span>
+<span class="fc" id="L25">        this.billController = billController;</span>
+<span class="fc" id="L26">        this.phoneLineController = phoneLineController;</span>
+<span class="fc" id="L27">    }</span>
 
     //Consulta de tarifa por numero telefonico
     @GetMapping(&quot;/number&quot;) // localhost:8080/bill/number?line=4123
     public ResponseEntity&lt;List&lt;BillProjection&gt;&gt; getBillbyNumber(@RequestParam String line) throws ValidationException {
-<span class="fc" id="L31">        ClientProjection clientLine = phoneLineController.getClientLine(line);</span>
-<span class="fc bfc" id="L32" title="All 2 branches covered.">        if (clientLine == null) {</span>
-<span class="fc" id="L33">            return ResponseEntity.notFound().build();</span>
+<span class="fc" id="L32">        ClientProjection clientLine = phoneLineController.getClientLine(line);</span>
+<span class="fc bfc" id="L33" title="All 2 branches covered.">        if (clientLine == null) {</span>
+<span class="fc" id="L34">            return ResponseEntity.notFound().build();</span>
         } else {
-<span class="fc" id="L35">            List&lt;BillProjection&gt; billsByNumber = billController.getBillByNumber(line);</span>
-<span class="fc bfc" id="L36" title="All 2 branches covered.">            if (billsByNumber.size() &gt; 0) {</span>
-<span class="fc" id="L37">                return ResponseEntity.ok().body(billsByNumber);</span>
+<span class="fc" id="L36">            List&lt;BillProjection&gt; billsByNumber = billController.getBillByNumber(line);</span>
+<span class="fc bfc" id="L37" title="All 2 branches covered.">            if (billsByNumber.size() &gt; 0) {</span>
+<span class="fc" id="L38">                return ResponseEntity.ok().body(billsByNumber);</span>
             } else {
-<span class="fc" id="L39">                return ResponseEntity.noContent().build();</span>
+<span class="fc" id="L40">                return ResponseEntity.noContent().build();</span>
             }
         }
     }
@@ -44,11 +45,11 @@ public class BillBackController {
     //Consulta de todas las bills
     @GetMapping(&quot;/&quot;)
     public ResponseEntity&lt;List&lt;BillProjection&gt;&gt; getBillAll() {
-<span class="fc" id="L47">        List&lt;BillProjection&gt; bills = billController.getBillAll();</span>
-<span class="fc bfc" id="L48" title="All 2 branches covered.">        if (bills.size() &gt; 0) {</span>
-<span class="fc" id="L49">            return ResponseEntity.ok().body(bills);</span>
+<span class="fc" id="L48">        List&lt;BillProjection&gt; bills = billController.getBillAll();</span>
+<span class="fc bfc" id="L49" title="All 2 branches covered.">        if (bills.size() &gt; 0) {</span>
+<span class="fc" id="L50">            return ResponseEntity.ok().body(bills);</span>
         } else {
-<span class="fc" id="L51">            return ResponseEntity.noContent().build();</span>
+<span class="fc" id="L52">            return ResponseEntity.noContent().build();</span>
         }
     }
 

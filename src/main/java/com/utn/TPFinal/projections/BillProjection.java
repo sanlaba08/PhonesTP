@@ -22,6 +22,8 @@ public interface BillProjection {
     Date getBill_date();
     @JsonInclude(JsonInclude.Include.NON_NULL)
     Date getExpiration_date();
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    Integer getPaid();
 
     void setComplete_name(String name);
     void setDni(String dni);

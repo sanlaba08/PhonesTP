@@ -1,4 +1,4 @@
-package com.utn.TPFinal.model;
+package com.utn.TPFinal.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -23,8 +23,7 @@ public class PhoneLine {
     private String numberLine;
 
     @Column(name = "available")
-    @JsonIgnore
-    private String available;
+    private Boolean available;
 
     @Column(name = "line_type")
     @Enumerated(EnumType.STRING)

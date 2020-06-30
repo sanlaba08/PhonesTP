@@ -1,5 +1,6 @@
 package com.utn.TPFinal.service;
 
+import com.utn.TPFinal.dto.AddPhoneLineDto;
 import com.utn.TPFinal.dto.PhoneLineByUserDto;
 import com.utn.TPFinal.projections.ClientProjection;
 import com.utn.TPFinal.repository.PhoneLineRepository;
@@ -16,6 +17,10 @@ public class PhoneLineService {
 
     public Integer addPhoneLine(PhoneLineByUserDto phoneLine) throws JpaSystemException {
         return phoneLineRepository.addPhoneLine(phoneLine.getUser(), phoneLine.getLineType());
+    }
+
+    public Integer addPhoneLineByDni(AddPhoneLineDto phoneLine) throws JpaSystemException {
+        return phoneLineRepository.addPhoneLineByDni(phoneLine.getDni(), phoneLine.getLineType());
     }
 
     public void suspendPhoneLine(Integer idLine) throws JpaSystemException {

@@ -30,9 +30,9 @@ public class BillController {
         return billService.getBillAll();
     }
 
-    public List<BillProjection> getBillDate(String dni, String first, String second) throws ValidationException {
-        if (!StringUtils.isBlank(dni) && !StringUtils.isBlank(first) && !StringUtils.isBlank(second)){
-            return billService.getListBillByDate(dni, first, second);
+    public List<BillProjection> getBillDate(String dni, String firstDate, String secondDate) throws ValidationException {
+        if (!StringUtils.isBlank(dni) && !StringUtils.isBlank(firstDate) && !StringUtils.isBlank(secondDate) && firstDate.compareTo(secondDate) < 0){
+            return billService.getListBillByDate(dni, firstDate, secondDate);
         } else {
             throw new ValidationException("Wrong parameters (empty, null, or wrong)");
         }

@@ -2,6 +2,7 @@ package com.utn.TPFinal.controller.backoffice;
 
 import com.utn.TPFinal.controller.model.PhoneLineController;
 import com.utn.TPFinal.controller.model.UserController;
+import com.utn.TPFinal.dto.AddPhoneLineDto;
 import com.utn.TPFinal.dto.PhoneLineByUserDto;
 import com.utn.TPFinal.dto.UserPhoneDto;
 import com.utn.TPFinal.exceptions.PhoneLineException;
@@ -49,6 +50,18 @@ class PhoneLineBackControllerTest {
         verify(phoneLineController, times(1)).addPhoneLine(phoneLineByUser);
     }
 
+    @Test
+    void addPhoneLineByDni() throws URISyntaxException, PhoneLineException, ValidationException {
+        AddPhoneLineDto phoneLineByUser = new AddPhoneLineDto( "3", "Home");
+        Integer idPhoneLineByUser = 1;
+        when(phoneLineController.addPhoneLineByDni(phoneLineByUser)).thenReturn(idPhoneLineByUser);
+        ResponseEntity responseEntity = ResponseEntity.created(new URI("http://localhost:8080/backoffice/phoneline/dni/" + idPhoneLineByUser)).body(phoneLineByUser);
+
+        Assertions.assertNotNull(responseEntity);
+        Assertions.assertEquals(responseEntity, phoneLineBackController.addPhoneLineByDni(phoneLineByUser));
+        verify(phoneLineController, times(1)).addPhoneLineByDni(phoneLineByUser);
+    }
+
     @Test()
     void addPhoneLineException() throws JpaSystemException, ValidationException {
         PhoneLineByUserDto phoneLineByUser = new PhoneLineByUserDto( 3, "Home");
@@ -57,6 +70,18 @@ class PhoneLineBackControllerTest {
 
         assertThrows(PhoneLineException.class, () -> {
             phoneLineBackController.addPhoneLine(phoneLineByUser);
+        });
+
+    }
+
+    @Test()
+    void addPhoneLineByDniException() throws JpaSystemException, ValidationException {
+        AddPhoneLineDto phoneLineByUser = new AddPhoneLineDto( "3", "Home");
+
+        when(phoneLineController.addPhoneLineByDni(phoneLineByUser)).thenThrow(new JpaSystemException(new RuntimeException(new SQLException())));
+
+        assertThrows(PhoneLineException.class, () -> {
+            phoneLineBackController.addPhoneLineByDni(phoneLineByUser);
         });
 
     }

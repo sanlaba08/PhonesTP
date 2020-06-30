@@ -1,6 +1,6 @@
 package com.utn.TPFinal.repository;
 
-import com.utn.TPFinal.model.PhoneLine;
+import com.utn.TPFinal.domain.PhoneLine;
 import com.utn.TPFinal.projections.ClientProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -14,6 +14,11 @@ public interface PhoneLineRepository extends JpaRepository<PhoneLine, Integer> {
     @Procedure(procedureName = "sp_phone_lines")
     Integer addPhoneLine(@Param("pIdUser") Integer idUser,
                       @Param("pLineType") String TypeLine) throws JpaSystemException;
+
+
+    @Procedure(procedureName = "sp_phone_lines_by_dni")
+    Integer addPhoneLineByDni(@Param("pDni") String dni,
+                         @Param("pLineType") String TypeLine) throws JpaSystemException;
 
     @Procedure(procedureName = "sp_line_suspend")
     void suspendPhoneLine(@Param("pIdLine") Integer idLine);

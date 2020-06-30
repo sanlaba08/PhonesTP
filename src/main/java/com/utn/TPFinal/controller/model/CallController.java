@@ -43,7 +43,7 @@ public class CallController {
     }
 
     public List<CallsProjection> getCallByDate(String dni, String firstDate, String secondDate) throws ValidationException {
-        if (!StringUtils.isBlank(dni) && !StringUtils.isBlank(firstDate) && !StringUtils.isBlank(secondDate)) {
+        if (!StringUtils.isBlank(dni) && !StringUtils.isBlank(firstDate) && !StringUtils.isBlank(secondDate) && firstDate.compareTo(secondDate) < 0) {
             return callService.getListCallByDate(dni,firstDate, secondDate);
         } else {
             throw new ValidationException("Wrong parameters (empty, null, or wrong)");

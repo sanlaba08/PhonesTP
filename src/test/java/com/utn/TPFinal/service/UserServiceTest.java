@@ -1,24 +1,21 @@
 package com.utn.TPFinal.service;
 
-import com.utn.TPFinal.controller.model.UserController;
 import com.utn.TPFinal.dto.EmployeeDto;
 import com.utn.TPFinal.dto.LoginRequestDto;
 import com.utn.TPFinal.dto.UserPhoneDto;
 import com.utn.TPFinal.dto.UserPhoneModifyDto;
-import com.utn.TPFinal.exceptions.EmployeeException;
 import com.utn.TPFinal.exceptions.UserNotExistException;
 import com.utn.TPFinal.exceptions.ValidationException;
-import com.utn.TPFinal.model.User;
+import com.utn.TPFinal.domain.User;
 import com.utn.TPFinal.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.springframework.data.repository.query.Param;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.utn.TPFinal.model.UserType.Admin;
+import static com.utn.TPFinal.domain.UserType.Admin;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;

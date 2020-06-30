@@ -5,7 +5,7 @@ import com.utn.TPFinal.dto.LoginRequestDto;
 import com.utn.TPFinal.dto.UserPhoneDto;
 import com.utn.TPFinal.dto.UserPhoneModifyDto;
 import com.utn.TPFinal.exceptions.UserNotExistException;
-import com.utn.TPFinal.model.User;
+import com.utn.TPFinal.domain.User;
 import com.utn.TPFinal.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.jpa.JpaSystemException;
