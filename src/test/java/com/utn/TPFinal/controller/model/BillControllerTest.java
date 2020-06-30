@@ -1,5 +1,6 @@
 package com.utn.TPFinal.controller.model;
 
+import com.utn.TPFinal.exceptions.ValidationException;
 import com.utn.TPFinal.projections.BillProjection;
 import com.utn.TPFinal.projections.TariffProjection;
 import com.utn.TPFinal.service.BillService;
@@ -50,7 +51,7 @@ class BillControllerTest {
     }
 
     @Test
-    void getBill() {
+    void getBill() throws ValidationException {
 
         when(billService.getBillByNumber("02236493784")).thenReturn(billList);
 
@@ -75,7 +76,7 @@ class BillControllerTest {
     }
 
     @Test
-    void getBillDate() {
+    void getBillDate() throws ValidationException {
         when(billService.getListBillByDate("42231235","2020-06-16","2020-06-18")).thenReturn(billList);
 
         List<BillProjection> aux = billController.getBillDate("42231235","2020-06-16","2020-06-18");

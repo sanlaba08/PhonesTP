@@ -98,4 +98,14 @@ class ControllerAdviceTest {
 
         assertEquals(responseDto,ans);
     }
+
+    @Test
+    void handleValidationException(){
+        ValidationException e = new ValidationException("Wrong parameters (empty, null, or wrong)");
+        ErrorResponseDto responseDto = new ErrorResponseDto(10, "Wrong parameters (empty, null, or wrong)");
+
+        ErrorResponseDto ans = controllerAdvice.handleValidationException(e);
+
+        assertEquals(responseDto,ans);
+    }
 }

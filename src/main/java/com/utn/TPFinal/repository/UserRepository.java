@@ -45,8 +45,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
                            @Param("pLastName") String lastName,
                            @Param("pDni") String dni,
                            @Param("pPassword") String password,
-                           @Param("pIdCity") Integer idCity,
-                           @Param("pLineType") String lineType) throws JpaSystemException;
+                           @Param("pIdCity") Integer idCity) throws JpaSystemException;
 
 
     @Query(value = "SELECT * FROM users u WHERE u.dni = ? and u.user_password = ? and available = 1", nativeQuery = true)

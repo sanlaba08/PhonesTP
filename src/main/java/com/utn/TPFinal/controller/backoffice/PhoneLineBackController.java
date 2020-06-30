@@ -1,8 +1,10 @@
 package com.utn.TPFinal.controller.backoffice;
 
 import com.utn.TPFinal.controller.model.PhoneLineController;
+import com.utn.TPFinal.dto.ModifyTariffDto;
 import com.utn.TPFinal.dto.PhoneLineByUserDto;
 import com.utn.TPFinal.exceptions.PhoneLineException;
+import com.utn.TPFinal.exceptions.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.orm.jpa.JpaSystemException;
@@ -23,7 +25,7 @@ public class PhoneLineBackController {
 
     // Alta de Linea con su respectivo usuario.
     @PostMapping("/")
-    public ResponseEntity addPhoneLine(@RequestBody PhoneLineByUserDto phoneLine) throws PhoneLineException, URISyntaxException {
+    public ResponseEntity addPhoneLine(@RequestBody PhoneLineByUserDto phoneLine) throws PhoneLineException, URISyntaxException, ValidationException {
         try {
             Integer idLine = phoneLineController.addPhoneLine(phoneLine);
             return ResponseEntity.created(new URI("http://localhost:8080/backoffice/phoneline/" + idLine)).body(phoneLine);
@@ -34,9 +36,9 @@ public class PhoneLineBackController {
 
     // Baja de Linea con su respectivo usuario.
     @DeleteMapping("/{idLine}")
-    public ResponseEntity deletePhoneLine(@PathVariable Integer idLine) throws PhoneLineException {
+    public ResponseEntity suspendPhoneLine(@PathVariable Integer idLine) throws PhoneLineException, ValidationException {
         try {
-            phoneLineController.deletePhoneLine(idLine);
+            phoneLineController.suspendPhoneLine(idLine);
             return ResponseEntity.ok().build();
         } catch (JpaSystemException e) {
             throw new PhoneLineException(e.getCause().getCause().getMessage());
@@ -45,7 +47,7 @@ public class PhoneLineBackController {
 
     // Activar una Linea con su respectivo usuario.
     @PostMapping("/{idLine}")
-    public ResponseEntity enablePhoneLine(@PathVariable Integer idLine) throws PhoneLineException {
+    public ResponseEntity enablePhoneLine(@PathVariable Integer idLine) throws PhoneLineException, ValidationException {
         try {
             phoneLineController.enablePhoneLine(idLine);
             return ResponseEntity.ok().build();

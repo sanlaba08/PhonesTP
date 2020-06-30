@@ -2,6 +2,7 @@ package com.utn.TPFinal.controller.backoffice;
 
 import com.utn.TPFinal.controller.model.BillController;
 import com.utn.TPFinal.controller.model.PhoneLineController;
+import com.utn.TPFinal.exceptions.ValidationException;
 import com.utn.TPFinal.projections.BillProjection;
 import com.utn.TPFinal.projections.ClientProjection;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +27,7 @@ public class BillBackController {
 
     //Consulta de tarifa por numero telefonico
     @GetMapping("/number") // localhost:8080/bill/number?line=4123
-    public ResponseEntity<List<BillProjection>> getBillbyNumber(@PathParam("line") String line) {
+    public ResponseEntity<List<BillProjection>> getBillbyNumber(@RequestParam String line) throws ValidationException {
         ClientProjection clientLine = phoneLineController.getClientLine(line);
         if (clientLine == null) {
             return ResponseEntity.notFound().build();
@@ -40,7 +41,7 @@ public class BillBackController {
         }
     }
 
-    //Consulta de todas las tarifas
+    //Consulta de todas las bills
     @GetMapping("/")
     public ResponseEntity<List<BillProjection>> getBillAll() {
         List<BillProjection> bills = billController.getBillAll();

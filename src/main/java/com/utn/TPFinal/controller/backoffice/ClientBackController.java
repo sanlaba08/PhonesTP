@@ -5,6 +5,7 @@ import com.utn.TPFinal.dto.UserPhoneDto;
 import com.utn.TPFinal.dto.UserPhoneModifyDto;
 import com.utn.TPFinal.exceptions.UserAllReadyExistException;
 import com.utn.TPFinal.exceptions.UserNotExistException;
+import com.utn.TPFinal.exceptions.ValidationException;
 import com.utn.TPFinal.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,7 +30,7 @@ public class ClientBackController {
 
     // Alta de Cliente con su respectiva linea telefonica.
     @PostMapping("/")
-    public ResponseEntity addClient(@RequestBody UserPhoneDto clientPhone) throws UserAllReadyExistException,  URISyntaxException {
+    public ResponseEntity addClient(@RequestBody UserPhoneDto clientPhone) throws UserAllReadyExistException, URISyntaxException, ValidationException {
         try {
             Integer idClient = userController.addClient(clientPhone);
             return ResponseEntity.created(new URI("http://localhost:8080/backoffice/client/" + idClient)).body(clientPhone);
@@ -40,7 +41,7 @@ public class ClientBackController {
 
     // Baja de Cliente con su respectiva linea telefonica.
     @DeleteMapping("/")
-    public ResponseEntity deleteClient(@PathParam("dni") String dni) throws UserNotExistException {
+    public ResponseEntity deleteClient(@RequestParam String dni) throws UserNotExistException, ValidationException {
         try {
             userController.deleteClient(dni);
             return ResponseEntity.ok().build();
@@ -51,7 +52,7 @@ public class ClientBackController {
 
     // Suspension de Cliente con su respectiva linea telefonica.
     @PutMapping("/number")///number?dni=.....
-    public ResponseEntity suspendClient(@PathParam("dni") String dni) throws UserNotExistException {
+    public ResponseEntity suspendClient(@RequestParam String dni) throws UserNotExistException, ValidationException {
         try {
             userController.suspendClient(dni);
             return ResponseEntity.ok().build();
@@ -62,7 +63,7 @@ public class ClientBackController {
 
     // Modificacion del Cliente y el tipo de linea telefonica.
     @PutMapping("/")
-    public ResponseEntity modifyClient(@RequestBody UserPhoneModifyDto clientPhone) throws UserNotExistException {
+    public ResponseEntity modifyClient(@RequestBody UserPhoneModifyDto clientPhone) throws UserNotExistException, ValidationException {
         try {
             userController.modifyClient(clientPhone);
             return ResponseEntity.status(HttpStatus.ACCEPTED).build();
@@ -85,7 +86,7 @@ public class ClientBackController {
 
     // Consulta de cliente por dni
     @GetMapping("/number")
-    public ResponseEntity<User> getClientPhoneLine(@PathParam("dni") String dni){
+    public ResponseEntity<User> getClientPhoneLine(@RequestParam String dni) throws ValidationException {
         User clients = userController.getClient(dni);
         if (clients != null) {
             return ResponseEntity.ok().body(clients);
@@ -96,7 +97,7 @@ public class ClientBackController {
 
     // Reactivar un cliente por dni
     @PostMapping("/number")
-    public ResponseEntity reactiveClient(@PathParam("dni") String dni) throws UserNotExistException {
+    public ResponseEntity reactiveClient(@RequestParam String dni) throws UserNotExistException, ValidationException {
         try {
             userController.reactiveClient(dni);
             return ResponseEntity.ok().build();

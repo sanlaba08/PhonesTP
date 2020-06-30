@@ -1,6 +1,7 @@
 package com.utn.TPFinal.controller.backoffice;
 
 import com.utn.TPFinal.controller.model.TariffController;
+import com.utn.TPFinal.exceptions.ValidationException;
 import com.utn.TPFinal.projections.TariffProjection;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -69,7 +70,7 @@ class TariffBackControllerTest {
     }
 
     @Test
-    void getTariffByIdOk() {
+    void getTariffByIdOk() throws ValidationException {
         tariffProjection.setIdTariff(1);
         tariffProjection.setCity_origin("Mar del Plata");
         tariffProjection.setCity_destination("Buenos Aires");
@@ -85,7 +86,7 @@ class TariffBackControllerTest {
     }
 
     @Test
-    void getTariffByIdBad() {
+    void getTariffByIdBad() throws ValidationException {
         when(tariffController.getTariffById(800)).thenReturn(null);
 
         ResponseEntity responseController = tariffBackController.getTariffById(800);
@@ -94,7 +95,7 @@ class TariffBackControllerTest {
 
 
     @Test
-    void getTariffByName() {
+    void getTariffByName() throws ValidationException {
         tariffProjection.setIdTariff(1);
         tariffProjection.setCity_origin("Mar del Plata");
         tariffProjection.setCity_destination("Buenos Aires");
@@ -110,7 +111,7 @@ class TariffBackControllerTest {
     }
 
     @Test
-    void getTariffByNameBad() {
+    void getTariffByNameBad() throws ValidationException {
         when(tariffController.getTariffByName("Argentina", "Buenos Aires")).thenReturn(null);
 
         ResponseEntity responseController = tariffBackController.getTariffByName("Argentina", "Buenos Aires");

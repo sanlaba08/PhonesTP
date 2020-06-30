@@ -1,6 +1,9 @@
 package com.utn.TPFinal.controller.model;
 
+import com.utn.TPFinal.dto.ModifyTariffDto;
 import com.utn.TPFinal.dto.TariffDto;
+import com.utn.TPFinal.dto.UserPhoneModifyDto;
+import com.utn.TPFinal.exceptions.ValidationException;
 import com.utn.TPFinal.projections.TariffProjection;
 import com.utn.TPFinal.service.TariffService;
 import org.junit.jupiter.api.BeforeEach;
@@ -55,7 +58,7 @@ class TariffControllerTest {
     }
 
     @Test
-    void getTariffByIdOk() {
+    void getTariffByIdOk() throws ValidationException {
 
         when(tariffService.getTariffById(1)).thenReturn(tariffProjection);
 
@@ -67,7 +70,7 @@ class TariffControllerTest {
     }
 
     @Test
-    void getTariffByNameOk() {
+    void getTariffByNameOk() throws ValidationException {
 
         when(tariffController.getTariffByName("Buenos Aires","Buenos Aires")).thenReturn(tariffProjection);
         TariffProjection aux = tariffService.getTariffByName("Buenos Aires","Buenos Aires");
@@ -77,10 +80,23 @@ class TariffControllerTest {
     }
 
     @Test
-    void addTariffOk() {
-        when(tariffService.addTariff(new TariffDto())).thenReturn(1);
-        Integer response = tariffController.addTariff(new TariffDto());
+    void addTariffOk() throws ValidationException {
+//        Integer idOriginCity;
+//        Integer idDestinationCity;
+//        long pricePerMinute;
+//        float costPerMinute
+        TariffDto dto =  new TariffDto(1,2,3,2);
+        when(tariffService.addTariff(dto)).thenReturn(1);
+        Integer response = tariffController.addTariff(dto);
         assertEquals(response,1);
-        verify(tariffService,times(1)).addTariff(new TariffDto());
+        verify(tariffService,times(1)).addTariff(dto);
+    }
+
+    @Test
+    void modifyTariff() throws ValidationException {
+        ModifyTariffDto modifyTariffDto = new ModifyTariffDto(1,4,3);
+        doNothing().when(tariffService).modifyTariff(modifyTariffDto);
+        tariffController.modifyTariff(modifyTariffDto);
+        verify(tariffService, times(1)).modifyTariff(modifyTariffDto);
     }
 }

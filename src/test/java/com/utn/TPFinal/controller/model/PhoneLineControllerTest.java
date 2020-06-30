@@ -2,6 +2,7 @@ package com.utn.TPFinal.controller.model;
 
 import com.utn.TPFinal.dto.EmployeeDto;
 import com.utn.TPFinal.dto.PhoneLineByUserDto;
+import com.utn.TPFinal.exceptions.ValidationException;
 import com.utn.TPFinal.projections.BillProjection;
 import com.utn.TPFinal.projections.ClientProjection;
 import com.utn.TPFinal.projections.TariffProjection;
@@ -40,7 +41,7 @@ class PhoneLineControllerTest {
     }
 
     @Test
-    void addPhoneLine() {
+    void addPhoneLine() throws ValidationException {
         PhoneLineByUserDto phoneLineByUserDto = new PhoneLineByUserDto(1,"Mobile");
         when(phoneLineService.addPhoneLine(phoneLineByUserDto)).thenReturn(1);
         Integer response = phoneLineController.addPhoneLine(phoneLineByUserDto);
@@ -49,21 +50,22 @@ class PhoneLineControllerTest {
     }
 
     @Test
-    void deletePhoneLine() {
-        doNothing().when(phoneLineService).deletePhoneLine(any());
-        phoneLineController.deletePhoneLine(any());
-        verify(phoneLineService,times(1)).deletePhoneLine(any());
+    void suspendPhoneLine() throws ValidationException {
+
+        doNothing().when(phoneLineService).suspendPhoneLine(1);
+        phoneLineController.suspendPhoneLine(1);
+        verify(phoneLineService,times(1)).suspendPhoneLine(1);
     }
 
     @Test
-    void enablePhoneLine() {
+    void enablePhoneLine() throws ValidationException {
         doNothing().when(phoneLineService).enablePhoneLine(1);
         phoneLineController.enablePhoneLine(1);
         verify(phoneLineService,times(1)).enablePhoneLine(1);
     }
 
     @Test
-    void getClientLine(){
+    void getClientLine() throws ValidationException {
         clientProjection.setName("Santiago");
         clientProjection.setLastName("Labatut");
         clientProjection.setDni("41686701");

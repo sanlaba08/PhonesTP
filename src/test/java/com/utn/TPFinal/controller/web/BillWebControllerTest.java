@@ -1,6 +1,7 @@
 package com.utn.TPFinal.controller.web;
 
 import com.utn.TPFinal.controller.model.BillController;
+import com.utn.TPFinal.exceptions.ValidationException;
 import com.utn.TPFinal.model.User;
 import com.utn.TPFinal.projections.BillProjection;
 import com.utn.TPFinal.session.SessionManager;
@@ -41,7 +42,7 @@ class BillWebControllerTest {
     }
 
     @Test
-    void getBillDate() {
+    void getBillDate() throws ValidationException {
         User user = new User(16,"Santiago", "Labatut", "41686701", "santi", 1,null, Client, null);
         String token = sessionManager.createSession(user);
         when(sessionManager.getCurrentUser(token)).thenReturn(user);
@@ -65,7 +66,7 @@ class BillWebControllerTest {
     }
 
     @Test
-    void getBillDateEmpty() {
+    void getBillDateEmpty() throws ValidationException {
         User user = new User(16,"Santiago", "Labatut", "41686701", "santi", 1,null, Client, null);
         String token = sessionManager.createSession(user);
         when(sessionManager.getCurrentUser(token)).thenReturn(user);

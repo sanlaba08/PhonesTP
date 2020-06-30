@@ -2,6 +2,7 @@ package com.utn.TPFinal.controller.backoffice;
 
 import com.utn.TPFinal.controller.model.BillController;
 import com.utn.TPFinal.controller.model.PhoneLineController;
+import com.utn.TPFinal.exceptions.ValidationException;
 import com.utn.TPFinal.projections.BillProjection;
 
 import com.utn.TPFinal.projections.ClientProjection;
@@ -73,7 +74,7 @@ class BillBackControllerTest {
     }
 
     @Test
-    void getBillbyNumberOk() {
+    void getBillbyNumberOk() throws ValidationException {
         clientProjection.setName("Santiago");
         clientProjection.setLastName("Labatut");
         clientProjection.setDni("41686701");
@@ -103,7 +104,7 @@ class BillBackControllerTest {
     }
 
     @Test
-    void getBillByNumberEmpty() {
+    void getBillByNumberEmpty() throws ValidationException {
         clientProjection.setName("Santiago");
         clientProjection.setLastName("Labatut");
         clientProjection.setDni("41686701");
@@ -122,7 +123,7 @@ class BillBackControllerTest {
     }
 
     @Test
-    void getBillByNumberBad() {
+    void getBillByNumberBad() throws ValidationException {
         clientProjection.setName("Santiago");
         clientProjection.setLastName("Labatut");
         clientProjection.setDni("41686701");

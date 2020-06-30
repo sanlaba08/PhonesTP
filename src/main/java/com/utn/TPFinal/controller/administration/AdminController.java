@@ -5,6 +5,7 @@ import com.utn.TPFinal.controller.model.TariffController;
 import com.utn.TPFinal.controller.model.UserController;
 import com.utn.TPFinal.dto.CallDto;
 import com.utn.TPFinal.dto.EmployeeDto;
+import com.utn.TPFinal.dto.ModifyTariffDto;
 import com.utn.TPFinal.dto.TariffDto;
 import com.utn.TPFinal.exceptions.*;
 import com.utn.TPFinal.model.User;
@@ -36,7 +37,7 @@ public class AdminController {
 
     // Alta de Empleado (Opcional).
     @PostMapping("employee/")
-    public ResponseEntity addEmployee(@RequestBody EmployeeDto employee) throws JpaSystemException,EmployeeException, URISyntaxException {
+    public ResponseEntity addEmployee(@RequestBody EmployeeDto employee) throws JpaSystemException, EmployeeException, URISyntaxException, ValidationException {
         try {
             Integer idEmployee = userController.addEmployee(employee);
            return ResponseEntity.created(new URI("http://localhost:8080/admin/employee/" + idEmployee)).body(employee);
@@ -58,7 +59,7 @@ public class AdminController {
 
     // Consulta de empleado (Opcional).
     @GetMapping("employee/number")
-    public ResponseEntity getEmployee(@PathParam("dni") String dni) {
+    public ResponseEntity getEmployee(@RequestParam String dni) throws ValidationException {
         User employee = userController.getEmployee(dni);
         if(employee == null){
             return ResponseEntity.notFound().build();
@@ -69,7 +70,7 @@ public class AdminController {
 
     //Alta de tarifas (Opcional)
     @PostMapping("tariff/")
-    public ResponseEntity addTariff(@RequestBody TariffDto tariffDto) throws TariffException, URISyntaxException {
+    public ResponseEntity addTariff(@RequestBody TariffDto tariffDto) throws TariffException, URISyntaxException, ValidationException {
         try {
             Integer idTariff = tariffController.addTariff(tariffDto);
             return ResponseEntity.created(new URI("http://localhost:8080/admin/tariff/" + idTariff)).body(tariffDto);
@@ -78,9 +79,19 @@ public class AdminController {
         }
     }
 
+    @PutMapping("tariff/")
+    public ResponseEntity modifyTariff(@RequestBody ModifyTariffDto modifyTariffDto) throws TariffException, ValidationException {
+        try {
+            tariffController.modifyTariff(modifyTariffDto);
+            return ResponseEntity.status(HttpStatus.ACCEPTED).build();
+        } catch (JpaSystemException e) {
+            throw new TariffException(e.getCause().getCause().getMessage());
+        }
+    }
+
     //INFRAESTRUCTURA = Realizar llamada.
     @PostMapping("call/")
-    public ResponseEntity addCall(@RequestBody CallDto callDto) throws IncorrectDataCallException, URISyntaxException {
+    public ResponseEntity addCall(@RequestBody CallDto callDto) throws IncorrectDataCallException, URISyntaxException, ValidationException {
         try{
             Integer idCall = callController.addCall(callDto);
             return ResponseEntity.created(new URI("http://localhost:8080/admin/call/" + idCall)).body(callDto);
@@ -88,4 +99,5 @@ public class AdminController {
             throw new IncorrectDataCallException(e.getCause().getCause().getMessage());
         }
     }
+
 }

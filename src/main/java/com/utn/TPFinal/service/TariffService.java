@@ -1,5 +1,6 @@
 package com.utn.TPFinal.service;
 
+import com.utn.TPFinal.dto.ModifyTariffDto;
 import com.utn.TPFinal.dto.TariffDto;
 import com.utn.TPFinal.projections.TariffProjection;
 import com.utn.TPFinal.repository.TariffRepository;
@@ -30,6 +31,10 @@ public class TariffService {
     }
 
     public Integer addTariff(TariffDto tariffDto) {
-        return tariffRepository.addTariff(tariffDto.getOriginCityName(),tariffDto.getDestinationCityName(),tariffDto.getPricePerMinute(),tariffDto.getCostPerMinute());
+        return tariffRepository.addTariff(tariffDto.getIdOriginCity(),tariffDto.getIdDestinationCity(),tariffDto.getPricePerMinute(),tariffDto.getCostPerMinute());
+    }
+
+    public void modifyTariff(ModifyTariffDto modifyTariffDto) {
+        tariffRepository.modifyTariff(modifyTariffDto.getIdTariff(),modifyTariffDto.getPricePerMinute(),modifyTariffDto.getCostPerMinute());
     }
 }

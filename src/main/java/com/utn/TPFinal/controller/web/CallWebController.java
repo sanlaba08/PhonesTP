@@ -1,9 +1,13 @@
 package com.utn.TPFinal.controller.web;
 
 import com.utn.TPFinal.controller.model.CallController;
+import com.utn.TPFinal.exceptions.ValidationException;
 import com.utn.TPFinal.model.User;
 import com.utn.TPFinal.projections.CallsProjection;
 import com.utn.TPFinal.session.SessionManager;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +29,7 @@ public class CallWebController {
 
     //Consulta del top 10 de destinos mas llamados del usuario logeado
     @GetMapping("/destination")
-    public ResponseEntity<List<CallsProjection>> getTopTenDestinations(@RequestHeader("Authorization") String sessionToken) {
+    public ResponseEntity<List<CallsProjection>> getTopTenDestinations(@RequestHeader("Authorization") String sessionToken) throws ValidationException {
         User session = sessionManager.getCurrentUser(sessionToken);
         List<CallsProjection> callDestination = callController.getTopTenDestinations(session.getDni());
         if (callDestination.size() > 0) {
@@ -37,11 +41,11 @@ public class CallWebController {
 
     //Consulta del llamadas por rango de fecha del usuario logeado
     @GetMapping("/date") // localhost:8080/call/date?first=31-05-2019
+    @ApiOperation(value = "Resturn a list of calls filtered by dates")
     public ResponseEntity<List<CallsProjection>> getCallByDate(@RequestHeader("Authorization") String sessionToken,
-                                                               @PathParam("from") String from,
-                                                               @PathParam("to") String to) {
+                                                               @RequestParam String from,
+                                                               @RequestParam String to) throws ValidationException {
         if (from.compareTo(to) > 0) {
-//            ErrorResponseDto error = new ErrorResponseDto(10, "The first date cannot be greater than the second");
             return ResponseEntity.badRequest().build();
         } else {
             User session = sessionManager.getCurrentUser(sessionToken);

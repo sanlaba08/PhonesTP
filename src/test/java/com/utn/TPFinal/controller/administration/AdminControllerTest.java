@@ -3,9 +3,7 @@ package com.utn.TPFinal.controller.administration;
 import com.utn.TPFinal.controller.model.CallController;
 import com.utn.TPFinal.controller.model.TariffController;
 import com.utn.TPFinal.controller.model.UserController;
-import com.utn.TPFinal.dto.CallDto;
-import com.utn.TPFinal.dto.EmployeeDto;
-import com.utn.TPFinal.dto.TariffDto;
+import com.utn.TPFinal.dto.*;
 import com.utn.TPFinal.exceptions.*;
 import com.utn.TPFinal.model.User;
 import com.utn.TPFinal.service.UserService;
@@ -28,6 +26,7 @@ import java.util.Date;
 import java.util.List;
 
 import static com.utn.TPFinal.model.UserType.Admin;
+import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
@@ -49,7 +48,7 @@ class AdminControllerTest {
     }
 
     @Test
-    void addEmployeeOk() throws URISyntaxException, EmployeeException {
+    void addEmployeeOk() throws URISyntaxException, EmployeeException, ValidationException {
         EmployeeDto employee = new EmployeeDto("Santiago", "Labatut", "41686701", "santi", 1);
         Integer idUser = 1;
         when(userController.addEmployee(employee)).thenReturn(idUser);
@@ -61,7 +60,7 @@ class AdminControllerTest {
     }
 
     @Test()
-    void addEmployeeExceptionEmployee() throws JpaSystemException, EmployeeException {
+    void addEmployeeExceptionEmployee() throws JpaSystemException, EmployeeException, ValidationException {
         EmployeeDto employee = new EmployeeDto("Santi", "Labatut", "41686701", "santi", 1);
 
         when(userController.addEmployee(employee)).thenThrow(new JpaSystemException(new RuntimeException(new SQLException())));
@@ -97,7 +96,7 @@ class AdminControllerTest {
     }
 
     @Test
-    void getEmployeeOk() {
+    void getEmployeeOk() throws ValidationException {
         User user = new User(1, "Santiago", "Labatut", "41686701", "santi", 1, null, Admin, null);
         when(userController.getEmployee(user.getDni())).thenReturn(user);
 
@@ -108,7 +107,7 @@ class AdminControllerTest {
     }
 
     @Test
-    void getEmployeeBad() {
+    void getEmployeeBad() throws ValidationException {
         when(userController.getEmployee("42231235")).thenReturn(null);
 
         ResponseEntity responseController = adminController.getEmployee("42231235");
@@ -116,8 +115,8 @@ class AdminControllerTest {
     }
 
     @Test
-    void addTariffOk() throws URISyntaxException, TariffException {
-        TariffDto tariff = new TariffDto("Mar del Plata", "Buenos Aires", 10, 30);
+    void addTariffOk() throws URISyntaxException, TariffException, ValidationException {
+        TariffDto tariff = new TariffDto(1, 2, 10, 30);
         Integer idTariff = 1;
         when(tariffController.addTariff(tariff)).thenReturn(idTariff);
         ResponseEntity responseEntity = ResponseEntity.created(new URI("http://localhost:8080/admin/tariff/" + idTariff)).body(tariff);
@@ -128,8 +127,8 @@ class AdminControllerTest {
     }
 
     @Test()
-    void addTariffException() throws JpaSystemException{
-        TariffDto tariff = new TariffDto("Mar del Plata", "China", 30, 40);
+    void addTariffException() throws JpaSystemException, ValidationException {
+        TariffDto tariff = new TariffDto(1, 2, 30, 40);
 
         when(tariffController.addTariff(tariff)).thenThrow(new JpaSystemException(new RuntimeException(new SQLException())));
 
@@ -140,7 +139,7 @@ class AdminControllerTest {
     }
 
     @Test
-    void addCallOk() throws IncorrectDataCallException, URISyntaxException {
+    void addCallOk() throws IncorrectDataCallException, URISyntaxException, ValidationException {
         CallDto call = new CallDto("02235351545", "02236162410", (long) 1200, new Date());
         Integer idCall = 1;
         when(callController.addCall(call)).thenReturn(idCall);
@@ -152,7 +151,7 @@ class AdminControllerTest {
     }
 
     @Test()
-    void addCallException() throws JpaSystemException{
+    void addCallException() throws JpaSystemException, ValidationException {
         CallDto call = new CallDto("02235351545", "02236162410", (long) 1200, new Date());
 
         when(callController.addCall(call)).thenThrow(new JpaSystemException(new RuntimeException(new SQLException())));
@@ -161,5 +160,28 @@ class AdminControllerTest {
             adminController.addCall(call);
         });
 
+    }
+
+    @Test
+    void modifyTariff() throws ValidationException, TariffException {
+        ModifyTariffDto modifyTariffDto = new ModifyTariffDto(1,2,1);
+
+        doNothing().when(tariffController).modifyTariff(modifyTariffDto);
+
+        ResponseEntity responseEntity = adminController.modifyTariff(modifyTariffDto);
+
+        assertEquals(HttpStatus.ACCEPTED, responseEntity.getStatusCode());
+        verify(tariffController, times(1)).modifyTariff(modifyTariffDto);
+    }
+
+    @Test
+    void modifyTariffException() throws ValidationException {
+        ModifyTariffDto modifyTariffDto = new ModifyTariffDto(1,2,1);
+
+        doThrow(new JpaSystemException(new RuntimeException(new SQLException()))).when(tariffController).modifyTariff(modifyTariffDto);
+
+        assertThrows(TariffException.class, () -> {
+            adminController.modifyTariff(modifyTariffDto);
+        });
     }
 }

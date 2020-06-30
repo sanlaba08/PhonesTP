@@ -2,10 +2,7 @@ package com.utn.TPFinal.controller.backoffice;
 
 import com.utn.TPFinal.controller.model.UserController;
 import com.utn.TPFinal.dto.*;
-import com.utn.TPFinal.exceptions.EmployeeException;
-import com.utn.TPFinal.exceptions.TariffException;
-import com.utn.TPFinal.exceptions.UserAllReadyExistException;
-import com.utn.TPFinal.exceptions.UserNotExistException;
+import com.utn.TPFinal.exceptions.*;
 import com.utn.TPFinal.model.User;
 import com.utn.TPFinal.session.SessionManager;
 import org.junit.jupiter.api.Assertions;
@@ -44,7 +41,7 @@ class ClientBackControllerTest {
         clientBackController = new ClientBackController(userController);
     }
     @Test
-    void addClient() throws URISyntaxException, UserAllReadyExistException {
+    void addClient() throws URISyntaxException, UserAllReadyExistException, ValidationException {
         UserPhoneDto userPhone = new UserPhoneDto("Santiago", "Labatut", "41686701", "santi",1, "Home");
         Integer idUserPhone = 1;
         when(userController.addClient(userPhone)).thenReturn(idUserPhone);
@@ -56,7 +53,7 @@ class ClientBackControllerTest {
     }
 
     @Test()
-    void addClientException() throws JpaSystemException{
+    void addClientException() throws JpaSystemException, ValidationException {
         UserPhoneDto userPhone = new UserPhoneDto("Santiago", "Labatut", "41686701", "santi",1, "Home");
 
         when(userController.addClient(userPhone)).thenThrow(new JpaSystemException(new RuntimeException(new SQLException())));
@@ -69,7 +66,7 @@ class ClientBackControllerTest {
 
 
     @Test
-    void deleteClient() throws UserNotExistException {
+    void deleteClient() throws UserNotExistException, ValidationException {
         doNothing().when(userController).deleteClient("41686701");
         ResponseEntity responseEntity = clientBackController.deleteClient("41686701");
 
@@ -78,7 +75,7 @@ class ClientBackControllerTest {
     }
 
     @Test()
-    void deleteClientException() throws JpaSystemException{
+    void deleteClientException() throws JpaSystemException, ValidationException {
         String dni = "41686701";
         doThrow(new JpaSystemException(new RuntimeException(new SQLException()))).when(userController).deleteClient(dni);
 
@@ -89,7 +86,7 @@ class ClientBackControllerTest {
     }
 
     @Test
-    void suspendClient() throws UserNotExistException {
+    void suspendClient() throws UserNotExistException, ValidationException {
         doNothing().when(userController).suspendClient("41686701");
         ResponseEntity responseEntity = clientBackController.suspendClient("41686701");
 
@@ -98,7 +95,7 @@ class ClientBackControllerTest {
     }
 
     @Test()
-    void suspendClientException() throws JpaSystemException{
+    void suspendClientException() throws JpaSystemException, ValidationException {
         String dni = "41686701";
         doThrow(new JpaSystemException(new RuntimeException(new SQLException()))).when(userController).suspendClient(dni);
 
@@ -108,8 +105,8 @@ class ClientBackControllerTest {
     }
 
     @Test
-    void modifyClient() throws UserNotExistException {
-        UserPhoneModifyDto userPhoneModify = new UserPhoneModifyDto(1,"Santiago", "Labatut", "41686701", "santi",1, "Home");
+    void modifyClient() throws UserNotExistException, ValidationException {
+        UserPhoneModifyDto userPhoneModify = new UserPhoneModifyDto(1,"Santiago", "Labatut", "41686701", "santi",1);
         doNothing().when(userController).modifyClient(userPhoneModify);
 
         ResponseEntity responseEntity = clientBackController.modifyClient(userPhoneModify);
@@ -119,8 +116,8 @@ class ClientBackControllerTest {
     }
 
     @Test()
-    void modifyClientException() throws JpaSystemException{
-        UserPhoneModifyDto userPhone = new UserPhoneModifyDto(1, "Santiago", "Labatut", "41686701", "santi", 3, "Home");
+    void modifyClientException() throws JpaSystemException, ValidationException {
+        UserPhoneModifyDto userPhone = new UserPhoneModifyDto(1, "Santiago", "Labatut", "41686701", "santi", 3);
 
         doThrow(new JpaSystemException(new RuntimeException(new SQLException()))).when(userController).modifyClient(userPhone);
 
@@ -155,7 +152,7 @@ class ClientBackControllerTest {
 
 
     @Test
-    void getClientPhoneLineOk() {
+    void getClientPhoneLineOk() throws ValidationException {
         User user = new User(1,"Santiago", "Labatut", "41686701", "santi", 1,null, Client, null);
         when(userController.getClient(user.getDni())).thenReturn(user);
 
@@ -166,7 +163,7 @@ class ClientBackControllerTest {
     }
 
     @Test
-    void getClientPhoneLineBad() {
+    void getClientPhoneLineBad() throws ValidationException {
         when(userController.getEmployee("42231235")).thenReturn(null);
 
         ResponseEntity responseController = clientBackController.getClientPhoneLine("42231235");
@@ -174,7 +171,7 @@ class ClientBackControllerTest {
     }
 
     @Test
-    void reactiveClient() throws UserNotExistException {
+    void reactiveClient() throws UserNotExistException, ValidationException {
         doNothing().when(userController).reactiveClient("41686701");
         ResponseEntity responseEntity = clientBackController.reactiveClient("41686701");
 
@@ -183,7 +180,7 @@ class ClientBackControllerTest {
     }
 
     @Test()
-    void reactiveClientException() throws JpaSystemException{
+    void reactiveClientException() throws JpaSystemException, ValidationException {
         String dni = "41686701";
         doThrow(new JpaSystemException(new RuntimeException(new SQLException()))).when(userController).reactiveClient(dni);
 

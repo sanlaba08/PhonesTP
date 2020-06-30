@@ -66,4 +66,10 @@ public class ControllerAdvice extends ResponseEntityExceptionHandler {
     public ErrorResponseDto handleSQLExeption(SQLException e) {
         return new ErrorResponseDto(9, "Error interno en la base de datos");//esto no lo tirara siempre no?
     }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(ValidationException.class)
+    public ErrorResponseDto handleValidationException(ValidationException e) {
+        return new ErrorResponseDto(10, e.getMessage());//esto no lo tirara siempre no?
+    }
 }

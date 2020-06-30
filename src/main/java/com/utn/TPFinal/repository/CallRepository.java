@@ -15,7 +15,7 @@ import java.util.List;
 @Repository
 public interface CallRepository extends JpaRepository<Call,Integer> {
 
-    @Query(value = "select *" + " from v_calls_info where dni_user_origin = ?1", nativeQuery = true)
+    @Query(value = "select * from v_calls_info where dni_user_origin = ?1", nativeQuery = true)
     List<CallsProjection> getListCall(String dni);
 
     @Procedure(procedureName = "sp_insert_call")

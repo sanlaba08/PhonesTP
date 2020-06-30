@@ -45,8 +45,7 @@ public class UserService {
                 clientPhone.getLastName(),
                 clientPhone.getDni(),
                 clientPhone.getPassword(),
-                clientPhone.getCity(),
-                clientPhone.getLineType());
+                clientPhone.getCity());
     }
 
 

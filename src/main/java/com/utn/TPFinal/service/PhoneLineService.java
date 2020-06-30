@@ -18,8 +18,8 @@ public class PhoneLineService {
         return phoneLineRepository.addPhoneLine(phoneLine.getUser(), phoneLine.getLineType());
     }
 
-    public void deletePhoneLine(Integer idLine) throws JpaSystemException {
-        phoneLineRepository.deletePhoneLine(idLine);
+    public void suspendPhoneLine(Integer idLine) throws JpaSystemException {
+        phoneLineRepository.suspendPhoneLine(idLine);
     }
 
     public void enablePhoneLine(Integer idLine) throws JpaSystemException {

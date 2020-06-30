@@ -7,6 +7,7 @@ import com.utn.TPFinal.dto.UserPhoneDto;
 import com.utn.TPFinal.exceptions.PhoneLineException;
 import com.utn.TPFinal.exceptions.UserAllReadyExistException;
 import com.utn.TPFinal.exceptions.UserNotExistException;
+import com.utn.TPFinal.exceptions.ValidationException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -37,7 +38,7 @@ class PhoneLineBackControllerTest {
     }
 
     @Test
-    void addPhoneLine() throws URISyntaxException, PhoneLineException {
+    void addPhoneLine() throws URISyntaxException, PhoneLineException, ValidationException {
         PhoneLineByUserDto phoneLineByUser = new PhoneLineByUserDto( 3, "Home");
         Integer idPhoneLineByUser = 1;
         when(phoneLineController.addPhoneLine(phoneLineByUser)).thenReturn(idPhoneLineByUser);
@@ -49,7 +50,7 @@ class PhoneLineBackControllerTest {
     }
 
     @Test()
-    void addPhoneLineException() throws JpaSystemException {
+    void addPhoneLineException() throws JpaSystemException, ValidationException {
         PhoneLineByUserDto phoneLineByUser = new PhoneLineByUserDto( 3, "Home");
 
         when(phoneLineController.addPhoneLine(phoneLineByUser)).thenThrow(new JpaSystemException(new RuntimeException(new SQLException())));
@@ -61,28 +62,28 @@ class PhoneLineBackControllerTest {
     }
 
     @Test
-    void deletePhoneLine() throws PhoneLineException {
-        doNothing().when(phoneLineController).deletePhoneLine(1);
-        ResponseEntity responseEntity = phoneLineBackController.deletePhoneLine(1);
+    void deletePhoneLine() throws PhoneLineException, ValidationException {
+        doNothing().when(phoneLineController).suspendPhoneLine(1);
+        ResponseEntity responseEntity = phoneLineBackController.suspendPhoneLine(1);
 
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-        verify(phoneLineController, times(1)).deletePhoneLine(1);
+        verify(phoneLineController, times(1)).suspendPhoneLine(1);
     }
 
     @Test()
-    void deleteClientException() throws JpaSystemException{
+    void deleteClientException() throws JpaSystemException, ValidationException {
         Integer idLine = 1;
-        doThrow(new JpaSystemException(new RuntimeException(new SQLException()))).when(phoneLineController).deletePhoneLine(idLine);
+        doThrow(new JpaSystemException(new RuntimeException(new SQLException()))).when(phoneLineController).suspendPhoneLine(idLine);
 
         assertThrows(PhoneLineException.class, () -> {
-            phoneLineBackController.deletePhoneLine(idLine);
+            phoneLineBackController.suspendPhoneLine(idLine);
         });
 
     }
 
 
     @Test
-    void enablePhoneLine() throws PhoneLineException {
+    void enablePhoneLine() throws PhoneLineException, ValidationException {
         doNothing().when(phoneLineController).enablePhoneLine(1);
         ResponseEntity responseEntity = phoneLineBackController.enablePhoneLine(1);
 
@@ -91,7 +92,7 @@ class PhoneLineBackControllerTest {
     }
 
     @Test()
-    void enableClientException() throws JpaSystemException{
+    void enableClientException() throws JpaSystemException, ValidationException {
         Integer idLine = 1;
         doThrow(new JpaSystemException(new RuntimeException(new SQLException()))).when(phoneLineController).enablePhoneLine(idLine);
 

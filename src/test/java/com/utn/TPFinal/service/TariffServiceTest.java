@@ -1,6 +1,8 @@
 package com.utn.TPFinal.service;
 
+import com.utn.TPFinal.dto.ModifyTariffDto;
 import com.utn.TPFinal.dto.TariffDto;
+import com.utn.TPFinal.dto.UserPhoneModifyDto;
 import com.utn.TPFinal.projections.CallsProjection;
 import com.utn.TPFinal.projections.TariffProjection;
 import com.utn.TPFinal.repository.TariffRepository;
@@ -9,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.data.projection.ProjectionFactory;
 import org.springframework.data.projection.SpelAwareProxyProjectionFactory;
+import org.springframework.data.repository.query.Param;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,21 +81,35 @@ class TariffServiceTest {
 
     @Test
     void addTariff() {
-        TariffDto dto = new TariffDto("Buenos Aires",
-                "Buenos Aires",
+        TariffDto dto = new TariffDto(1,
+                1,
                 3,
                 (float) 0.3);
 
-        when(tariffRepository.addTariff(dto.getOriginCityName(),
-                dto.getDestinationCityName(),
+        when(tariffRepository.addTariff(dto.getIdOriginCity(),
+                dto.getIdDestinationCity(),
                 dto.getPricePerMinute(),
                 dto.getCostPerMinute())).thenReturn(1);
 
         Integer response = tariffService.addTariff(dto);
         assertEquals(response,1);
-        verify(tariffRepository,times(1)).addTariff(dto.getOriginCityName(),
-                dto.getDestinationCityName(),
+        verify(tariffRepository,times(1)).addTariff(dto.getIdOriginCity(),
+                dto.getIdDestinationCity(),
                 dto.getPricePerMinute(),
                 dto.getCostPerMinute());
+    }
+
+    @Test
+    void modifyTariff() {
+        ModifyTariffDto modifyTariffDto = new ModifyTariffDto(1,2,1);
+        doNothing().when(tariffRepository).modifyTariff(modifyTariffDto.getIdTariff(),
+                                                        modifyTariffDto.getPricePerMinute(),
+                                                        modifyTariffDto.getCostPerMinute());
+
+        tariffService.modifyTariff(modifyTariffDto);
+
+        verify(tariffRepository, times(1)).modifyTariff(modifyTariffDto.getIdTariff(),
+                                                                                modifyTariffDto.getPricePerMinute(),
+                                                                                modifyTariffDto.getCostPerMinute());
     }
 }

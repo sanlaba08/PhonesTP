@@ -1,6 +1,7 @@
 package com.utn.TPFinal.controller.web;
 
 import com.utn.TPFinal.controller.model.CallController;
+import com.utn.TPFinal.exceptions.ValidationException;
 import com.utn.TPFinal.model.User;
 import com.utn.TPFinal.projections.CallsProjection;
 import com.utn.TPFinal.session.SessionManager;
@@ -45,7 +46,7 @@ class CallWebControllerTest {
     }
 
     @Test
-    void getTopTenDestinationsOk() {
+    void getTopTenDestinationsOk() throws ValidationException {
         User user = new User(16,"Santiago", "Labatut", "41686701", "santi", 1,null, Client, null);
         String token = sessionManager.createSession(user);
         when(sessionManager.getCurrentUser(token)).thenReturn(user);
@@ -64,7 +65,7 @@ class CallWebControllerTest {
     }
 
     @Test
-    void getTopTenDestinationsEmpty() {
+    void getTopTenDestinationsEmpty() throws ValidationException {
         User user = new User(16,"Santiago", "Labatut", "41686701", "santi", 1,null, Client, null);
         String token = sessionManager.createSession(user);
         when(sessionManager.getCurrentUser(token)).thenReturn(user);
@@ -77,7 +78,7 @@ class CallWebControllerTest {
     }
 
     @Test
-    void getCallByDateOk() {
+    void getCallByDateOk() throws ValidationException {
         User user = new User(16,"Santiago", "Labatut", "41686701", "santi", 1,null, Client, null);
         String token = sessionManager.createSession(user);
         when(sessionManager.getCurrentUser(token)).thenReturn(user);
@@ -102,7 +103,7 @@ class CallWebControllerTest {
     }
 
     @Test
-    void getCallByDateBad() {
+    void getCallByDateBad() throws ValidationException {
         User user = new User(16,"Santiago", "Labatut", "41686701", "santi", 1,null, Client, null);
         String token = sessionManager.createSession(user);
         when(sessionManager.getCurrentUser(token)).thenReturn(user);
@@ -115,7 +116,7 @@ class CallWebControllerTest {
     }
 
     @Test
-    void getCallByDateEmpty() {
+    void getCallByDateEmpty() throws ValidationException {
         User user = new User(16,"Santiago", "Labatut", "41686701", "santi", 1,null, Client, null);
         String token = sessionManager.createSession(user);
         when(sessionManager.getCurrentUser(token)).thenReturn(user);

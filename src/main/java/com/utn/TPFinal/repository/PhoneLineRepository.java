@@ -16,7 +16,7 @@ public interface PhoneLineRepository extends JpaRepository<PhoneLine, Integer> {
                       @Param("pLineType") String TypeLine) throws JpaSystemException;
 
     @Procedure(procedureName = "sp_line_suspend")
-    void deletePhoneLine(@Param("pIdLine") Integer idLine);
+    void suspendPhoneLine(@Param("pIdLine") Integer idLine);
 
     @Procedure(procedureName = "sp_line_active")
     void enablePhoneLine(@Param("pIdLine") Integer idLine);

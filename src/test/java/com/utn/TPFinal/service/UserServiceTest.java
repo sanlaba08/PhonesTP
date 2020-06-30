@@ -132,14 +132,13 @@ class UserServiceTest {
 
     @Test
     void modifyClientPhone() {
-        UserPhoneModifyDto clientPhone = new UserPhoneModifyDto(1, "manu", "sure", "123", "321", 1, "Mobile");
+        UserPhoneModifyDto clientPhone = new UserPhoneModifyDto(1, "manu", "sure", "123", "321", 1);
         doNothing().when(userRepository).modifyClientPhone(clientPhone.getUser(),
                 clientPhone.getName(),
                 clientPhone.getLastName(),
                 clientPhone.getDni(),
                 clientPhone.getPassword(),
-                clientPhone.getCity(),
-                clientPhone.getLineType());
+                clientPhone.getCity());
 
         userService.modifyClientPhone(clientPhone);
 
@@ -148,8 +147,7 @@ class UserServiceTest {
                 clientPhone.getLastName(),
                 clientPhone.getDni(),
                 clientPhone.getPassword(),
-                clientPhone.getCity(),
-                clientPhone.getLineType());
+                clientPhone.getCity());
     }
 
     @Test
@@ -194,31 +192,4 @@ class UserServiceTest {
         });
 
     }
-
-
-    @Test
-    public void testLoginUserNotFound() throws UserNotExistException, ValidationException {
-//        LoginRequestDto loginRequestDto = new LoginRequestDto("41686701", "santi");
-//        when(userRepository.getByUsername(null,null)).thenThrow(new UserNotExistException("Incorrect User Data"));
-//        assertThrows(UserNotExistException.class, () -> {
-//            userService.login(null);
-//        });
-    }
-
-
-//    @Test
-//    public void testLoginUserNotFound() throws UserNotExistException, ValidationException {
-//        LoginRequestDto loginRequestDto = new LoginRequestDto("41686701", "santi");
-//        when(userRepository.getByUsername(loginRequestDto.getDni(),loginRequestDto.getPassword())).thenThrow(new UserNotExistException("Incorrect user data"));
-//        assertThrows(UserNotExistException.class, () -> {
-//            userService.login(loginRequestDto);
-//        });
-//    }
-
-//    @Test
-//    public void testLoginInvalidData() throws UserNotExistException, ValidationException {
-//        assertThrows(ValidationException.class, () -> {
-//            userService.login(new LoginRequestDto(null, "bla"));
-//        });
-//    }
 }

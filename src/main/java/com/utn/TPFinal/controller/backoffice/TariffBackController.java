@@ -1,6 +1,7 @@
 package com.utn.TPFinal.controller.backoffice;
 
 import com.utn.TPFinal.controller.model.TariffController;
+import com.utn.TPFinal.exceptions.ValidationException;
 import com.utn.TPFinal.projections.TariffProjection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,7 +34,7 @@ public class TariffBackController {
 
     //Consulta de tarifa por id
     @GetMapping("/{idTariff}")
-    public ResponseEntity getTariffById(@PathVariable Integer idTariff) {
+    public ResponseEntity getTariffById(@PathVariable Integer idTariff) throws ValidationException {
         TariffProjection tariffById = tariffController.getTariffById(idTariff);
         if(tariffById == null){
             return ResponseEntity.notFound().build();
@@ -44,8 +45,8 @@ public class TariffBackController {
 
     //Consulta de tarifa por ciudad de origen y ciudad de destino
     @GetMapping("/city")
-    public ResponseEntity getTariffByName(@PathParam("originCityName") String originCityName,
-                                          @PathParam("destinationCityName") String destinationCityName){
+    public ResponseEntity getTariffByName(@RequestParam String originCityName,
+                                          @RequestParam String destinationCityName) throws ValidationException {
         TariffProjection tariffByName = tariffController.getTariffByName(originCityName, destinationCityName);
         if(tariffByName == null){
             return ResponseEntity.notFound().build();
@@ -53,4 +54,6 @@ public class TariffBackController {
             return ResponseEntity.ok(tariffByName);
         }
     }
+
+
 }

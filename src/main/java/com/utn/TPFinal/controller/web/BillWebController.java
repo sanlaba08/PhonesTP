@@ -1,6 +1,7 @@
 package com.utn.TPFinal.controller.web;
 
 import com.utn.TPFinal.controller.model.BillController;
+import com.utn.TPFinal.exceptions.ValidationException;
 import com.utn.TPFinal.model.User;
 import com.utn.TPFinal.projections.BillProjection;
 import com.utn.TPFinal.session.SessionManager;
@@ -26,8 +27,8 @@ public class BillWebController {
     //Consulta de facturas por rango de fechas del usuario logeado
     @GetMapping("/date")
     public ResponseEntity <List<BillProjection>> getBillDate(@RequestHeader("Authorization") String sessionToken,
-                                                             @PathParam("from") String from,
-                                                             @PathParam("to") String to){
+                                                             @RequestParam String from,
+                                                             @RequestParam String to) throws ValidationException {
         User session = sessionManager.getCurrentUser(sessionToken);
         List<BillProjection> billsByDate = billController.getBillDate(session.getDni(),from, to);
         if (billsByDate.size() > 0){

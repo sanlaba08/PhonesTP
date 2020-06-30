@@ -34,10 +34,10 @@ class UserControllerTest {
     @Test
     void getAllEmployee() {
         List<User> list = new ArrayList<>();
-        User user = new User(1,"Santiago",
-                "Labatut","41686701",
-                "admin123",1,null,
-                null,null);
+        User user = new User(1, "Santiago",
+                "Labatut", "41686701",
+                "admin123", 1, null,
+                null, null);
 
         list.add(user);
 
@@ -46,7 +46,7 @@ class UserControllerTest {
         aux = userController.getAllEmployee();
         assertNotNull(aux);
         assertEquals(aux, list);
-        verify(userService,times(1)).getAllEmployee();
+        verify(userService, times(1)).getAllEmployee();
     }
 
     @Test
@@ -61,78 +61,79 @@ class UserControllerTest {
         aux = userController.getAllClients();
         assertNotNull(aux);
         assertEquals(aux, list);
-        verify(userService,times(1)).getAllClient();
+        verify(userService, times(1)).getAllClient();
 
     }
 
     @Test
-    void getEmployee() {
+    void getEmployee() throws ValidationException {
         User employee = new User();
         when(userService.getEmployeeDni("41686701")).thenReturn(employee);
 
         User aux = userController.getEmployee("41686701");
         assertNotNull(aux);
         assertEquals(aux, employee);
-        verify(userService,times(1)).getEmployeeDni("41686701");
+        verify(userService, times(1)).getEmployeeDni("41686701");
     }
 
     @Test
-    void getClient() {
+    void getClient() throws ValidationException {
         User client = new User();
         when(userService.findClientByDni("41686701")).thenReturn(client);
 
         User aux = userController.getClient("41686701");
         assertNotNull(aux);
         assertEquals(aux, client);
-        verify(userService,times(1)).findClientByDni("41686701");
+        verify(userService, times(1)).findClientByDni("41686701");
 
     }
 
     @Test
-    void addClientOk() {
-        when(userService.addClientPhone(new UserPhoneDto())).thenReturn(1);
-        Integer response = userController.addClient(new UserPhoneDto());
-        assertEquals(response,1);
-        verify(userService,times(1)).addClientPhone(new UserPhoneDto());
+    void addClientOk() throws ValidationException {
+        UserPhoneDto userPhoneDto = new UserPhoneDto("manu","sure","4321","123",1,"Home");
+        when(userService.addClientPhone(userPhoneDto)).thenReturn(1);
+        Integer response = userController.addClient(userPhoneDto);
+        assertEquals(response, 1);
+        verify(userService, times(1)).addClientPhone(userPhoneDto);
     }
 
     @Test
-    void deleteClientOk() {
-        doNothing().when(userService).deleteClientPhone(any());
-        userController.deleteClient(any());
-        verify(userService,times(1)).deleteClientPhone(any());
+    void deleteClientOk() throws ValidationException {
+        doNothing().when(userService).deleteClientPhone("123");
+        userController.deleteClient("123");
+        verify(userService, times(1)).deleteClientPhone(any());
     }
 
     @Test
-    void suspendClient() {
+    void suspendClient() throws ValidationException {
         doNothing().when(userService).suspendClient("123");
         userController.suspendClient("123");
-        verify(userService,times(1)).suspendClient("123");
+        verify(userService, times(1)).suspendClient("123");
     }
 
     @Test
-    void modifyClient() {
-        UserPhoneModifyDto user = new UserPhoneModifyDto(1,"manu","sure","123","321",1,"Mobile");
+    void modifyClient() throws ValidationException {
+        UserPhoneModifyDto user = new UserPhoneModifyDto(1, "manu", "sure", "123", "321", 1);
         doNothing().when(userService).modifyClientPhone(user);
         userController.modifyClient(user);
-        verify(userService,times(1)).modifyClientPhone(user);
+        verify(userService, times(1)).modifyClientPhone(user);
     }
 
     @Test
-    void addEmployee() {
-        EmployeeDto employeeDto = new EmployeeDto("manu","sure","321","321",1);
+    void addEmployee() throws ValidationException {
+        EmployeeDto employeeDto = new EmployeeDto("manu", "sure", "321", "321", 1);
         when(userService.addEmployee(employeeDto)).thenReturn(1);
         Integer response = userController.addEmployee(employeeDto);
-        assertEquals(response,1);
-        verify(userService,times(1)).addEmployee(employeeDto);
+        assertEquals(response, 1);
+        verify(userService, times(1)).addEmployee(employeeDto);
     }
 
 
     @Test
-    void reactiveClient() {
+    void reactiveClient() throws ValidationException {
         doNothing().when(userService).reactiveClient("123");
         userController.reactiveClient("123");
-        verify(userService,times(1)).reactiveClient("123");
+        verify(userService, times(1)).reactiveClient("123");
     }
 
     @Test

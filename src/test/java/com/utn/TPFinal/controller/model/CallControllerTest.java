@@ -1,6 +1,7 @@
 package com.utn.TPFinal.controller.model;
 
 import com.utn.TPFinal.dto.CallDto;
+import com.utn.TPFinal.exceptions.ValidationException;
 import com.utn.TPFinal.projections.CallsProjection;
 import com.utn.TPFinal.service.CallService;
 import org.junit.jupiter.api.BeforeEach;
@@ -52,7 +53,7 @@ class CallControllerTest {
     }
 
     @Test
-    void getCall() {
+    void getCall() throws ValidationException {
         when(callService.getListCall("42231235")).thenReturn(calls);
 
         List<CallsProjection> aux = callController.getCall("42231235");
@@ -63,7 +64,7 @@ class CallControllerTest {
     }
 
     @Test
-    void getTopTenDestinations() {
+    void getTopTenDestinations() throws ValidationException {
         topTenCallProjection.setFull_name_o("Santiago Labatut");
         topTenCallProjection.setDestination_city("Mar del Plata");
         topTenCallProjection.setCant(5);
@@ -81,7 +82,7 @@ class CallControllerTest {
     }
 
     @Test
-    void getCallByDate() {
+    void getCallByDate() throws ValidationException {
 
         when(callService.getListCallByDate("42231235","2020-04-01","2020-06-20")).thenReturn(calls);
 
@@ -93,10 +94,15 @@ class CallControllerTest {
     }
 
     @Test
-    void addCallOk() {
-        when(callService.addCall(new CallDto())).thenReturn(1);
-        Integer response = callController.addCall(new CallDto());
+    void addCallOk() throws ValidationException {
+//        String lineOrigin;
+//        String lineDestination;
+//        Long duration;
+//        Date callDate
+        CallDto dto = new CallDto("123","321", (long) 3,new Date());
+        when(callService.addCall(dto)).thenReturn(1);
+        Integer response = callController.addCall(dto);
         assertEquals(response,1);
-        verify(callService,times(1)).addCall(new CallDto());
+        verify(callService,times(1)).addCall(dto);
     }
 }

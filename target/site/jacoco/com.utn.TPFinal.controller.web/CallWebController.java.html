@@ -4,6 +4,9 @@ import com.utn.TPFinal.controller.model.CallController;
 import com.utn.TPFinal.model.User;
 import com.utn.TPFinal.projections.CallsProjection;
 import com.utn.TPFinal.session.SessionManager;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,38 +21,39 @@ public class CallWebController {
     private final CallController callController;
 
     @Autowired
-<span class="fc" id="L21">    public CallWebController(SessionManager sessionManager, CallController callController) {</span>
-<span class="fc" id="L22">        this.sessionManager = sessionManager;</span>
-<span class="fc" id="L23">        this.callController = callController;</span>
-<span class="fc" id="L24">    }</span>
+<span class="fc" id="L24">    public CallWebController(SessionManager sessionManager, CallController callController) {</span>
+<span class="fc" id="L25">        this.sessionManager = sessionManager;</span>
+<span class="fc" id="L26">        this.callController = callController;</span>
+<span class="fc" id="L27">    }</span>
 
     //Consulta del top 10 de destinos mas llamados del usuario logeado
     @GetMapping(&quot;/destination&quot;)
     public ResponseEntity&lt;List&lt;CallsProjection&gt;&gt; getTopTenDestinations(@RequestHeader(&quot;Authorization&quot;) String sessionToken) {
-<span class="fc" id="L29">        User session = sessionManager.getCurrentUser(sessionToken);</span>
-<span class="fc" id="L30">        List&lt;CallsProjection&gt; callDestination = callController.getTopTenDestinations(session.getDni());</span>
-<span class="fc bfc" id="L31" title="All 2 branches covered.">        if (callDestination.size() &gt; 0) {</span>
-<span class="fc" id="L32">            return ResponseEntity.ok().body(callDestination);</span>
+<span class="fc" id="L32">        User session = sessionManager.getCurrentUser(sessionToken);</span>
+<span class="fc" id="L33">        List&lt;CallsProjection&gt; callDestination = callController.getTopTenDestinations(session.getDni());</span>
+<span class="fc bfc" id="L34" title="All 2 branches covered.">        if (callDestination.size() &gt; 0) {</span>
+<span class="fc" id="L35">            return ResponseEntity.ok().body(callDestination);</span>
         } else {
-<span class="fc" id="L34">            return ResponseEntity.noContent().build();</span>
+<span class="fc" id="L37">            return ResponseEntity.noContent().build();</span>
         }
     }
 
     //Consulta del llamadas por rango de fecha del usuario logeado
     @GetMapping(&quot;/date&quot;) // localhost:8080/call/date?first=31-05-2019
+    @ApiOperation(value = &quot;Resturn a list of calls filtered by dates&quot;)
     public ResponseEntity&lt;List&lt;CallsProjection&gt;&gt; getCallByDate(@RequestHeader(&quot;Authorization&quot;) String sessionToken,
                                                                @PathParam(&quot;from&quot;) String from,
                                                                @PathParam(&quot;to&quot;) String to) {
-<span class="fc bfc" id="L43" title="All 2 branches covered.">        if (from.compareTo(to) &gt; 0) {</span>
+<span class="fc bfc" id="L47" title="All 2 branches covered.">        if (from.compareTo(to) &gt; 0) {</span>
 //            ErrorResponseDto error = new ErrorResponseDto(10, &quot;The first date cannot be greater than the second&quot;);
-<span class="fc" id="L45">            return ResponseEntity.badRequest().build();</span>
+<span class="fc" id="L49">            return ResponseEntity.badRequest().build();</span>
         } else {
-<span class="fc" id="L47">            User session = sessionManager.getCurrentUser(sessionToken);</span>
-<span class="fc" id="L48">            List&lt;CallsProjection&gt; callByDate = callController.getCallByDate(session.getDni(), from, to);</span>
-<span class="fc bfc" id="L49" title="All 2 branches covered.">            if (callByDate.size() &gt; 0) {</span>
-<span class="fc" id="L50">                return ResponseEntity.ok().body(callByDate);</span>
+<span class="fc" id="L51">            User session = sessionManager.getCurrentUser(sessionToken);</span>
+<span class="fc" id="L52">            List&lt;CallsProjection&gt; callByDate = callController.getCallByDate(session.getDni(), from, to);</span>
+<span class="fc bfc" id="L53" title="All 2 branches covered.">            if (callByDate.size() &gt; 0) {</span>
+<span class="fc" id="L54">                return ResponseEntity.ok().body(callByDate);</span>
             } else {
-<span class="fc" id="L52">                return ResponseEntity.noContent().build();</span>
+<span class="fc" id="L56">                return ResponseEntity.noContent().build();</span>
             }
         }
     }

@@ -44,10 +44,10 @@ class PhoneLineServiceTest {
     }
 
     @Test
-    void deletePhoneLine() {
-        doNothing().when(phoneLineRepository).deletePhoneLine(any());
-        phoneLineService.deletePhoneLine(any());
-        verify(phoneLineRepository).deletePhoneLine(any());
+    void suspendPhoneLine() {
+        doNothing().when(phoneLineRepository).suspendPhoneLine(any());
+        phoneLineService.suspendPhoneLine(any());
+        verify(phoneLineRepository).suspendPhoneLine(any());
     }
 
     @Test

@@ -2,6 +2,7 @@ package com.utn.TPFinal.controller.backoffice;
 
 import com.utn.TPFinal.controller.model.CallController;
 import com.utn.TPFinal.controller.model.UserController;
+import com.utn.TPFinal.exceptions.ValidationException;
 import com.utn.TPFinal.model.User;
 import com.utn.TPFinal.projections.CallsProjection;
 import org.junit.jupiter.api.BeforeEach;
@@ -39,7 +40,7 @@ class CallBackControllerTest {
     }
 
     @Test
-    void getCallTest(){
+    void getCallTest() throws ValidationException {
         User client = new User(1, "Santiago", "Labatut", "41686701", "santi", 1, null, Client, null);
         when(userController.getClient(client.getDni())).thenReturn(client);
 
@@ -64,7 +65,7 @@ class CallBackControllerTest {
     }
 
     @Test
-    void getCallEmpty() {
+    void getCallEmpty() throws ValidationException {
         User client = new User(1, "Santiago", "Labatut", "41686701", "santi", 1, null, Client, null);
         when(userController.getClient(client.getDni())).thenReturn(client);
 
@@ -77,7 +78,7 @@ class CallBackControllerTest {
     }
 
     @Test
-    void getCallBad() {
+    void getCallBad() throws ValidationException {
         User client = new User(1, "Santiago", "Labatut", "41686701", "santi", 1, null, Client, null);
         when(userController.getClient(client.getDni())).thenReturn(null);
 
