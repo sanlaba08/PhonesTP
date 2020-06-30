@@ -52,7 +52,7 @@ db.phone_lines.insert(
     _id: ObjectId("the object id"),
     number_line: string,
     available: Boolean,
-    line_type: ["Mobile", "Home", "Admin"],
+    line_type: ["Mobile", "Home"],
     id_user: ObjectId("the object id"),
     user: {
                 _id: ObjectId("the object id"),
@@ -117,7 +117,7 @@ db.bills.insert(
                     _id: ObjectId("the object id"),
                     number_line: string,
                     available: Boolean,
-                    line_type: ["Mobile", "Home", "Admin"],
+                    line_type: ["Mobile", "Home"],
                     id_user: ObjectId("the object id"),
                     user: {
                                 _id: ObjectId("the object id"),
@@ -159,7 +159,7 @@ db.calls.insert(
                      _id: ObjectId("the object id"),
                      number_line: string,
                      available: Boolean,
-                     line_type: ["Mobile", "Home", "Admin"],
+                     line_type: ["Mobile", "Home"],
                      id_user: ObjectId("the object id"),
                      user: {
                                  _id: ObjectId("the object id"),
@@ -187,7 +187,7 @@ db.calls.insert(
                            _id: ObjectId("the object id"),
                            number_line: string,
                            available: Boolean,
-                           line_type: ["Mobile", "Home", "Admin"],
+                           line_type: ["Mobile", "Home"],
                            id_user: ObjectId("the object id"),
                            user: {
                                        _id: ObjectId("the object id"),
@@ -244,7 +244,7 @@ db.calls.insert(
                                _id: ObjectId("the object id"),
                                number_line: string,
                                available: Boolean,
-                               line_type: ["Mobile", "Home", "Admin"],
+                               line_type: ["Mobile", "Home"],
                                id_user: ObjectId("the object id"),
                                user: {
                                            _id: ObjectId("the object id"),
